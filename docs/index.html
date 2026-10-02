@@ -139,6 +139,11 @@ figure img { display: block; width: 100%; height: auto; }
 .conv th { font-family: var(--f-display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil); }
 .conv tr.hl td { background: var(--omr-soft); color: var(--omr); font-weight: 600; }
 
+.test2-card { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border: 1.5px solid var(--omr); border-radius: 4px; background: var(--omr-soft); color: var(--ink); text-decoration: none; }
+.test2-card strong { font-family: var(--f-display); font-size: 1.15rem; }
+.test2-card span:not(.label) { max-width: 70ch; }
+.test2-card .test2-go { font-family: var(--f-display); font-weight: 700; color: var(--omr); }
+.test2-card:hover .test2-go { text-decoration: underline; }
 footer { font-size: 0.88rem; color: var(--pencil); display: flex; flex-direction: column; gap: 6px; max-width: 75ch; }
 footer a { color: inherit; }
 .note { font-size: 0.9rem; color: var(--pencil); }
@@ -199,6 +204,12 @@ footer a { color: inherit; }
       <h2>Listening · full practice exam</h2>
       <span class="trf-meta">4 parts · 40 questions · self-contained audio · automatic marking</span>
     </div>
+    <a class="test2-card" href="listening-test-2.html">
+      <span class="label">New · exam conditions</span>
+      <strong>Listening Practice Test 2</strong>
+      <span>Real exam format: membership form, map labelling, choose-two and matching questions, lecture notes. Narrator, reading time and checking time between parts, recording played once only. Opens full screen.</span>
+      <span class="test2-go">Start Test 2 →</span>
+    </a>
     <div class="full-listening-exam" id="full-listening-exam"></div>
   </section>
 
@@ -355,7 +366,9 @@ footer a { color: inherit; }
 
   // ---------- Test Report Form ----------
   function renderTRF() {
-    const originalFullResult = state.fullListeningExam?.submitted ? state.fullListeningExam?.result : null;
+    const examA = state.fullListeningExam?.submitted ? state.fullListeningExam?.result : null;
+    const examB = state.listeningTest2 || null;
+    const originalFullResult = examA && examB ? ((examB.recordedAt || '') > (examA.recordedAt || '') ? examB : examA) : (examA || examB);
     const originalListening = originalFullResult
       ? { correct: originalFullResult.correct, attempted: 40, raw40: originalFullResult.correct, band: band(originalFullResult.correct), pte: PTE[band(originalFullResult.correct)] }
       : null;

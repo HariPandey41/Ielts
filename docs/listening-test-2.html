@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Listening Test 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: computer-delivered exam shell — fixed top status bar, question paper in the middle, question navigator along the bottom. */
+:root {
+  --paper: #f2f5f3;
+  --sheet: #ffffff;
+  --ink: #1b2430;
+  --pencil: #5b6672;
+  --rule: #ccd5d2;
+  --omr: #c2334d;
+  --omr-soft: #f7e1e5;
+  --ok: #2b7a4b;
+  --ok-soft: #dff0e5;
+  --bad: #b23a2a;
+  --bad-soft: #f6e0dc;
+  --warn: #9a6512;
+  --water: #cfe3ec;
+  --grass: #e4eedc;
+  --hl: #fff2b3;
+  --f-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+    --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --bad-soft: #3b201b; --warn: #e3b25c;
+    --water: #1d3a48; --grass: #1f2c1d; --hl: #4a4116;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+  --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --bad-soft: #3b201b; --warn: #e3b25c;
+  --water: #1d3a48; --grass: #1f2c1d; --hl: #4a4116;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+p { margin: 0; }
+.label { font-family: var(--f-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil); }
+.muted { color: var(--pencil); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+a { color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--omr); outline-offset: 2px; }
+
+.btn { font-family: var(--f-display); font-weight: 700; font-size: 0.95rem; border: 1.5px solid var(--ink); background: var(--ink); color: var(--sheet); padding: 9px 16px; border-radius: 3px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* status bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--ink); color: var(--sheet); padding-inline: 16px; padding-block: 10px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between; }
+.bar .who { font-family: var(--f-display); font-weight: 700; }
+.bar .status { font-family: var(--f-mono); font-size: 0.85rem; display: flex; gap: 8px; align-items: center; min-width: 0; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--pencil); flex: none; }
+.dot.on { background: #4fd18b; box-shadow: 0 0 0 4px rgba(79, 209, 139, .25); }
+.dot.pause { background: #f3c049; }
+.clock { font-family: var(--f-mono); font-weight: 600; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.bar a { color: var(--sheet); font-family: var(--f-display); font-size: 0.85rem; }
+
+.wrap { max-width: 920px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 140px; display: flex; flex-direction: column; gap: 24px; }
+
+/* start screen */
+.intro { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.intro h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; }
+.intro ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; max-width: 68ch; }
+.voices { font-size: 0.9rem; color: var(--pencil); }
+.warnbox { border-left: 3px solid var(--warn); padding: 6px 12px; color: var(--warn); font-size: 0.95rem; }
+
+/* question paper */
+.part { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+.part-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; border-bottom: 1.5px solid var(--ink); padding-bottom: 10px; }
+.part-head h2 { font-size: 1.4rem; }
+.qblock { display: flex; flex-direction: column; gap: 12px; }
+.qblock h3 { font-size: 1rem; }
+.instr { font-size: 0.98rem; }
+.instr b { font-family: var(--f-display); letter-spacing: 0.02em; }
+
+.form { border: 1.5px solid var(--ink); border-radius: 2px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+.form h4 { font-family: var(--f-display); font-size: 1.05rem; text-align: center; margin: 0 0 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+.form .line { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 4px 14px; align-items: baseline; }
+.form .sub { font-family: var(--f-display); font-weight: 700; font-size: 0.9rem; margin-top: 6px; }
+@media (max-width: 560px) { .form .line { grid-template-columns: minmax(0, 1fr); } }
+.example { font-style: italic; color: var(--pencil); }
+.example u { font-style: normal; color: var(--ink); text-decoration-thickness: 1px; }
+
+.gap { display: inline-flex; align-items: center; gap: 4px; vertical-align: baseline; }
+.gap .n { font-family: var(--f-mono); font-weight: 600; font-size: 0.78rem; border: 1.5px solid var(--omr); color: var(--omr); border-radius: 2px; min-width: 1.9rem; height: 1.6rem; display: inline-grid; place-items: center; }
+.gap input { font: inherit; font-size: 0.98rem; color: var(--ink); background: var(--paper); border: 0; border-bottom: 1.5px solid var(--ink); padding: 2px 6px; width: 9.5rem; max-width: 52vw; border-radius: 0; }
+.gap.correct .n { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.gap.wrong .n { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+.fix { font-family: var(--f-mono); font-size: 0.8rem; color: var(--ok); }
+
+.notes { border: 1.5px solid var(--ink); border-radius: 2px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+.notes h4 { font-family: var(--f-display); font-size: 1.05rem; text-align: center; margin: 0 0 6px; }
+.notes .h { font-family: var(--f-display); font-weight: 700; margin-top: 8px; }
+.notes ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
+
+.mcq { display: flex; flex-direction: column; gap: 6px; padding-block: 4px; }
+.mcq .q { display: flex; gap: 10px; align-items: baseline; }
+.mcq label { display: flex; gap: 10px; align-items: baseline; padding: 4px 8px; margin-left: 2.4rem; border-radius: 3px; cursor: pointer; }
+.mcq label:hover { background: var(--paper); }
+.mcq input { accent-color: var(--omr); }
+.mcq label b { font-family: var(--f-display); width: 1rem; flex: none; }
+.qn { font-family: var(--f-mono); font-weight: 600; font-size: 0.8rem; border: 1.5px solid var(--omr); color: var(--omr); border-radius: 2px; min-width: 1.9rem; height: 1.6rem; display: inline-grid; place-items: center; flex: none; }
+.mcq.correct .q .qn, .match-row.correct .qn { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.mcq.wrong .q .qn, .match-row.wrong .qn { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+.mcq label.key { background: var(--ok-soft); }
+
+.boxlist { border: 1px solid var(--ink); padding: 10px 14px; border-radius: 2px; display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: 2px 8px; max-width: 34rem; }
+.boxlist b { font-family: var(--f-display); }
+.match-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.match-row .who { min-width: 12rem; }
+select { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-bottom: 1.5px solid var(--ink); border-radius: 2px; padding: 4px 8px; }
+
+.mapwrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 760px) { .mapwrap { grid-template-columns: minmax(0, 1fr); } }
+svg.map { width: 100%; height: auto; border: 1.5px solid var(--ink); border-radius: 2px; background: var(--grass); display: block; }
+svg.map text { font-family: var(--f-display); fill: var(--ink); }
+svg.map .letter circle { fill: var(--sheet); stroke: var(--omr); stroke-width: 2; }
+svg.map .letter text { fill: var(--omr); font-weight: 800; font-size: 15px; }
+svg.map .path { stroke: var(--pencil); stroke-width: 14; stroke-linecap: round; fill: none; opacity: .55; }
+svg.map .lake { fill: var(--water); stroke: var(--pencil); stroke-width: 1.5; }
+svg.map .bldg { fill: var(--sheet); stroke: var(--ink); stroke-width: 1.5; }
+svg.map .wood { fill: var(--ok-soft); stroke: var(--ok); stroke-width: 1; stroke-dasharray: 4 3; }
+svg.map .small { font-size: 12px; font-weight: 700; }
+.maptable { display: flex; flex-direction: column; gap: 10px; }
+
+/* navigator */
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--sheet); border-top: 1.5px solid var(--ink); padding-inline: 16px; padding-block: 8px calc(8px + env(safe-area-inset-bottom, 0px)); }
+.nav-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 10px 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.nav-parts { display: flex; gap: 10px 14px; flex-wrap: wrap; min-width: 0; }
+.nav-part { display: flex; gap: 3px; align-items: center; flex-wrap: wrap; }
+.nav-part > span { font-family: var(--f-display); font-weight: 700; font-size: 0.75rem; margin-right: 4px; color: var(--pencil); }
+.nav-part.live > span { color: var(--omr); }
+.nav button.qb { font-family: var(--f-mono); font-size: 0.68rem; width: 1.55rem; height: 1.55rem; padding: 0; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); border-radius: 2px; cursor: pointer; }
+.nav button.qb.done { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+.nav button.qb.ok { background: var(--ok); color: var(--sheet); border-color: var(--ok); }
+.nav button.qb.no { background: var(--bad); color: var(--sheet); border-color: var(--bad); }
+.nav .cnt { display: none; }
+@media (max-width: 640px) {
+  .nav button.qb { display: none; }
+  .nav-part > span { display: none; }
+  .nav .cnt { display: inline-block; font-family: var(--f-mono); font-size: 0.75rem; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); border-radius: 2px; padding: 4px 7px; cursor: pointer; }
+  .nav-part.live .cnt { border-color: var(--omr); color: var(--omr); }
+  .nav-parts { gap: 6px; }
+  .nav .btn { padding: 6px 12px; font-size: 0.85rem; }
+}
+
+/* results */
+.result { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 4px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.scorebox { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.band-box { font-family: var(--f-mono); font-weight: 600; font-size: 2.2rem; line-height: 1; border: 2px solid var(--omr); color: var(--omr); min-width: 4.4rem; height: 3.6rem; display: grid; place-items: center; border-radius: 3px; padding-inline: 8px; }
+.tbl-wrap { overflow-x: auto; }
+table.rev { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+table.rev th, table.rev td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--rule); }
+table.rev th { font-family: var(--f-display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil); }
+table.rev td.n { font-family: var(--f-mono); }
+table.rev .ok { color: var(--ok); font-weight: 600; }
+table.rev .no { color: var(--bad); font-weight: 600; }
+.transcript { display: flex; flex-direction: column; gap: 14px; }
+.transcript details { border: 1px solid var(--rule); border-radius: 3px; padding: 10px 14px; }
+.transcript summary { font-family: var(--f-display); font-weight: 700; cursor: pointer; }
+.transcript p { margin-top: 6px; max-width: 72ch; }
+.transcript .sp { font-family: var(--f-display); font-weight: 700; font-size: 0.85rem; }
+.transcript .ann { font-style: italic; color: var(--pencil); }
+mark { background: var(--hl); color: inherit; padding: 0 2px; border-radius: 2px; }
+mark sup { font-family: var(--f-mono); font-size: 0.65rem; color: var(--omr); margin-left: 2px; }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="who">IELTS Listening · Practice Test 2</span>
+  <span class="status"><span class="dot" id="dot"></span><span id="status">Not started</span></span>
+  <span class="row" style="gap:14px"><span class="clock" id="clock">30:00</span><a href="./#full-exam">Back to trainer</a></span>
+</div>
+
+<div class="wrap">
+
+  <section class="intro" id="intro">
+    <span class="label">Academic &amp; General Training · Listening</span>
+    <h1>Listening Practice Test 2</h1>
+    <ul>
+      <li>There are four parts and 40 questions. Each question carries one mark.</li>
+      <li>You will hear each recording <b>once only</b>. The audio cannot be paused or replayed.</li>
+      <li>Before each part you have time to read the questions, as in the real test.</li>
+      <li>Answer the questions as you listen. Watch the word limit in each instruction: answers that go over it are marked wrong.</li>
+      <li>When the recording ends you have <b>2 minutes</b> to check your answers. The test then submits automatically.</li>
+    </ul>
+    <p class="voices" id="voice-info">Checking the voices available in your browser…</p>
+    <p class="warnbox" id="no-tts" hidden>This browser cannot play synthetic speech. Open the test in Chrome, Edge or Safari on a computer or phone.</p>
+    <div class="row">
+      <button class="btn ghost" id="sound-check" type="button">Sound check</button>
+      <button class="btn" id="start" type="button">Start the test</button>
+    </div>
+    <p class="muted" style="font-size:0.9rem">Use headphones for the most realistic experience. Keep this tab in the foreground while the recording plays. Microsoft Edge has the most natural voices.</p>
+  </section>
+
+  <div id="paper" hidden></div>
+
+  <section class="result" id="result" hidden></section>
+</div>
+
+<nav class="nav" id="nav" hidden>
+  <div class="nav-inner">
+    <div class="nav-parts" id="nav-parts"></div>
+    <button class="btn" id="submit" type="button">Submit answers</button>
+  </div>
+</nav>
+
+<script>
+(() => {
+  'use strict';
+
+  // ================= CONTENT =================
+  // Speakers: role → voice preference
+  const ROLES = {
+    narrator: { lang: 'en-GB', gender: 'm', label: 'Narrator' },
+    tom:      { lang: 'en-GB', gender: 'm', label: 'Tom' },
+    laura:    { lang: 'en-AU', gender: 'f', label: 'Laura' },
+    claire:   { lang: 'en-AU', gender: 'f', label: 'Claire' },
+    evans:    { lang: 'en-GB', gender: 'm', label: 'Dr Evans' },
+    mia:      { lang: 'en-GB', gender: 'f', label: 'Mia' },
+    jake:     { lang: 'en-AU', gender: 'm', label: 'Jake' },
+    lecturer: { lang: 'en-GB', gender: 'f', label: 'Lecturer' },
+  };
+
+  // Script: [role, text] lines, or ['pause', seconds, label], or ['focus', part]
+  // {{text|n}} marks where the answer to question n is heard.
+  const SCRIPT = [
+    ['focus', 1],
+    ['narrator', 'IELTS Listening. Practice Test 2.'],
+    ['narrator', 'In the test, you will hear a number of different recordings and you will have to answer questions on what you hear. There will be time for you to read the instructions and questions, and you will have a chance to check your work. All the recordings will be played once only. The test is in four parts.'],
+    ['narrator', 'Now turn to Part 1.'],
+    ['narrator', 'Part 1. You will hear a woman phoning a sports club to ask about becoming a member. First, you have some time to look at questions 1 to 5.'],
+    ['pause', 30, 'Reading time · Questions 1–5'],
+    ['narrator', 'You will see that there is an example that has been done for you. On this occasion only, the conversation relating to this will be played first.'],
+    ['tom', 'Good morning, Greenfield Sports Club, Tom speaking. How can I help?'],
+    ['laura', "Oh, hello. I'm calling because I'd like to join the club. I saw on the leaflet that there are a few different types of membership."],
+    ['tom', "That's right. We have family membership, student membership and individual membership. Which were you thinking of?"],
+    ['laura', "Just individual, please. It's only for me."],
+    ['narrator', "The woman wants individual membership, so 'individual' has been written in the space. Now we shall begin. You should answer the questions as you listen, because you will not hear the recording a second time. Listen carefully and answer questions 1 to 5."],
+    ['tom', 'Good morning, Greenfield Sports Club, Tom speaking. How can I help?'],
+    ['laura', "Oh, hello. I'm calling because I'd like to join the club. I saw on the leaflet that there are a few different types of membership."],
+    ['tom', "That's right. We have family membership, student membership and individual membership. Which were you thinking of?"],
+    ['laura', "Just individual, please. It's only for me."],
+    ['tom', "Lovely. I can fill in the application form for you now over the phone, if that's easier. Can I take your name?"],
+    ['laura', "Yes, it's Laura Pemberton."],
+    ['tom', 'Could you spell your surname for me, please?'],
+    ['laura', "Sure. It's {{P, E, M, B, E, R, T, O, N|1}}."],
+    ['tom', 'Thank you. And what is your address?'],
+    ['laura', "It's sixty-four... oh no, sorry, that's my old flat. I moved last month. It's {{forty-six|2}} Marsh Road. That's in Westbury."],
+    ['tom', 'Forty-six Marsh Road, Westbury. And the postcode?'],
+    ['laura', "It's {{W, B, 7, 2, R, Q|3}}."],
+    ['tom', 'Let me just read that back to you. W, B, 7, 2, R, Q.'],
+    ['laura', "That's right."],
+    ['tom', 'And could I ask what you do for a living? We offer a discount for some professions.'],
+    ['laura', "I'm a {{nurse|4}}. I was a teacher for a few years, actually, but I changed careers about two years ago."],
+    ['tom', "In that case you'll qualify for our healthcare workers' discount. I'll come back to that. Now, when do you think you'll mostly use the club? We're very quiet in the mornings, if that's useful."],
+    ['laura', "Until recently I'd have said mornings, but my shifts at the hospital have changed, so it'll mostly be weekday {{evenings|5}} now."],
+    ['tom', 'Weekday evenings. No problem at all.'],
+    ['narrator', 'Before you hear the rest of the conversation, you have some time to look at questions 6 to 10.'],
+    ['pause', 30, 'Reading time · Questions 6–10'],
+    ['narrator', 'Now listen and answer questions 6 to 10.'],
+    ['tom', "Just for our records, can I ask how you heard about us? Was it through our website?"],
+    ['laura', "No, I haven't looked at the website yet. A colleague mentioned the club a while ago, but what actually made me call was an advert I saw in the {{newspaper|6}} last week."],
+    ['tom', "That's good to hear. Now, about the fees. There's a one-off joining fee. It's normally forty pounds, but we're running a special offer this month, so it's just {{twenty-five|7}} pounds."],
+    ['laura', 'Oh, good timing, then.'],
+    ['tom', "Then there's the monthly payment. For individual members it's usually thirty-five pounds, but with the healthcare discount it comes down to {{thirty-two pounds fifty|8}}."],
+    ['laura', "Thirty-two fifty a month. That's fine."],
+    ['tom', 'And which of our facilities are you most interested in?'],
+    ['laura', "Mainly the swimming pool. And I'd like to join a class as well. I was hoping to try Pilates."],
+    ['tom', "I'm afraid the Pilates classes are full until the spring. But there's still space in the {{yoga|9}} classes on Tuesday and Thursday evenings."],
+    ['laura', "Yoga would be fine. I've done a little before."],
+    ['tom', "I'll put you down for that, then. Is there anything else I can help with?"],
+    ['laura', "Yes, just one thing. Can I bring someone with me at weekends? My husband isn't really interested in sport, but my {{brother|10}} visits quite often and he'd love to use the pool."],
+    ['tom', "Yes, every member gets a guest pass for one named person. I'll put your brother's details on that."],
+    ['laura', 'Perfect. Thank you so much.'],
+    ['narrator', 'That is the end of Part 1. You now have half a minute to check your answers to Part 1.'],
+    ['pause', 30, 'Checking time · Part 1'],
+
+    ['focus', 2],
+    ['narrator', 'Now turn to Part 2.'],
+    ['narrator', 'Part 2. You will hear a ranger talking to a group of visitors at Haddon Park nature reserve. First, you have some time to look at questions 11 to 14.'],
+    ['pause', 30, 'Reading time · Questions 11–14'],
+    ['narrator', 'Now listen carefully and answer questions 11 to 14.'],
+    ['claire', "Good morning, everyone, and welcome to Haddon Park. My name's Claire, and I'm one of the rangers here. Before you set off, I'd like to tell you a little about the park and show you where everything is."],
+    ['claire', 'First, some history. A lot of visitors assume that Haddon Park was once a farm, probably because of the old barn by the entrance. There was a small dairy here for a few years, but that came much later. The lake you will see today was dug out as a {{gravel quarry|11}} in the nineteen fifties, and when the quarry closed, it slowly filled with water and wildlife moved in.'],
+    ['claire', "We've made a few changes this year. The visitor centre was refurbished last year, so that isn't new, although it does look very smart now. We had planned to start guided night walks this season, but unfortunately those have had to be postponed until next year. What is new is {{electric bike hire|12}}. You can pick up a bike from the visitor centre and ride along any of the main paths."],
+    ['claire', "Now, a few rules. I can see that many of you have brought dogs, and they're very welcome here. Some of you may have heard that dogs are only allowed on the main path. That was the rule a few years ago, but it has changed. Dogs can now go anywhere in the park, but they must be {{kept on a lead at all times|13}}."],
+    ['claire', "And finally, one special request. There are bins at the café, so you don't need to take your litter home, and although we'd rather you didn't feed bread to the ducks, it isn't forbidden. What we really ask is that between March and June you {{keep to the marked paths|14}}, because that's when ground-nesting birds are raising their young, and they are very easily disturbed."],
+    ['narrator', 'Before you hear the rest of the talk, you have some time to look at questions 15 to 20.'],
+    ['pause', 30, 'Reading time · Questions 15–20'],
+    ['narrator', 'Now listen and answer questions 15 to 20.'],
+    ['claire', "Right. If you look at your maps, you'll see that we are standing at the entrance, at the bottom of the map. The car park is on your left."],
+    ['claire', "Let's start with the gift shop, as it's the closest. As you come through the entrance, it's immediately on your left, {{in between the main path and the car park|15}}."],
+    ['claire', "If you walk straight up the main path, you'll pass the visitor centre on your right. Keep going, and just before you reach the junction with the path that goes off to the east, you'll find the café. It's on the right-hand side, {{on the corner where the two paths meet|16}}."],
+    ['claire', "Now, the lake is on the left of the main path. The picnic area used to be next to the car park, but people complained about the noise from the cars, so we've moved it. It's now on the {{southern shore of the lake|17}}, the side closest to you as you walk up."],
+    ['claire', "If you enjoy birdwatching, you'll want to visit the bird hide. It's on the far side of the lake, on the {{north-west shore|18}}, so it's quite a walk, but it's worth it, because the birds there are hardly ever disturbed."],
+    ['claire', "Families with children should head along the path that goes east from the café. Follow it right to the very end, and you'll find the adventure playground {{on the south side of the path, just where it finishes|19}}."],
+    ['claire', "And lastly, the first aid point. It's on that same east path, {{about halfway along, on the north side|20}}, so on your left as you walk away from the café. There is always someone there until five o'clock."],
+    ['claire', 'Right, I hope you all enjoy your visit.'],
+    ['narrator', 'That is the end of Part 2. You now have half a minute to check your answers to Part 2.'],
+    ['pause', 30, 'Checking time · Part 2'],
+
+    ['focus', 3],
+    ['narrator', 'Now turn to Part 3.'],
+    ['narrator', 'Part 3. You will hear two students, Mia and Jake, talking to their tutor about their research project on food waste in the university canteen. First, you have some time to look at questions 21 to 26.'],
+    ['pause', 30, 'Reading time · Questions 21–26'],
+    ['narrator', 'Now listen carefully and answer questions 21 to 26.'],
+    ['evans', 'Come in, both of you. So, you wanted to talk about your food waste project before the presentation next week?'],
+    ['mia', "Yes, thanks, Dr Evans. We've collected all our data now, but we wanted your advice on a few things."],
+    ['evans', "Of course. Let's start with your questionnaire. How did that go?"],
+    ['jake', 'Mostly well. We were worried we would not get many responses from staff, but in the end almost a third of them filled it in, which was more than we expected.'],
+    ['mia', 'The main problem was that {{some of the questions were confusing|21}}. Question six especially. A lot of people misunderstood what we meant by regularly.'],
+    ['evans', 'That often happens. And how long did it take people to complete?'],
+    ['jake', "We thought it might be too long, but the average was about four minutes, so that wasn't an issue. The other problem was that quite a few people only answered the first page and left the rest blank, so we had {{a lot of incomplete answers|22}}."],
+    ['evans', 'Did you use paper copies or an online version?'],
+    ['mia', 'Paper. We left the questionnaires on the canteen tables.'],
+    ['evans', "Fine, that's worth mentioning in your method section. Now, your waste figures. You weighed the food left on plates for two weeks?"],
+    ['jake', "That's right. We've got the totals for each day."],
+    ['evans', "Good. Some students worry that their sample is too small, but for a project of this size two weeks is perfectly adequate. And I see you've already turned the figures into a graph. What would really strengthen your findings, though, is a comparison. If you could get {{figures from the canteen in the science building|23}}, you'd be able to show whether your results are typical."],
+    ['mia', "OK, we'll ask them."],
+    ['evans', 'So, what do you think is the main cause of the waste?'],
+    ['mia', "I think a lot of students just don't like the food. You see whole meals left untouched."],
+    ['jake', "I'm not sure about that. Most of the plates we weighed were half eaten, not untouched. I think {{the portions are simply too big|24}} for most people. Lectures running late might explain a few plates, but not most of them."],
+    ['evans', 'Interesting. And what are you going to propose?'],
+    ['mia', 'We looked at a few options. Some universities have switched to smaller plates, but students there complained a lot. We also considered charging by weight, but that would be too complicated at the till.'],
+    ['jake', "So we're going to suggest {{offering a choice of portion sizes|25}}, a small and a regular, at different prices."],
+    ['evans', "Sensible. And as for the presentation itself, I've looked at your slides. Your interview section is fine as it is, and you've clearly practised your timing. But your introduction takes up nearly half of the presentation. {{I'd cut that down a lot|26}}."],
+    ['jake', "Right, we'll shorten it."],
+    ['narrator', 'Before you hear the rest of the discussion, you have some time to look at questions 27 to 30.'],
+    ['pause', 30, 'Reading time · Questions 27–30'],
+    ['narrator', 'Now listen and answer questions 27 to 30.'],
+    ['evans', 'You said you had discussed your proposal with a few people. What did they say?'],
+    ['mia', 'Well, we spoke to the canteen manager first. I expected her to say it would be difficult to organise, but she said it would actually be quite straightforward. She just wants to {{try it for a month in one canteen|27}} before making a decision.'],
+    ['evans', 'That seems reasonable. What about the student union?'],
+    ['jake', "They were really positive. They ran a quick poll on social media, and they think {{students will really like having the choice|28}}. Their only comment was about the price of the small portion."],
+    ['evans', 'And the kitchen staff?'],
+    ['mia', "We assumed they'd be worried about longer queues, but they said serving wouldn't take any longer. Their concern was that preparing two sizes would mean {{they'd need another person in the kitchen|29}} at lunchtime."],
+    ['evans', 'And did you get a response from the finance office?'],
+    ['jake', "Yes, by email. They didn't comment on how it would work in practice, but they calculated that cutting waste by even ten per cent would {{save the university a significant amount|30}} each year."],
+    ['evans', "Excellent. That's a really useful point to end your presentation on."],
+    ['narrator', 'That is the end of Part 3. You now have half a minute to check your answers to Part 3.'],
+    ['pause', 30, 'Checking time · Part 3'],
+
+    ['focus', 4],
+    ['narrator', 'Now turn to Part 4.'],
+    ['narrator', 'Part 4. You will hear a lecture about urban beekeeping. First, you have some time to look at questions 31 to 40.'],
+    ['pause', 45, 'Reading time · Questions 31–40'],
+    ['narrator', 'Now listen carefully and answer questions 31 to 40.'],
+    ['lecturer', "Good afternoon. Today I'm going to talk about a trend that has grown rapidly in many cities around the world, and that is urban beekeeping."],
+    ['lecturer', "Let's start with some background. In London, for example, the number of registered beehives has more than doubled in the last {{decade|31}}. Some people keep hives in their back gardens, but a surprising number are placed on the {{roofs|32}} of office buildings, where companies see them as a way of showing their commitment to the environment."],
+    ['lecturer', 'So why do bees do so well in cities? There are several reasons. First, cities are warmer than the surrounding countryside. Because temperatures are higher, plants start flowering earlier in the year and stop later, so the flowering {{season|33}} is longer, and bees have food for more of the year.'],
+    ['lecturer', 'Second, city parks generally use far fewer {{pesticides|34}} than farms do. Modern agriculture relies heavily on chemicals that can harm bees, while many city councils have reduced their use considerably.'],
+    ['lecturer', 'And third, although you might expect cities to offer bees very little, in fact private gardens provide an enormous {{variety|35}} of plants. A farm might grow a single crop over hundreds of hectares, whereas a single city street might contain dozens of different flowering species.'],
+    ['lecturer', 'However, urban beekeeping is not without its problems. The most serious is that in some areas there are now simply too many hives. When this happens, there is intense {{competition|36}} for food, not only between honeybees, but also with wild bees.'],
+    ['lecturer', 'And wild bees are particularly vulnerable. Unlike honeybees, which can fly several kilometres to find flowers, most wild species cannot travel long {{distances|37}}. So if the flowers near their nest are stripped by honeybees, they have nowhere else to go.'],
+    ['lecturer', 'There are also some interesting differences in the honey itself. City honey tends to be {{darker|38}} in colour than honey from the countryside, mainly because city bees feed on the flowers of trees such as lime and sycamore, rather than on field crops.'],
+    ['lecturer', "So, what is being done about the problems I've described? Several city councils have begun planting {{wildflowers|39}} along roadsides and on roundabouts, which provides food for both honeybees and wild bees."],
+    ['lecturer', 'And in some cities, new beekeepers are now required to register their hives and to complete a {{course|40}} before they are allowed to keep bees. This makes sure they understand not only how to look after their own colonies, but also the effect those colonies have on other insects.'],
+    ['lecturer', "To sum up, then, cities can be good places for bees, but only if the number of hives is managed carefully. In the next lecture, we'll look at how researchers measure the health of a bee colony."],
+    ['narrator', 'That is the end of Part 4. That is the end of the listening test.'],
+  ];
+
+  // Questions. kind: gap | mcq | two | match | map
+  const LIMIT_WN = 'ONE WORD AND/OR A NUMBER';
+  const Q = {
+    1:  { kind: 'gap', ans: ['pemberton'], limit: 'wn' },
+    2:  { kind: 'gap', ans: ['46', 'forty-six', 'forty six'], limit: 'wn' },
+    3:  { kind: 'gap', ans: ['wb72rq'], limit: null, nospace: true },
+    4:  { kind: 'gap', ans: ['nurse'], limit: 'wn' },
+    5:  { kind: 'gap', ans: ['evenings', 'evening'], limit: 'wn' },
+    6:  { kind: 'gap', ans: ['newspaper', 'paper'], limit: 'wn' },
+    7:  { kind: 'gap', ans: ['25', 'twenty-five', 'twenty five'], limit: 'wn' },
+    8:  { kind: 'gap', ans: ['32.50', '32.5'], limit: 'wn' },
+    9:  { kind: 'gap', ans: ['yoga'], limit: 'wn' },
+    10: { kind: 'gap', ans: ['brother'], limit: 'wn' },
+    11: { kind: 'mcq', q: 'The lake in Haddon Park was originally', opts: { A: 'part of a dairy farm.', B: 'a gravel quarry.', C: 'a private fishing lake.' }, ans: 'B' },
+    12: { kind: 'mcq', q: 'What is new at the park this year?', opts: { A: 'electric bike hire', B: 'guided night walks', C: 'a refurbished visitor centre' }, ans: 'A' },
+    13: { kind: 'mcq', q: 'What is the rule for dogs in the park?', opts: { A: 'They are allowed on the main path only.', B: 'They must be on a lead everywhere.', C: 'They are not allowed near the lake.' }, ans: 'B' },
+    14: { kind: 'mcq', q: 'Between March and June, visitors are asked to', opts: { A: 'take their litter home.', B: 'avoid feeding the ducks.', C: 'stay on the marked paths.' }, ans: 'C' },
+    15: { kind: 'map', label: 'Gift shop', ans: 'A' },
+    16: { kind: 'map', label: 'Café', ans: 'H' },
+    17: { kind: 'map', label: 'Picnic area', ans: 'B' },
+    18: { kind: 'map', label: 'Bird hide', ans: 'C' },
+    19: { kind: 'map', label: 'Adventure playground', ans: 'G' },
+    20: { kind: 'map', label: 'First aid point', ans: 'F' },
+    21: { kind: 'two', pair: [21, 22], ans: ['B', 'E'] },
+    22: { kind: 'two', pair: [21, 22], ans: ['B', 'E'] },
+    23: { kind: 'mcq', q: 'What does the tutor suggest the students do with their food waste data?', opts: { A: 'present it as a graph', B: 'collect data for a longer period', C: 'compare it with data from another canteen' }, ans: 'C' },
+    24: { kind: 'mcq', q: 'Jake believes the main reason for food waste is that', opts: { A: 'portions are too large.', B: 'students dislike the food.', C: 'students leave when lectures run late.' }, ans: 'A' },
+    25: { kind: 'mcq', q: 'What will the students propose?', opts: { A: 'using smaller plates', B: 'charging customers by weight', C: 'offering different portion sizes' }, ans: 'C' },
+    26: { kind: 'mcq', q: 'The tutor advises the students to', opts: { A: 'shorten their introduction.', B: 'add more interview data.', C: 'practise the timing of their talk.' }, ans: 'A' },
+    27: { kind: 'match', label: 'the canteen manager', ans: 'D' },
+    28: { kind: 'match', label: 'the student union', ans: 'E' },
+    29: { kind: 'match', label: 'the kitchen staff', ans: 'F' },
+    30: { kind: 'match', label: 'the finance office', ans: 'A' },
+    31: { kind: 'gap', ans: ['decade'], limit: 'w' },
+    32: { kind: 'gap', ans: ['roofs', 'rooftops', 'roof'], limit: 'w' },
+    33: { kind: 'gap', ans: ['season'], limit: 'w' },
+    34: { kind: 'gap', ans: ['pesticides', 'pesticide'], limit: 'w' },
+    35: { kind: 'gap', ans: ['variety'], limit: 'w' },
+    36: { kind: 'gap', ans: ['competition'], limit: 'w' },
+    37: { kind: 'gap', ans: ['distances'], limit: 'w' },
+    38: { kind: 'gap', ans: ['darker'], limit: 'w' },
+    39: { kind: 'gap', ans: ['wildflowers', 'wild-flowers'], limit: 'w' },
+    40: { kind: 'gap', ans: ['course'], limit: 'w' },
+  };
+  const TWO_OPTS = { A: 'Too few members of staff responded.', B: 'Some questions were difficult to understand.', C: 'It took people too long to complete.', D: 'The online link did not work.', E: 'Many people did not answer every question.' };
+  const MATCH_OPTS = { A: 'It would save money.', B: 'It would be difficult to organise.', C: 'It would reduce queues.', D: 'It should be tested first.', E: 'It would be popular with students.', F: 'It would require extra staff.' };
+  const MAP_LETTERS = 'ABCDEFGHI'.split('');
+
+  const gap = n => `<span class="gap" data-q="${n}"><span class="n">${n}</span><input type="text" id="q${n}" data-q="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}"></span>`;
+  const mcq = n => { const q = Q[n]; return `<div class="mcq" data-q="${n}" role="radiogroup" aria-labelledby="ql${n}"><div class="q"><span class="qn">${n}</span><span id="ql${n}">${q.q}</span></div>${Object.entries(q.opts).map(([k, v]) => `<label data-opt="${k}"><input type="radio" name="q${n}" value="${k}" data-q="${n}"><b>${k}</b><span>${v}</span></label>`).join('')}</div>`; };
+  const sel = (n, letters) => `<select id="q${n}" data-q="${n}" aria-label="Question ${n}"><option value="">–</option>${letters.map(l => `<option>${l}</option>`).join('')}</select>`;
+
+  const MAP_SVG = `<svg class="map" viewBox="0 0 600 430" role="img" aria-label="Map of Haddon Park with locations labelled A to I">
+    <rect class="wood" x="400" y="30" width="180" height="120" rx="14"/>
+    <text x="490" y="62" text-anchor="middle" class="small">Woodland</text>
+    <ellipse class="lake" cx="150" cy="170" rx="118" ry="72"/>
+    <text x="150" y="176" text-anchor="middle" class="small">Lake</text>
+    <path class="path" d="M300 410 L300 40"/>
+    <path class="path" d="M300 230 L565 230"/>
+    <rect class="bldg" x="30" y="325" width="150" height="70" rx="3"/>
+    <text x="105" y="365" text-anchor="middle" class="small">Car park</text>
+    <rect class="bldg" x="322" y="318" width="96" height="52" rx="3"/>
+    <text x="370" y="341" text-anchor="middle" class="small">Visitor</text>
+    <text x="370" y="356" text-anchor="middle" class="small">centre</text>
+    <text x="300" y="426" text-anchor="middle" class="small">▲ ENTRANCE (you are here)</text>
+    <text x="318" y="52" class="small" opacity=".7">main path</text>
+    <text x="470" y="250" class="small" opacity=".7">east path</text>
+    <g transform="translate(560,40)"><text x="0" y="0" text-anchor="middle" class="small">N</text><path d="M0 6 L0 26" stroke="currentColor" stroke-width="2" style="stroke:var(--ink)"/></g>
+    ${[['A',240,365],['B',150,262],['C',48,112],['D',250,62],['E',345,190],['F',440,198],['G',545,268],['H',345,272],['I',520,370]].map(([l,x,y]) => `<g class="letter"><circle cx="${x}" cy="${y}" r="14"/><text x="${x}" y="${y + 5}" text-anchor="middle">${l}</text></g>`).join('')}
+  </svg>`;
+
+  const PAPER = `
+  <section class="part" id="part-1" data-part="1">
+    <div class="part-head"><h2>Part 1</h2><span class="label">Questions 1–10</span></div>
+    <div class="qblock">
+      <h3>Questions 1–10</h3>
+      <p class="instr">Complete the form below. Write <b>${LIMIT_WN}</b> for each answer.</p>
+      <div class="form">
+        <h4>Greenfield Sports Club · Membership application</h4>
+        <div class="line"><span>Type of membership:</span><span class="example">Example: <u>individual</u></span></div>
+        <div class="line"><span>Name:</span><span>Laura ${gap(1)}</span></div>
+        <div class="line"><span>Address:</span><span>${gap(2)} Marsh Road, Westbury</span></div>
+        <div class="line"><span>Postcode:</span><span>${gap(3)}</span></div>
+        <div class="line"><span>Occupation:</span><span>${gap(4)}</span></div>
+        <div class="line"><span>Usually visits:</span><span>weekday ${gap(5)}</span></div>
+        <div class="line"><span>Heard about the club from:</span><span>an advert in the ${gap(6)}</span></div>
+        <div class="sub">Fees</div>
+        <div class="line"><span>Joining fee:</span><span>£ ${gap(7)} (special offer)</span></div>
+        <div class="line"><span>Monthly payment:</span><span>£ ${gap(8)} (with discount)</span></div>
+        <div class="sub">Facilities and classes</div>
+        <div class="line"><span>Main interest:</span><span>swimming pool</span></div>
+        <div class="line"><span>Class:</span><span>${gap(9)} (Tuesday and Thursday)</span></div>
+        <div class="line"><span>Guest pass for her:</span><span>${gap(10)}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="part-2" data-part="2" hidden>
+    <div class="part-head"><h2>Part 2</h2><span class="label">Questions 11–20</span></div>
+    <div class="qblock">
+      <h3>Questions 11–14</h3>
+      <p class="instr">Choose the correct letter, <b>A, B or C</b>.</p>
+      ${[11, 12, 13, 14].map(mcq).join('')}
+    </div>
+    <div class="qblock">
+      <h3>Questions 15–20</h3>
+      <p class="instr">Label the map below. Write the correct letter, <b>A–I</b>, next to Questions 15–20.</p>
+      <div class="mapwrap">
+        ${MAP_SVG}
+        <div class="maptable">
+          <span class="label">Haddon Park</span>
+          ${[15, 16, 17, 18, 19, 20].map(n => `<div class="match-row" data-q="${n}"><span class="qn">${n}</span><span class="who">${Q[n].label}</span>${sel(n, MAP_LETTERS)}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="part-3" data-part="3" hidden>
+    <div class="part-head"><h2>Part 3</h2><span class="label">Questions 21–30</span></div>
+    <div class="qblock">
+      <h3>Questions 21 and 22</h3>
+      <p class="instr">Choose <b>TWO</b> letters, <b>A–E</b>.</p>
+      <div class="mcq" data-q="21" data-two="1">
+        <div class="q"><span class="qn">21–22</span><span>Which <b>TWO</b> problems did the students have with their questionnaire?</span></div>
+        ${Object.entries(TWO_OPTS).map(([k, v]) => `<label data-opt="${k}"><input type="checkbox" value="${k}" data-two="1"><b>${k}</b><span>${v}</span></label>`).join('')}
+      </div>
+    </div>
+    <div class="qblock">
+      <h3>Questions 23–26</h3>
+      <p class="instr">Choose the correct letter, <b>A, B or C</b>.</p>
+      ${[23, 24, 25, 26].map(mcq).join('')}
+    </div>
+    <div class="qblock">
+      <h3>Questions 27–30</h3>
+      <p class="instr">What opinion did each of the following give about the students’ proposal? Choose <b>FOUR</b> answers from the box and write the correct letter, <b>A–F</b>, next to Questions 27–30.</p>
+      <div class="boxlist"><span class="label" style="grid-column:1/-1">Opinions</span>${Object.entries(MATCH_OPTS).map(([k, v]) => `<b>${k}</b><span>${v}</span>`).join('')}</div>
+      ${[27, 28, 29, 30].map(n => `<div class="match-row" data-q="${n}"><span class="qn">${n}</span><span class="who">${Q[n].label}</span>${sel(n, Object.keys(MATCH_OPTS))}</div>`).join('')}
+    </div>
+  </section>
+
+  <section class="part" id="part-4" data-part="4" hidden>
+    <div class="part-head"><h2>Part 4</h2><span class="label">Questions 31–40</span></div>
+    <div class="qblock">
+      <h3>Questions 31–40</h3>
+      <p class="instr">Complete the notes below. Write <b>ONE WORD ONLY</b> for each answer.</p>
+      <div class="notes">
+        <h4>Urban beekeeping</h4>
+        <span class="h">Background</span>
+        <ul>
+          <li>In London, the number of registered hives has more than doubled in the last ${gap(31)}.</li>
+          <li>Many hives are kept on the ${gap(32)} of office buildings.</li>
+        </ul>
+        <span class="h">Why bees do well in cities</span>
+        <ul>
+          <li>Higher temperatures mean the flowering ${gap(33)} lasts longer.</li>
+          <li>City parks use fewer ${gap(34)} than farms.</li>
+          <li>Private gardens offer a great ${gap(35)} of plants.</li>
+        </ul>
+        <span class="h">Problems</span>
+        <ul>
+          <li>Too many hives cause ${gap(36)} for food.</li>
+          <li>Most wild bees cannot fly long ${gap(37)}.</li>
+          <li>City honey is usually ${gap(38)} than countryside honey.</li>
+        </ul>
+        <span class="h">Solutions</span>
+        <ul>
+          <li>Councils are planting ${gap(39)} on roadsides and roundabouts.</li>
+          <li>New beekeepers may have to register hives and complete a ${gap(40)}.</li>
+        </ul>
+      </div>
+    </div>
+  </section>`;
+
+  // ================= STATE =================
+  const answers = {};
+  let submitted = false, running = false, livePart = 1, viewPart = 1;
+  const $ = id => document.getElementById(id);
+  const paper = $('paper');
+  paper.innerHTML = PAPER;
+
+  // ================= VOICES =================
+  const synth = window.speechSynthesis;
+  const FEMALE = /female|woman|zira|hazel|susan|libby|sonia|maisie|mia|abbi|bella|hollie|olivia|natasha|annette|carly|elsie|freya|joanne|kim|tina|karen|catherine|samantha|serena|kate|moira|tessa|fiona|victoria|allison|ava|aria|jenny|michelle|emma|amy|nicole|joanna|salli|kimberly|ivy|ruth|clara|sara|libby|google uk english female/i;
+  const MALE = /\bmale\b|daniel|george|ryan|thomas|arthur|oliver|alfie|elliot|ethan|noah|william|james|darren|duncan|ken|neil|tim|lee|gordon|david|mark|guy|christopher|eric|roger|steffan|brian|russell|matthew|joey|justin|fred|alex|aaron|google uk english male/i;
+  const genderOf = v => (MALE.test(v.name) && !/female/i.test(v.name)) ? 'm' : FEMALE.test(v.name) ? 'f' : '?';
+  const quality = v => /natural|neural|online|premium|enhanced/i.test(v.name) ? 2 : /google/i.test(v.name) ? 1 : 0;
+  let cast = {};
+  function loadVoices() {
+    return new Promise(resolve => {
+      if (!synth) return resolve([]);
+      let vs = synth.getVoices();
+      if (vs.length) return resolve(vs);
+      const t = setTimeout(() => resolve(synth.getVoices()), 1500);
+      synth.addEventListener('voiceschanged', () => { clearTimeout(t); resolve(synth.getVoices()); }, { once: true });
+    });
+  }
+  function castVoices(all) {
+    const en = all.filter(v => /^en[-_]/i.test(v.lang) || /^en$/i.test(v.lang));
+    const used = new Map();
+    cast = {};
+    // assign roles that share a conversation so partners differ
+    const order = ['narrator', 'tom', 'laura', 'claire', 'evans', 'mia', 'jake', 'lecturer'];
+    const partners = { tom: ['laura'], laura: ['tom'], evans: ['mia', 'jake'], mia: ['evans', 'jake'], jake: ['evans', 'mia'], claire: [], lecturer: [], narrator: [] };
+    for (const role of order) {
+      const want = ROLES[role];
+      let best = null, bestScore = -1e9;
+      for (const v of en) {
+        const lang = v.lang.replace('_', '-');
+        let s = 0;
+        if (lang.toLowerCase() === want.lang.toLowerCase()) s += 4;
+        else if (/en-(gb|au|ie|nz)/i.test(lang)) s += 2;
+        else if (/en-us/i.test(lang)) s += 1;
+        const g = genderOf(v);
+        s += g === want.gender ? 3 : g === '?' ? 0 : -4;
+        s += quality(v);
+        if ((partners[role] || []).some(p => cast[p] && cast[p].voice === v)) s -= 8;
+        s -= (used.get(v) || 0) * 1.5;
+        if (s > bestScore) { bestScore = s; best = v; }
+      }
+      const clash = (partners[role] || []).some(p => cast[p] && cast[p].voice === best);
+      cast[role] = { voice: best, pitch: clash ? (want.gender === 'f' ? 1.25 : 0.8) : 1, rate: role === 'narrator' ? 0.95 : 0.98 };
+      if (best) used.set(best, (used.get(best) || 0) + 1);
+    }
+    const names = Object.entries(cast).filter(([r]) => r !== 'narrator').map(([r, c]) => `${ROLES[r].label}: ${c.voice ? c.voice.name.replace(/Microsoft |Online |\(Natural\)| - English.*$/g, '').trim() : 'default'}`);
+    $('voice-info').textContent = en.length ? `${en.length} English voices found. Cast: ${names.join(' · ')}.` : 'No English voices found. The browser default voice will be used.';
+  }
+
+  const stripMarks = s => s.replace(/\{\{(.+?)\|\d+\}\}/g, '$1');
+  function chunks(text) {
+    // keep utterances short; long ones get cut off in some browsers
+    const parts = text.match(/[^.!?]+[.!?]*\s*/g) || [text];
+    const out = [];
+    for (const p of parts) { const s = p.trim(); if (!s) continue; if (out.length && (out[out.length - 1] + ' ' + s).length < 160) out[out.length - 1] += ' ' + s; else out.push(s); }
+    return out;
+  }
+  function sayOne(text, role) {
+    return new Promise(resolve => {
+      if (!synth) return setTimeout(resolve, 400);
+      const u = new SpeechSynthesisUtterance(text);
+      const c = cast[role] || {};
+      if (c.voice) { u.voice = c.voice; u.lang = c.voice.lang; } else u.lang = ROLES[role].lang;
+      u.pitch = c.pitch || 1; u.rate = c.rate || 1;
+      let done = false;
+      const finish = () => { if (!done) { done = true; clearTimeout(guard); resolve(); } };
+      const guard = setTimeout(finish, 4000 + text.split(/\s+/).length * 650);
+      u.onend = finish; u.onerror = finish;
+      synth.speak(u);
+    });
+  }
+  async function say(role, text) {
+    for (const c of chunks(stripMarks(text))) {
+      if (!running) return;
+      await sayOne(c, role);
+      if (!running) return;
+      await wait(120);
+    }
+  }
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  // ================= CLOCK =================
+  let examStart = 0, clockTimer = null, reviewEnd = 0, pauseEnd = 0;
+  const fmt = s => `${Math.floor(s / 60)}:${String(Math.max(0, s) % 60).padStart(2, '0')}`;
+  function tickClock() {
+    const now = Date.now();
+    if (reviewEnd) {
+      const left = Math.ceil((reviewEnd - now) / 1000);
+      $('clock').textContent = fmt(Math.max(0, left));
+      if (left <= 0) submit(true);
+      return;
+    }
+    const elapsed = Math.floor((now - examStart) / 1000);
+    $('clock').textContent = fmt(Math.max(0, 30 * 60 - elapsed));
+    if (pauseEnd) {
+      const p = Math.ceil((pauseEnd - now) / 1000);
+      const lbl = $('status').dataset.base || '';
+      $('status').textContent = `${lbl} · ${p}s`;
+    }
+  }
+  function setStatus(text, mode) {
+    $('status').textContent = text; $('status').dataset.base = text;
+    $('dot').className = 'dot' + (mode === 'on' ? ' on' : mode === 'pause' ? ' pause' : '');
+  }
+
+  // ================= RUN =================
+  async function run() {
+    running = true;
+    examStart = Date.now();
+    clockTimer = setInterval(tickClock, 250);
+    for (const line of SCRIPT) {
+      if (!running) return;
+      if (line[0] === 'focus') { livePart = line[1]; showPart(line[1]); renderNav(); continue; }
+      if (line[0] === 'pause') {
+        setStatus(line[2], 'pause');
+        pauseEnd = Date.now() + line[1] * 1000;
+        while (running && Date.now() < pauseEnd) await wait(200);
+        pauseEnd = 0;
+        continue;
+      }
+      setStatus(`Recording playing · Part ${livePart}`, 'on');
+      await say(line[0], line[1]);
+    }
+    if (!running) return;
+    setStatus('Recording finished · check your answers', 'pause');
+    reviewEnd = Date.now() + 2 * 60 * 1000;
+  }
+
+  function showPart(p) {
+    viewPart = p;
+    document.querySelectorAll('.part').forEach(s => s.hidden = Number(s.dataset.part) !== p);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ================= ANSWERS =================
+  paper.addEventListener('input', e => {
+    const t = e.target;
+    if (submitted) return;
+    if (t.dataset.two) {
+      const boxes = [...paper.querySelectorAll('input[data-two]')];
+      const on = boxes.filter(b => b.checked);
+      if (on.length > 2) { t.checked = false; }
+      const picked = boxes.filter(b => b.checked).map(b => b.value);
+      answers[21] = picked[0] || ''; answers[22] = picked[1] || '';
+    } else if (t.dataset.q) {
+      answers[t.dataset.q] = t.value;
+    }
+    renderNav();
+  });
+  paper.addEventListener('change', e => { const t = e.target; if (!submitted && t.dataset.q && t.type !== 'checkbox') { answers[t.dataset.q] = t.value; renderNav(); } });
+
+  const normAns = s => String(s || '').toLowerCase().replace(/[£$€]/g, '').replace(/[’']/g, "'").replace(/[^a-z0-9.\-' ]+/g, ' ').replace(/\.$/, '').replace(/\s+/g, ' ').trim();
+  function withinLimit(raw, limit) {
+    const toks = normAns(raw).split(' ').filter(Boolean);
+    if (!limit) return true;
+    if (limit === 'w') return toks.length === 1;
+    const nums = toks.filter(t => /\d/.test(t)).length, words = toks.length - nums;
+    return words <= 1 && nums <= 1;
+  }
+  function mark(n) {
+    const q = Q[n], given = answers[n] || '';
+    if (q.kind === 'gap') {
+      if (!normAns(given)) return false;
+      if (!withinLimit(given, q.limit)) return false;
+      const g = q.nospace ? normAns(given).replace(/\s/g, '') : normAns(given);
+      return q.ans.some(a => (q.nospace ? a.replace(/\s/g, '') : a) === g);
+    }
+    if (q.kind === 'two') {
+      const picked = [answers[21], answers[22]].filter(Boolean);
+      const right = picked.filter(p => q.ans.includes(p));
+      // one mark per correct letter, given to 21 then 22
+      return n === 21 ? right.length >= 1 : right.length >= 2;
+    }
+    return given === q.ans;
+  }
+  const keyText = n => { const q = Q[n]; if (q.kind === 'gap') return n === 3 ? 'WB7 2RQ' : n === 8 ? '32.50' : q.ans[0]; if (q.kind === 'two') return 'B, E (either order)'; return q.ans; };
+
+  // ================= NAV =================
+  function answered(n) { return String(answers[n] || '').trim() !== ''; }
+  function renderNav() {
+    const parts = [[1, 10], [11, 20], [21, 30], [31, 40]];
+    $('nav-parts').innerHTML = parts.map(([a, b], i) => {
+      const nums = Array.from({ length: b - a + 1 }, (_, k) => a + k);
+      const tally = submitted ? `${nums.filter(mark).length}✓` : `${nums.filter(answered).length}/10`;
+      return `<div class="nav-part ${livePart === i + 1 && running ? 'live' : ''}"><span>Part ${i + 1}</span><button type="button" class="cnt" data-go="${a}">P${i + 1} ${tally}</button>${nums.map(n => {
+        const cls = submitted ? (mark(n) ? 'ok' : 'no') : answered(n) ? 'done' : '';
+        return `<button type="button" class="qb ${cls}" data-go="${n}" aria-label="Question ${n}">${n}</button>`;
+      }).join('')}</div>`;
+    }).join('');
+  }
+  $('nav-parts').addEventListener('click', e => {
+    const b = e.target.closest('[data-go]'); if (!b) return;
+    const n = +b.dataset.go, p = Math.ceil(n / 10);
+    showPart(p);
+    setTimeout(() => {
+      const el = paper.querySelector(`[data-q="${n}"]`) || paper.querySelector(`[data-q="21"]`);
+      if (el) { el.scrollIntoView({ block: 'center' }); const f = el.querySelector('input,select') || (el.matches('input,select') ? el : null); if (f) f.focus({ preventScroll: true }); }
+    }, 50);
+  });
+
+  // ================= SUBMIT =================
+  let submitArmed = false;
+  $('submit').addEventListener('click', () => {
+    if (submitted) return;
+    if (running && !reviewEnd && !submitArmed) {
+      submitArmed = true; $('submit').textContent = 'Recording still playing · click again to submit';
+      setTimeout(() => { submitArmed = false; if (!submitted) $('submit').textContent = 'Submit answers'; }, 4000);
+      return;
+    }
+    submit(false);
+  });
+
+  const BAND = s => s >= 39 ? 9 : s >= 37 ? 8.5 : s >= 35 ? 8 : s >= 32 ? 7.5 : s >= 30 ? 7 : s >= 26 ? 6.5 : s >= 23 ? 6 : s >= 18 ? 5.5 : s >= 16 ? 5 : s >= 13 ? 4.5 : s >= 11 ? 4 : s >= 9 ? 3.5 : s >= 7 ? 3 : s >= 5 ? 2.5 : s >= 3 ? 2 : s >= 1 ? 1.5 : 0;
+  const PTE = { 9: 88, 8.5: 81, 8: 75.5, 7.5: 68.5, 7: 61, 6.5: 53.5, 6: 45.5, 5.5: 38.5, 5: 32.5, 4.5: 26, 4: 19, 3.5: 12.5, 3: 8.5, 2.5: 6.5, 2: 4.5, 1.5: 2.5, 1: 1, 0: 0 };
+  const fmtBand = b => Number.isInteger(b) ? b.toFixed(1) : String(b);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  function submit(auto) {
+    if (submitted) return;
+    submitted = true; running = false;
+    if (synth) synth.cancel();
+    clearInterval(clockTimer);
+    setStatus(auto ? 'Time is up · answers submitted' : 'Answers submitted', '');
+    $('clock').textContent = '0:00';
+    paper.querySelectorAll('input,select').forEach(el => el.disabled = true);
+
+    let score = 0;
+    for (let n = 1; n <= 40; n++) if (mark(n)) score++;
+    const band = BAND(score);
+
+    // decorate paper
+    for (let n = 1; n <= 40; n++) {
+      const ok = mark(n), q = Q[n];
+      if (q.kind === 'gap') {
+        const g = paper.querySelector(`.gap[data-q="${n}"]`);
+        g.classList.add(ok ? 'correct' : 'wrong');
+        if (!ok) g.insertAdjacentHTML('beforeend', `<span class="fix">${esc(keyText(n))}</span>`);
+      } else if (q.kind === 'mcq') {
+        const m = paper.querySelector(`.mcq[data-q="${n}"]`);
+        m.classList.add(ok ? 'correct' : 'wrong');
+        m.querySelector(`label[data-opt="${q.ans}"]`).classList.add('key');
+      } else if (q.kind === 'map' || q.kind === 'match') {
+        const r = paper.querySelector(`.match-row[data-q="${n}"]`);
+        r.classList.add(ok ? 'correct' : 'wrong');
+        if (!ok) r.insertAdjacentHTML('beforeend', `<span class="fix">${q.ans}</span>`);
+      }
+    }
+    const two = paper.querySelector('.mcq[data-two]');
+    two.classList.add(mark(21) && mark(22) ? 'correct' : 'wrong');
+    ['B', 'E'].forEach(k => two.querySelector(`label[data-opt="${k}"]`).classList.add('key'));
+    renderNav();
+
+    // save to the trainer's report form (same browser)
+    try {
+      const KEY = 'ielts-band-trainer-v1';
+      const st = JSON.parse(localStorage.getItem(KEY) || '{}') || {};
+      st.listeningTest2 = { correct: score, band, recordedAt: new Date().toISOString() };
+      localStorage.setItem(KEY, JSON.stringify(st));
+    } catch (e) {}
+
+    const rows = Array.from({ length: 40 }, (_, i) => i + 1).map(n => {
+      const ok = mark(n);
+      const given = Q[n].kind === 'two' ? (answers[n] || '') : (answers[n] || '');
+      return `<tr><td class="n">${n}</td><td>${given ? esc(given) : '<span class="muted">blank</span>'}</td><td>${esc(keyText(n))}</td><td class="${ok ? 'ok' : 'no'}">${ok ? '✓' : '✗'}</td></tr>`;
+    }).join('');
+
+    const partNames = { 1: 'Part 1 · Joining a sports club', 2: 'Part 2 · Haddon Park tour', 3: 'Part 3 · Food waste project', 4: 'Part 4 · Urban beekeeping' };
+    const tx = { 1: [], 2: [], 3: [], 4: [] };
+    let p = 1;
+    for (const line of SCRIPT) {
+      if (line[0] === 'focus') { p = line[1]; continue; }
+      if (line[0] === 'pause') continue;
+      const html = esc(line[1]).replace(/\{\{(.+?)\|(\d+)\}\}/g, '<mark>$1<sup>$2</sup></mark>');
+      tx[p].push(line[0] === 'narrator' ? `<p class="ann">${html}</p>` : `<p><span class="sp">${ROLES[line[0]].label}:</span> ${html}</p>`);
+    }
+
+    const r = $('result');
+    r.hidden = false;
+    r.innerHTML = `
+      <span class="label">Result</span>
+      <div class="scorebox">
+        <div class="band-box">${fmtBand(band)}</div>
+        <div><h2>${score} / 40 correct</h2><p class="muted">IELTS Listening band ${fmtBand(band)} · PTE equivalent ≈ ${PTE[band]}</p></div>
+      </div>
+      <p class="muted">Your band has been added to the Test Report Form on the trainer page. Correct answers are shown in green on the question paper above each part.</p>
+      <div class="row"><a class="btn" href="./#full-exam">Back to trainer</a><button class="btn ghost" type="button" id="again">Take the test again</button></div>
+      <h3>Answer key</h3>
+      <div class="tbl-wrap"><table class="rev"><thead><tr><th>Q</th><th>Your answer</th><th>Correct answer</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+      <h3>Transcript</h3>
+      <p class="muted">Highlighted text shows where each answer was heard. The small number is the question.</p>
+      <div class="transcript">${[1, 2, 3, 4].map(k => `<details ${k === 1 ? 'open' : ''}><summary>${partNames[k]}</summary>${tx[k].join('')}</details>`).join('')}</div>`;
+    $('again').addEventListener('click', () => location.reload());
+    // show all parts for review
+    document.querySelectorAll('.part').forEach(s => s.hidden = false);
+    r.scrollIntoView({ behavior: 'smooth' });
+    $('submit').disabled = true; $('submit').textContent = `Score: ${score}/40 · Band ${fmtBand(band)}`;
+  }
+
+  // ================= START =================
+  loadVoices().then(vs => { castVoices(vs); });
+  if (!synth) { $('no-tts').hidden = false; $('start').disabled = true; $('sound-check').disabled = true; }
+  $('sound-check').addEventListener('click', async () => {
+    if (!synth) return;
+    synth.cancel(); running = true;
+    await say('narrator', 'This is a sound check. You should be able to hear this voice clearly. Adjust your volume now.');
+    await say('laura', 'And this is one of the speakers you will hear in the test.');
+    running = false;
+  });
+  $('start').addEventListener('click', async () => {
+    if (!Object.keys(cast).length) castVoices(await loadVoices());
+    synth && synth.cancel();
+    $('intro').hidden = true; paper.hidden = false; $('nav').hidden = false;
+    renderNav();
+    run();
+  });
+  window.addEventListener('beforeunload', e => { if (running && !submitted) { e.preventDefault(); e.returnValue = ''; } });
+  renderNav();
+})();
+</script>
+</body>
+</html>
