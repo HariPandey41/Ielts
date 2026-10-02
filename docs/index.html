@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="assets/official-listening-tests.css">
+<link rel="stylesheet" href="assets/one-question-test.css">
 <style>
 /* Layout: a Test Report Form strip of band boxes on top, then one module sheet at a time below it. */
 :root {
@@ -165,6 +166,7 @@ footer a { color: inherit; }
 
   <nav class="tabs" role="tablist" aria-label="Modules">
     <button role="tab" id="tab-listening" aria-selected="true" data-tab="listening">Listening</button>
+    <button role="tab" id="tab-one-test" aria-selected="false" data-tab="one-test">One-write test</button>
     <button role="tab" id="tab-exam" aria-selected="false" data-tab="exam">Official listening tests</button>
     <button role="tab" id="tab-reading" aria-selected="false" data-tab="reading">Reading</button>
     <button role="tab" id="tab-writing" aria-selected="false" data-tab="writing">Writing</button>
@@ -189,6 +191,15 @@ footer a { color: inherit; }
       <span class="note" id="l-voice-note"></span>
     </div>
     <ol class="items" id="l-items"></ol>
+  </section>
+
+  <!-- ONE-WRITE LISTENING PROTOTYPE -->
+  <section class="sheet" id="panel-one-test" role="tabpanel" hidden>
+    <div class="sheet-head">
+      <h2>Listening · one-write test</h2>
+      <span class="trf-meta">Self-contained audio · one answer · automatic marking</span>
+    </div>
+    <div class="one-question-test" id="one-question-test"></div>
   </section>
 
   <!-- FULL LISTENING TEST -->
@@ -291,11 +302,12 @@ footer a { color: inherit; }
 </div>
 
 <script src="assets/official-listening-tests.js?v=20261002-6"></script>
+<script src="assets/one-question-test.js?v=20261002-1"></script>
 <script>
 (() => {
   // ---------- storage ----------
   const KEY = 'ielts-band-trainer-v1';
-  let state = { listening: {}, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null };
+  let state = { listening: {}, oneQuestion: { answer: '', played: false, submitted: false }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null };
   try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s) state = Object.assign(state, s); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
 
@@ -707,6 +719,12 @@ footer a { color: inherit; }
   }
 
   let officialListeningLibrary = null;
+  let oneQuestionTest = null;
+  function renderOneQuestionTest() {
+    if (!window.createOneQuestionTest) return;
+    if (!oneQuestionTest) oneQuestionTest = window.createOneQuestionTest({ root: document.getElementById('one-question-test'), getState: () => state, save });
+    oneQuestionTest.render();
+  }
   function renderOfficialListeningLibrary() {
     if (!window.createOfficialListeningLibrary) return;
     if (!officialListeningLibrary) officialListeningLibrary = window.createOfficialListeningLibrary({
@@ -722,12 +740,12 @@ footer a { color: inherit; }
 
   document.getElementById('reset-all').addEventListener('click', e => {
     const b = e.target;
-    if (b.dataset.armed) { state = { listening: {}, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null }; save(); renderAll(); b.textContent = 'Clear my scores'; delete b.dataset.armed; return; }
+    if (b.dataset.armed) { state = { listening: {}, oneQuestion: { answer: '', played: false, submitted: false }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null }; save(); renderAll(); b.textContent = 'Clear my scores'; delete b.dataset.armed; return; }
     b.dataset.armed = '1'; b.textContent = 'Click again to clear';
     setTimeout(() => { if (b.dataset.armed) { delete b.dataset.armed; b.textContent = 'Clear my scores'; } }, 3000);
   });
 
-  function renderAll() { renderListening(); renderOfficialListeningLibrary(); renderReading(); renderWriting(); renderCue(); renderTRF(); }
+  function renderAll() { renderListening(); renderOneQuestionTest(); renderOfficialListeningLibrary(); renderReading(); renderWriting(); renderCue(); renderTRF(); }
   renderAll();
 })();
 </script>
