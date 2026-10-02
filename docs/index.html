@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Band Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a Test Report Form strip of band boxes on top, then one module sheet at a time below it. */
+:root {
+  --paper: #f2f5f3;
+  --sheet: #ffffff;
+  --ink: #1b2430;
+  --pencil: #5b6672;
+  --rule: #ccd5d2;
+  --omr: #c2334d;        /* answer-sheet red */
+  --omr-soft: #f7e1e5;
+  --ok: #2b7a4b;
+  --ok-soft: #dff0e5;
+  --bad: #b23a2a;
+  --bad-soft: #f6e0dc;
+  --warn: #9a6512;
+  --f-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+    --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --bad-soft: #3b201b; --warn: #e3b25c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+  --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --bad-soft: #3b201b; --warn: #e3b25c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; }
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 28px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 1.35rem; font-weight: 700; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; }
+.label { font-family: var(--f-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil); }
+.muted { color: var(--pencil); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+header.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px 24px; }
+header.top .lede { max-width: 60ch; color: var(--pencil); }
+
+/* Test Report Form strip */
+.trf { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 4px; }
+.trf-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 10px 14px; border-bottom: 1.5px solid var(--ink); }
+.trf-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.trf-cell { padding: 12px 14px 14px; border-right: 1px solid var(--rule); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.trf-cell:last-child { border-right: 0; background: var(--omr-soft); }
+.band-box { font-family: var(--f-mono); font-weight: 600; font-size: 1.9rem; line-height: 1; border: 1.5px solid var(--omr); color: var(--omr); width: 3.6rem; height: 3rem; display: grid; place-items: center; border-radius: 3px; background: var(--sheet); }
+.band-box.empty { color: var(--rule); border-color: var(--rule); }
+.trf-meta { font-family: var(--f-mono); font-size: 0.74rem; color: var(--pencil); }
+@media (max-width: 720px) {
+  .trf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trf-cell { border-bottom: 1px solid var(--rule); }
+  .trf-cell:nth-child(2n) { border-right: 0; }
+  .trf-cell:last-child { grid-column: 1 / -1; border-bottom: 0; }
+}
+
+/* tabs */
+nav.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1.5px solid var(--ink); }
+nav.tabs button { font-family: var(--f-display); font-weight: 700; font-size: 0.95rem; background: transparent; color: var(--pencil); border: 1.5px solid transparent; border-bottom: 0; padding: 9px 16px; border-radius: 4px 4px 0 0; cursor: pointer; margin-bottom: -1.5px; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); background: var(--sheet); border-color: var(--ink); }
+nav.tabs button:hover { color: var(--ink); }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--omr); outline-offset: 2px; }
+
+section.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 22px; display: flex; flex-direction: column; gap: 20px; }
+.sheet-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; }
+.instr { border-left: 3px solid var(--ink); padding: 4px 0 4px 12px; max-width: 70ch; }
+
+.btn { font-family: var(--f-display); font-weight: 700; font-size: 0.9rem; border: 1.5px solid var(--ink); background: var(--ink); color: var(--sheet); padding: 8px 14px; border-radius: 3px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+input[type="text"], textarea, select { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-bottom: 1.5px solid var(--ink); border-radius: 2px; padding: 7px 10px; width: 100%; }
+textarea { font-family: var(--f-body); line-height: 1.6; resize: vertical; min-height: 260px; }
+
+/* question items */
+ol.items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.item { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: 4px 12px; align-items: start; }
+.qnum { font-family: var(--f-mono); font-weight: 600; border: 1.5px solid var(--omr); color: var(--omr); height: 2rem; display: grid; place-items: center; border-radius: 2px; font-size: 0.9rem; }
+.item.correct .qnum { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.item.wrong .qnum { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+.item .body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.answer-line { display: flex; gap: 8px; flex-wrap: wrap; }
+.answer-line input { flex: 1 1 220px; width: auto; }
+.feedback { font-size: 0.92rem; }
+.feedback .ok { color: var(--ok); font-weight: 600; }
+.feedback .no { color: var(--bad); font-weight: 600; }
+.diff span { padding: 0 2px; border-radius: 2px; }
+.diff .miss { background: var(--bad-soft); color: var(--bad); text-decoration: underline; }
+.diff .hit { color: var(--ok); }
+
+.passage { font-size: 1.02rem; max-width: 68ch; display: flex; flex-direction: column; gap: 10px; }
+.passage-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-family: var(--f-display); font-size: 0.82rem; font-weight: 700; padding: 5px 11px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { border-color: var(--omr); color: var(--omr); background: var(--omr-soft); }
+
+.split { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 760px) { .split { grid-template-columns: minmax(0, 1fr); } }
+
+figure { margin: 0; border: 1px solid var(--rule); background: #fff; border-radius: 3px; padding: 8px; }
+figure img { display: block; width: 100%; height: auto; }
+
+.metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.metric { border: 1px solid var(--rule); border-radius: 3px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.metric .v { font-family: var(--f-mono); font-weight: 600; font-size: 1.15rem; }
+.criteria { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.criteria th, .criteria td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.criteria th { font-family: var(--f-display); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil); }
+.criteria td.b { font-family: var(--f-mono); font-weight: 600; color: var(--omr); white-space: nowrap; }
+.table-wrap { overflow-x: auto; }
+
+.timer { font-family: var(--f-mono); font-size: 3rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.timer.prep { color: var(--warn); }
+.timer.talk { color: var(--omr); }
+.cue { border: 1.5px dashed var(--ink); border-radius: 3px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; max-width: 62ch; }
+.cue ul { margin: 0; padding-left: 1.2em; }
+
+.conv { width: 100%; border-collapse: collapse; font-family: var(--f-mono); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.conv th, .conv td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: right; }
+.conv th:first-child, .conv td:first-child { text-align: left; }
+.conv th { font-family: var(--f-display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil); }
+.conv tr.hl td { background: var(--omr-soft); color: var(--omr); font-weight: 600; }
+
+footer { font-size: 0.88rem; color: var(--pencil); display: flex; flex-direction: column; gap: 6px; max-width: 75ch; }
+footer a { color: inherit; }
+.note { font-size: 0.9rem; color: var(--pencil); }
+@media (prefers-reduced-motion: no-preference) { .item .qnum { transition: background .2s, color .2s; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span class="label">Academic module · practice</span>
+      <h1>IELTS Band Trainer</h1>
+    </div>
+    <p class="lede">Practise Listening, Reading, Writing and Speaking in the browser. Scores use the same raw-score-to-band and band-to-PTE tables as the Python evaluator in this repository.</p>
+  </header>
+
+  <div class="trf" aria-label="Your current band scores">
+    <div class="trf-head">
+      <span class="label">Test Report Form · this browser</span>
+      <button class="btn ghost" id="reset-all" type="button" style="padding:3px 10px;font-size:0.78rem">Clear my scores</button>
+    </div>
+    <div class="trf-grid" id="trf"></div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Modules">
+    <button role="tab" id="tab-listening" aria-selected="true" data-tab="listening">Listening</button>
+    <button role="tab" id="tab-reading" aria-selected="false" data-tab="reading">Reading</button>
+    <button role="tab" id="tab-writing" aria-selected="false" data-tab="writing">Writing</button>
+    <button role="tab" id="tab-speaking" aria-selected="false" data-tab="speaking">Speaking</button>
+    <button role="tab" id="tab-bands" aria-selected="false" data-tab="bands">Band table</button>
+  </nav>
+
+  <!-- LISTENING -->
+  <section class="sheet" id="panel-listening" role="tabpanel">
+    <div class="sheet-head">
+      <h2>Listening · dictation</h2>
+      <span class="trf-meta" id="l-progress"></span>
+    </div>
+    <p class="instr">Press <b>Play</b> to hear a sentence, then type exactly what you heard. Spelling counts; punctuation and capital letters do not. You may play each sentence as often as you like.</p>
+    <div class="row">
+      <label class="label" for="l-rate">Speed</label>
+      <select id="l-rate" style="width:auto">
+        <option value="0.8">Slow</option>
+        <option value="0.95" selected>Exam pace</option>
+        <option value="1.1">Fast</option>
+      </select>
+      <span class="note" id="l-voice-note"></span>
+    </div>
+    <ol class="items" id="l-items"></ol>
+  </section>
+
+  <!-- READING -->
+  <section class="sheet" id="panel-reading" role="tabpanel" hidden>
+    <div class="sheet-head">
+      <h2>Reading · short answers</h2>
+      <span class="trf-meta" id="r-progress"></span>
+    </div>
+    <div class="passage-picker" id="r-picker" aria-label="Choose a passage"></div>
+    <div class="split">
+      <article class="passage" id="r-passage"></article>
+      <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+        <p class="instr">Answer using <b>NO MORE THAN THREE WORDS</b> from the passage.</p>
+        <ol class="items" id="r-items"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="sheet" id="panel-writing" role="tabpanel" hidden>
+    <div class="sheet-head">
+      <h2>Writing</h2>
+      <div class="passage-picker" id="w-picker"></div>
+    </div>
+    <div class="split">
+      <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+        <p class="instr" id="w-prompt"></p>
+        <figure id="w-figure" hidden><img id="w-img" alt=""></figure>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+        <label class="label" for="w-text">Your answer</label>
+        <textarea id="w-text" spellcheck="false" placeholder="Start writing here…"></textarea>
+        <div class="row" style="justify-content:space-between">
+          <span class="trf-meta" id="w-count">0 words</span>
+          <div class="row">
+            <button class="btn ghost" id="w-sample" type="button">Load sample answer</button>
+            <button class="btn" id="w-assess" type="button">Assess</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="w-result" hidden style="display:flex;flex-direction:column;gap:16px"></div>
+    <p class="note">The original project grades essays with GPT. This page has no AI grader, so it estimates each criterion from measurable features of your text: length, task keywords, paragraphing, linking words, vocabulary range and sentence variety. Treat it as a rough guide, not an examiner's score.</p>
+  </section>
+
+  <!-- SPEAKING -->
+  <section class="sheet" id="panel-speaking" role="tabpanel" hidden>
+    <div class="sheet-head">
+      <h2>Speaking · Part 2 long turn</h2>
+      <button class="btn ghost" id="s-next" type="button">New cue card</button>
+    </div>
+    <div class="split">
+      <div class="cue" id="s-card"></div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <span class="label" id="s-phase">Ready</span>
+        <div class="timer" id="s-timer">1:00</div>
+        <div class="row">
+          <button class="btn" id="s-start" type="button">Start 1-minute preparation</button>
+          <button class="btn ghost" id="s-skip" type="button" disabled>Start speaking now</button>
+          <button class="btn ghost" id="s-stop" type="button" disabled>Stop</button>
+        </div>
+        <label class="label" for="s-notes">Preparation notes</label>
+        <textarea id="s-notes" style="min-height:120px" placeholder="Jot down key words while you prepare…"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3>Part 3 follow-up questions</h3>
+      <ol id="s-followups" style="margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:4px"></ol>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <label class="label" for="s-self">Self-assessment band (enter your own or a teacher's estimate)</label>
+      <div class="row">
+        <select id="s-self" style="width:auto"></select>
+        <button class="btn ghost" id="s-save" type="button">Save to report</button>
+      </div>
+    </div>
+    <p class="note">Speaking is scored in the Python project with Azure pronunciation assessment, which needs a microphone and an API key. Browser pages here cannot use the microphone, so record yourself on your phone, listen back, and rate fluency, vocabulary, grammar and pronunciation.</p>
+  </section>
+
+  <!-- BAND TABLE -->
+  <section class="sheet" id="panel-bands" role="tabpanel" hidden>
+    <div class="sheet-head"><h2>Raw score → band → PTE</h2></div>
+    <p class="instr">Listening and Reading are marked out of 40. This is the conversion used by <span class="mono">ielts_bands.py</span> and <span class="mono">pte_evaluation.py</span>. Your projected scores are highlighted.</p>
+    <div class="table-wrap"><table class="conv" id="conv"></table></div>
+  </section>
+
+  <footer>
+    <p>Built from <a href="https://github.com/HariPandey41/Ielts" target="_blank" rel="noopener">HariPandey41/Ielts</a> (IELTS_PracticeAndEvaluation). Your answers and scores are saved only in this browser.</p>
+    <p>Listening and Reading bands are projected to a 40-question test from the questions you have answered so far.</p>
+  </footer>
+</div>
+
+<script>
+(() => {
+  // ---------- storage ----------
+  const KEY = 'ielts-band-trainer-v1';
+  let state = { listening: {}, reading: {}, writing: {}, speaking: null };
+  try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s) state = Object.assign(state, s); } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+  // ---------- band tables (ported from ielts_bands.py / pte_evaluation.py) ----------
+  function band(score) {
+    if (score <= 40 && score >= 39) return 9;
+    if (score <= 38 && score >= 37) return 8.5;
+    if (score <= 36 && score >= 35) return 8.0;
+    if (score <= 34 && score >= 32) return 7.5;
+    if (score <= 31 && score >= 30) return 7.0;
+    if (score <= 29 && score >= 26) return 6.5;
+    if (score <= 25 && score >= 23) return 6.0;
+    if (score <= 22 && score >= 18) return 5.5;
+    if (score <= 17 && score >= 16) return 5.0;
+    if (score <= 15 && score >= 13) return 4.5;
+    if (score <= 12 && score >= 11) return 4.0;
+    if (score <= 10 && score >= 9) return 3.5;
+    if (score <= 8 && score >= 7) return 3.0;
+    if (score <= 6 && score >= 5) return 2.5;
+    if (score <= 4 && score >= 3) return 2.0;
+    if (score <= 2 && score >= 1) return 1.5;
+    if (score <= 1 && score > 0) return 1.0;
+    return 0.0;
+  }
+  const PTE = { 9: 88, 8.5: 81, 8: 75.5, 7.5: 68.5, 7: 61, 6.5: 53.5, 6: 45.5, 5.5: 38.5, 5: 32.5, 4.5: 26, 4: 19, 3.5: 12.5, 3: 8.5, 2.5: 6.5, 2: 4.5, 1.5: 2.5, 1: 1, 0: 0 };
+  const fmtBand = b => (b == null ? '–' : (Number.isInteger(b) ? b.toFixed(1) : String(b)));
+  const roundHalf = x => Math.round(x * 2) / 2;
+  // overall IELTS band: mean of four, rounded to nearest half (x.25 → x.5, x.75 → next whole)
+  const overallBand = arr => roundHalf(arr.reduce((a, b) => a + b, 0) / arr.length);
+
+  // ---------- text helpers ----------
+  const norm = s => s.toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9' ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  const stripArticles = s => norm(s).replace(/\b(a|an|the)\b/g, ' ').replace(/\s+/g, ' ').trim();
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // ---------- projection for 40-question modules ----------
+  function projection(map) {
+    const vals = Object.values(map);
+    if (!vals.length) return null;
+    const correct = vals.filter(v => v === 1).length;
+    const raw40 = Math.round(correct / vals.length * 40);
+    const b = band(raw40);
+    return { correct, attempted: vals.length, raw40, band: b, pte: PTE[b] };
+  }
+
+  // ---------- Test Report Form ----------
+  function renderTRF() {
+    const L = projection(state.listening), R = projection(state.reading);
+    const wVals = Object.values(state.writing);
+    const W = wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
+    const S = state.speaking;
+    const cells = [
+      ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ≈${L.raw40}/40` : 'not started'],
+      ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ≈${R.raw40}/40` : 'not started'],
+      ['Writing', W, wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
+      ['Speaking', S, S != null ? 'self-assessed' : 'not rated'],
+    ];
+    const parts = [L && L.band, R && R.band, W, S];
+    const ov = parts.every(v => v != null) ? overallBand(parts) : null;
+    const pte = ov != null ? (PTE[ov] ?? null) : null;
+    cells.push(['Overall band', ov, ov != null ? `PTE equivalent ≈ ${pte}` : 'complete all four']);
+    document.getElementById('trf').innerHTML = cells.map(([name, b, meta]) => `
+      <div class="trf-cell">
+        <span class="label">${name}</span>
+        <div class="band-box ${b == null ? 'empty' : ''}">${fmtBand(b)}</div>
+        <span class="trf-meta">${meta}</span>
+      </div>`).join('');
+    document.getElementById('l-progress').textContent = L ? `${L.correct} of ${L.attempted} correct · band ${fmtBand(L.band)} · PTE ${L.pte}` : `${LISTEN.length} sentences`;
+    document.getElementById('r-progress').textContent = R ? `${R.correct} of ${R.attempted} correct · band ${fmtBand(R.band)} · PTE ${R.pte}` : `${PASSAGES.reduce((a, p) => a + p.qs.length, 0)} questions`;
+    renderConv(L, R);
+  }
+
+  // ---------- tabs ----------
+  const tabs = [...document.querySelectorAll('nav.tabs button')];
+  function showTab(name) {
+    tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
+    tabs.forEach(t => document.getElementById('panel-' + t.dataset.tab).hidden = t.dataset.tab !== name);
+    try { localStorage.setItem(KEY + '-tab', name); } catch (e) {}
+  }
+  tabs.forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+  const hashTab = location.hash.slice(1);
+  let startTab = 'listening';
+  try { startTab = localStorage.getItem(KEY + '-tab') || startTab; } catch (e) {}
+  if (tabs.some(t => t.dataset.tab === hashTab)) startTab = hashTab;
+  showTab(startTab);
+
+  // ---------- LISTENING ----------
+  const LISTEN = [
+    'Why hello there.',
+    'How are you doing nowadays?',
+    'I am good, how are you?',
+    'I like to travel once or twice a year.',
+    'The library closes at half past six on Fridays.',
+    'Please bring your passport and two photographs.',
+    'The lecture has been moved to the main hall.',
+    'Most students prefer to live near the campus.',
+    'The museum is free for children under twelve.',
+    'Our flight was delayed because of heavy fog.',
+    'You should submit the assignment by next Thursday.',
+    'Rainfall in the region has decreased significantly.',
+  ];
+  const synth = window.speechSynthesis;
+  let voice = null;
+  function pickVoice() {
+    if (!synth) return;
+    const vs = synth.getVoices();
+    voice = vs.find(v => /en[-_]GB/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null;
+    document.getElementById('l-voice-note').textContent = voice ? `Voice: ${voice.name}` : '';
+  }
+  if (synth) { pickVoice(); synth.onvoiceschanged = pickVoice; }
+  else document.getElementById('l-voice-note').textContent = 'Your browser cannot play speech. Use “Show sentence” to practise reading instead.';
+  function speak(text) {
+    if (!synth) return;
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if (voice) u.voice = voice;
+    u.lang = voice ? voice.lang : 'en-GB';
+    u.rate = parseFloat(document.getElementById('l-rate').value);
+    synth.speak(u);
+  }
+  function wordDiff(target, given) {
+    const t = norm(target).split(' '), g = new Set(norm(given).split(' '));
+    return t.map(w => `<span class="${g.has(w) ? 'hit' : 'miss'}">${esc(w)}</span>`).join(' ');
+  }
+  function renderListening() {
+    const ol = document.getElementById('l-items');
+    ol.innerHTML = LISTEN.map((s, i) => {
+      const st = state.listening[i];
+      return `<li class="item ${st === 1 ? 'correct' : st === 0 ? 'wrong' : ''}" data-i="${i}">
+        <span class="qnum">${i + 1}</span>
+        <div class="body">
+          <div class="answer-line">
+            <button class="btn ghost" type="button" data-act="play" ${synth ? '' : 'disabled'}>▶ Play</button>
+            <input type="text" id="l-in-${i}" autocomplete="off" aria-label="Sentence ${i + 1}">
+            <button class="btn" type="button" data-act="check">Check</button>
+          </div>
+          <div class="feedback" id="l-fb-${i}"></div>
+        </div></li>`;
+    }).join('');
+  }
+  document.getElementById('l-items').addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    const li = btn.closest('li'), i = +li.dataset.i, target = LISTEN[i];
+    if (btn.dataset.act === 'play') return speak(target);
+    if (btn.dataset.act === 'reveal') { document.getElementById('l-fb-' + i).innerHTML = `<span class="muted">Sentence:</span> ${esc(target)}`; return; }
+    const given = document.getElementById('l-in-' + i).value;
+    if (!norm(given)) { document.getElementById('l-fb-' + i).innerHTML = '<span class="muted">Type what you heard first.</span>'; return; }
+    const ok = norm(given) === norm(target) ? 1 : 0;
+    state.listening[i] = ok; save();
+    li.classList.toggle('correct', ok === 1); li.classList.toggle('wrong', ok === 0);
+    document.getElementById('l-fb-' + i).innerHTML = ok
+      ? `<span class="ok">Correct.</span> ${esc(target)}`
+      : `<span class="no">Not quite.</span> <span class="diff">${wordDiff(target, given)}</span> <span class="muted">· underlined words were missed or misspelled</span>`;
+    renderTRF();
+  });
+  document.getElementById('l-items').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.matches('input')) e.target.closest('li').querySelector('[data-act="check"]').click();
+  });
+
+  // ---------- READING ----------
+  const PASSAGES = [
+    {
+      title: 'The morning cup',
+      text: [
+        'Coffee arrived in European port cities in the seventeenth century, carried by traders from Yemen and the Ottoman Empire. Within a few decades, coffee houses had opened in Venice, London and Vienna. In London they were nicknamed “penny universities”, because for the price of a single cup a customer could listen to conversations on science, trade and politics.',
+        'Many of these houses became associated with particular professions. Ship owners and merchants gathered at Edward Lloyd’s coffee house to exchange shipping news, and the business that grew from those meetings later became one of the world’s best-known insurance markets.',
+        'Today the drink is grown in more than seventy countries, mostly in a belt between the Tropics of Cancer and Capricorn. Brazil has been the largest producer for over a century, while Finland records the highest consumption per person.',
+      ],
+      qs: [
+        { q: 'Where did traders bring coffee from?', a: ['yemen and the ottoman empire', 'yemen', 'the ottoman empire', 'ottoman empire', 'yemen and ottoman empire'] },
+        { q: 'What nickname were London coffee houses given?', a: ['penny universities'] },
+        { q: 'Whose coffee house did ship owners use?', a: ["edward lloyd's", 'edward lloyd', "lloyd's", 'lloyd'] },
+        { q: 'Which country drinks the most coffee per person?', a: ['finland'] },
+      ],
+    },
+    {
+      title: 'Sleep and memory',
+      text: [
+        'Researchers have long suspected that sleep helps people remember what they learn. In a typical experiment, volunteers study a list of word pairs in the evening and are tested the next morning. Those who sleep normally recall significantly more pairs than those kept awake through the night.',
+        'The benefit appears to depend on a stage called slow-wave sleep, during which the brain replays recent experiences. When scientists play quiet sounds linked to earlier lessons during this stage, recall of those lessons improves further, even though the sleepers do not wake up.',
+        'Short daytime naps can also help, provided they last at least twenty minutes. However, the researchers caution that no technique can replace a regular sleep schedule, which remains the most reliable way to protect memory.',
+      ],
+      qs: [
+        { q: 'What do volunteers study in the evening?', a: ['word pairs', 'a list of word pairs', 'list of word pairs'] },
+        { q: 'Which stage of sleep supports memory?', a: ['slow-wave sleep', 'slow wave sleep', 'slow-wave'] },
+        { q: 'What is played to sleepers to improve recall?', a: ['quiet sounds', 'sounds'] },
+        { q: 'What is the minimum useful length of a nap?', a: ['twenty minutes', '20 minutes', 'at least twenty minutes'] },
+      ],
+    },
+    {
+      title: 'Building with timber',
+      text: [
+        'For most of the twentieth century, tall buildings were made from steel and concrete. Recently, however, architects have begun to design towers using engineered wood known as cross-laminated timber, in which layers of boards are glued together at right angles.',
+        'Supporters argue that the material stores carbon absorbed by trees as they grow, while producing concrete releases large amounts of carbon dioxide. Timber panels are also cut in factories and delivered ready to install, which can reduce construction time by up to a quarter.',
+        'Critics point to the risk of fire, although tests show that thick timber panels form a protective layer of charcoal that slows burning. Building codes in several countries now allow wooden buildings of up to eighteen storeys.',
+      ],
+      qs: [
+        { q: 'What is the engineered wood called?', a: ['cross-laminated timber', 'cross laminated timber'] },
+        { q: 'At what angle are the boards glued?', a: ['right angles', 'at right angles', 'right angle'] },
+        { q: 'By how much can construction time be reduced?', a: ['a quarter', 'up to a quarter', 'quarter', '25%'] },
+        { q: 'What forms on thick panels during a fire?', a: ['a protective layer of charcoal', 'charcoal', 'protective layer', 'a layer of charcoal', 'layer of charcoal'] },
+      ],
+    },
+  ];
+  let passageIdx = 0;
+  function renderReading() {
+    document.getElementById('r-picker').innerHTML = PASSAGES.map((p, i) =>
+      `<button class="chip" type="button" data-p="${i}" aria-pressed="${i === passageIdx}">Passage ${i + 1} · ${esc(p.title)}</button>`).join('');
+    const p = PASSAGES[passageIdx];
+    document.getElementById('r-passage').innerHTML = `<h3>${esc(p.title)}</h3>` + p.text.map(t => `<p>${esc(t)}</p>`).join('');
+    const offset = PASSAGES.slice(0, passageIdx).reduce((a, x) => a + x.qs.length, 0);
+    document.getElementById('r-items').innerHTML = p.qs.map((q, j) => {
+      const id = `${passageIdx}-${j}`, st = state.reading[id];
+      return `<li class="item ${st === 1 ? 'correct' : st === 0 ? 'wrong' : ''}" data-id="${id}">
+        <span class="qnum">${offset + j + 1}</span>
+        <div class="body">
+          <label for="r-in-${id}">${esc(q.q)}</label>
+          <div class="answer-line">
+            <input type="text" id="r-in-${id}" autocomplete="off">
+            <button class="btn" type="button">Check</button>
+          </div>
+          <div class="feedback" id="r-fb-${id}"></div>
+        </div></li>`;
+    }).join('');
+  }
+  document.getElementById('r-picker').addEventListener('click', e => {
+    const b = e.target.closest('[data-p]'); if (!b) return;
+    passageIdx = +b.dataset.p; renderReading();
+  });
+  function checkReading(li) {
+    const id = li.dataset.id, [pi, qi] = id.split('-').map(Number), q = PASSAGES[pi].qs[qi];
+    const raw = document.getElementById('r-in-' + id).value, fb = document.getElementById('r-fb-' + id);
+    const given = stripArticles(raw);
+    if (!given) { fb.innerHTML = '<span class="muted">Write an answer first.</span>'; return; }
+    if (norm(raw).split(' ').length > 3) { fb.innerHTML = '<span class="no">Too long.</span> <span class="muted">Use no more than three words.</span>'; return; }
+    const ok = q.a.some(a => stripArticles(a) === given) ? 1 : 0;
+    state.reading[id] = ok; save();
+    li.classList.toggle('correct', ok === 1); li.classList.toggle('wrong', ok === 0);
+    fb.innerHTML = ok ? '<span class="ok">Correct.</span>' : `<span class="no">Incorrect.</span> <span class="muted">Answer: ${esc(q.a[0])}</span>`;
+    renderTRF();
+  }
+  document.getElementById('r-items').addEventListener('click', e => { if (e.target.closest('button')) checkReading(e.target.closest('li')); });
+  document.getElementById('r-items').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input')) checkReading(e.target.closest('li')); });
+
+  // ---------- WRITING ----------
+  const TASKS = [
+    {
+      id: 't1-process', label: 'Task 1 · Process diagram', min: 150, img: 'assets/workflow.png', alt: 'Diagram of a seven-step manufacturing workflow: suppliers, raw materials, manufacturing, quality assurance, packaging, storage and shipping.',
+      prompt: 'The diagram shows the stages in a simple manufacturing workflow. Summarise the information by selecting and reporting the main features. Write at least 150 words.',
+      sample: 'The diagram illustrates the seven stages involved in a simple manufacturing workflow, from the supply of components to the final delivery of finished goods.\n\nOverall, the process is linear: materials enter at one end, are transformed and checked in the middle, and leave as packaged products at the other end.\n\nThe process begins with suppliers, who provide the parts that are needed. These are then transported by truck and collected as raw materials. In the third stage, the materials are assembled or changed during manufacturing. After that, the items are inspected in quality assurance to make sure that they meet the required standard.\n\nOnce the products have passed this check, they are packaged. The packaged goods are subsequently kept in storage until they are required. Finally, in the seventh stage, the products are loaded onto trucks and shipped to customers. In addition, the diagram uses arrows to connect each step, which clearly shows the order in which the stages take place.',
+    },
+    {
+      id: 't1-photo', label: 'Task 1 · Describe a photo', min: 150, img: 'assets/van.jpg', alt: 'Three men push a white van that is stuck in red mud on a dirt road, with snow-capped mountains in the distance.',
+      prompt: 'Describe the photograph in detail, explaining what is happening and what the scene suggests. Write at least 150 words.',
+      sample: 'The photograph shows three people trying to push a large white van that has become stuck in deep red mud on an unpaved road. The scene appears to take place in a wide, dry plain covered with low bushes, and a range of snow-capped mountains can be seen in the distance under a clear, pale sky.\n\nTwo of the men are pushing from the side of the van, leaning their whole weight against the door, while a third man stands near the front and seems to be giving directions with his outstretched arm. Meanwhile, a driver is sitting behind the wheel, presumably trying to accelerate at the right moment.\n\nAlthough the weather looks calm and sunny, the wet track suggests that it rained recently. Overall, the image conveys a sense of teamwork and determination, because everyone is working together to solve an unexpected problem far from any town.',
+    },
+    {
+      id: 't2-cars', label: 'Task 2 · Cars essay', min: 250,
+      prompt: 'Write a passage reflecting on the role of cars in your life, your favourite type of car, or any memorable experiences you have had with automobiles. What do cars mean to you, and how do they contribute to your daily life or sense of adventure? Write at least 250 words.',
+      sample: '',
+    },
+    {
+      id: 't2-online', label: 'Task 2 · Online learning', min: 250,
+      prompt: 'Some people believe that online learning will soon replace traditional classrooms. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.',
+      sample: '',
+    },
+  ];
+  const LINKERS = ['however','moreover','furthermore','in addition','additionally','therefore','consequently','as a result','thus','hence','although','even though','whereas','while','on the other hand','in contrast','nevertheless','for example','for instance','such as','firstly','secondly','finally','in conclusion','to conclude','overall','meanwhile','subsequently','after that','then','because','since','in particular','similarly','likewise','instead','despite','in spite of','to sum up','once'];
+  const SUBORD = /\b(because|although|though|while|whereas|which|who|whom|whose|that|if|unless|when|whenever|since|until|after|before|once)\b/;
+  const STOP = new Set('a an the and or of to in on at for with by from as is are was were be been this that these those it its your you i my me we our they their them he she his her any what how do does did have has had at least write words summarise information selecting reporting main features give reasons answer include relevant examples own knowledge experience some people believe will soon extent agree disagree describe detail explaining happening scene suggests which there'.split(' '));
+  let taskIdx = 0;
+  const drafts = {};
+  function renderWritingPicker() {
+    document.getElementById('w-picker').innerHTML = TASKS.map((t, i) =>
+      `<button class="chip" type="button" data-t="${i}" aria-pressed="${i === taskIdx}">${esc(t.label)}${state.writing[t.id] != null ? ' · ' + fmtBand(state.writing[t.id]) : ''}</button>`).join('');
+  }
+  function renderWriting() {
+    const t = TASKS[taskIdx];
+    renderWritingPicker();
+    document.getElementById('w-prompt').textContent = t.prompt;
+    const fig = document.getElementById('w-figure');
+    fig.hidden = !t.img;
+    if (t.img) { const img = document.getElementById('w-img'); img.src = t.img; img.alt = t.alt; }
+    const ta = document.getElementById('w-text');
+    ta.value = drafts[t.id] || '';
+    document.getElementById('w-sample').hidden = !t.sample;
+    document.getElementById('w-result').hidden = true;
+    updateCount();
+  }
+  const words = s => (s.toLowerCase().match(/[a-z]+(?:['’-][a-z]+)*/g) || []);
+  function updateCount() {
+    const n = words(document.getElementById('w-text').value).length, min = TASKS[taskIdx].min;
+    document.getElementById('w-count').textContent = `${n} words · minimum ${min}`;
+  }
+  document.getElementById('w-text').addEventListener('input', e => { drafts[TASKS[taskIdx].id] = e.target.value; updateCount(); });
+  document.getElementById('w-picker').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; taskIdx = +b.dataset.t; renderWriting(); });
+  document.getElementById('w-sample').addEventListener('click', () => {
+    const t = TASKS[taskIdx]; document.getElementById('w-text').value = t.sample; drafts[t.id] = t.sample; updateCount();
+  });
+  const clampBand = b => Math.max(3, Math.min(9, roundHalf(b)));
+  function assess(text, task) {
+    const w = words(text), n = w.length;
+    const paras = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
+    const sents = text.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(s => words(s).length > 0);
+    const lens = sents.map(s => words(s).length);
+    const avgLen = lens.reduce((a, b) => a + b, 0) / (lens.length || 1);
+    const sd = Math.sqrt(lens.reduce((a, b) => a + (b - avgLen) ** 2, 0) / (lens.length || 1));
+    // moving-average type-token ratio over 50-word windows (repo uses plain unique/total)
+    let mattr = 0;
+    if (n >= 50) { let sum = 0, k = 0; for (let i = 0; i + 50 <= n; i += 5) { sum += new Set(w.slice(i, i + 50)).size / 50; k++; } mattr = sum / k; }
+    else mattr = n ? new Set(w).size / n : 0;
+    const ttr = n ? new Set(w).size / n : 0;
+    const lower = ' ' + norm(text) + ' ';
+    const linkUsed = LINKERS.filter(l => lower.includes(' ' + l + ' '));
+    const complexShare = sents.filter(s => SUBORD.test(s.toLowerCase())).length / (sents.length || 1);
+    const longWords = w.filter(x => x.length >= 8).length / (n || 1);
+    const keys = [...new Set(words(task.prompt).filter(x => x.length > 3 && !STOP.has(x)))];
+    const keyHit = keys.length ? keys.filter(k => w.some(x => x.startsWith(k.slice(0, Math.max(4, k.length - 2))))).length / keys.length : 1;
+    const capsOk = sents.filter(s => /^[A-Z“"'(0-9]/.test(s)).length / (sents.length || 1);
+    const lowerI = (text.match(/\bi\b/g) || []).length;
+
+    const ratio = n / task.min;
+    const TA = clampBand(4 + Math.min(2.5, ratio * 2.5) * (ratio >= 1 ? 1 : 0.8) + keyHit * 2 - (ratio < 0.6 ? 1.5 : 0));
+    const CC = clampBand(4 + Math.min(2, linkUsed.length / 3) + Math.min(1.5, (paras.length - 1) * 0.5) + (avgLen >= 10 && avgLen <= 26 ? 0.5 : 0));
+    const LR = clampBand(3 + (mattr - 0.55) * 12 + longWords * 10);
+    const GRA = clampBand(4 + complexShare * 3 + Math.min(1.5, sd / 5) + (capsOk - 0.8) * 5 - Math.min(1.5, lowerI * 0.5));
+    const overall = roundHalf((TA + CC + LR + GRA) / 4);
+    return {
+      overall,
+      metrics: [['Words', n], ['Paragraphs', paras.length], ['Sentences', sents.length], ['Avg sentence', avgLen.toFixed(1) + ' words'],
+        ['Lexical diversity', ttr.toFixed(2)], ['Linking words', linkUsed.length], ['Complex sentences', Math.round(complexShare * 100) + '%'], ['Prompt keywords', Math.round(keyHit * 100) + '%']],
+      criteria: [
+        ['Task achievement / response', TA, ratio < 1 ? `Under the ${task.min}-word minimum by ${task.min - n} words.` : keyHit < 0.5 ? 'Few of the prompt’s key ideas appear. Address every part of the question.' : 'Length is adequate and the main ideas of the prompt are covered.'],
+        ['Coherence and cohesion', CC, paras.length < 3 ? 'Use clear paragraphs: an introduction or overview, body paragraphs, and a conclusion.' : linkUsed.length < 4 ? 'Add a wider range of linking words (however, as a result, in contrast).' : `Good organisation. Linkers used: ${linkUsed.slice(0, 6).join(', ')}.`],
+        ['Lexical resource', LR, mattr < 0.62 ? 'Several words are repeated. Use synonyms and more precise vocabulary.' : 'A reasonable range of vocabulary.'],
+        ['Grammatical range and accuracy', GRA, complexShare < 0.3 ? 'Most sentences are simple. Mix in complex sentences with because, although, which or when.' : lowerI ? 'Capitalise the pronoun “I”.' : 'A good mix of simple and complex sentences. Proofread for errors this tool cannot detect.'],
+      ],
+    };
+  }
+  document.getElementById('w-assess').addEventListener('click', () => {
+    const t = TASKS[taskIdx], text = document.getElementById('w-text').value, out = document.getElementById('w-result');
+    out.hidden = false;
+    if (words(text).length < 30) { out.innerHTML = '<p class="feedback"><span class="no">Too short to assess.</span> <span class="muted">Write at least 30 words.</span></p>'; return; }
+    const r = assess(text, t);
+    state.writing[t.id] = r.overall; save(); renderTRF(); renderWritingPicker();
+    out.innerHTML = `
+      <div class="row" style="gap:14px"><div class="band-box">${fmtBand(r.overall)}</div>
+        <div><h3>Estimated band ${fmtBand(r.overall)}</h3><p class="muted">PTE equivalent ≈ ${PTE[r.overall] ?? '–'}</p></div></div>
+      <div class="metrics">${r.metrics.map(([k, v]) => `<div class="metric"><span class="label">${k}</span><span class="v">${v}</span></div>`).join('')}</div>
+      <div class="table-wrap"><table class="criteria"><thead><tr><th>Criterion</th><th>Band</th><th>Feedback</th></tr></thead>
+      <tbody>${r.criteria.map(([c, b, f]) => `<tr><td>${c}</td><td class="b">${fmtBand(b)}</td><td>${esc(f)}</td></tr>`).join('')}</tbody></table></div>`;
+  });
+
+  // ---------- SPEAKING ----------
+  const CUES = [
+    { topic: 'Describe a journey you remember well.', points: ['where you went', 'how you travelled', 'who you were with'], explain: 'and explain why you remember this journey so well.',
+      f: ['Why do some people enjoy travelling more than others?', 'How has tourism changed in your country in recent years?', 'Do you think people will travel less in the future? Why?'] },
+    { topic: 'Describe a skill you learned that you are proud of.', points: ['what the skill is', 'when and how you learned it', 'how often you use it'], explain: 'and explain why you are proud of it.',
+      f: ['Which skills are most useful for young people today?', 'Is it better to learn from a teacher or teach yourself?', 'How might technology change the way people learn skills?'] },
+    { topic: 'Describe a place in your town where people like to meet.', points: ['where it is', 'what it looks like', 'what people do there'], explain: 'and explain why it is popular.',
+      f: ['Why are public spaces important in cities?', 'Do people meet face to face less than in the past?', 'Who should pay for parks and public squares?'] },
+    { topic: 'Describe a vehicle you would like to own.', points: ['what kind of vehicle it is', 'what it looks like', 'where you would drive it'], explain: 'and explain why you would like to own it.',
+      f: ['What are the advantages of owning a car in a big city?', 'Should governments discourage people from driving?', 'How will transport look in fifty years?'] },
+    { topic: 'Describe a book or film that changed your opinion about something.', points: ['what it was', 'when you read or watched it', 'what it was about'], explain: 'and explain how it changed your opinion.',
+      f: ['Do films influence young people more than books?', 'Should schools choose which books students read?', 'Why do people enjoy stories about real events?'] },
+  ];
+  let cueIdx = 0, timer = null, remain = 0, phase = 'ready';
+  const fmtTime = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  function renderCue() {
+    const c = CUES[cueIdx];
+    document.getElementById('s-card').innerHTML = `<span class="label">Candidate task card</span><h3>${esc(c.topic)}</h3><p>You should say:</p><ul>${c.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul><p>${esc(c.explain)}</p>`;
+    document.getElementById('s-followups').innerHTML = c.f.map(q => `<li>${esc(q)}</li>`).join('');
+    stopTimer(); setPhase('ready', 60);
+  }
+  function setPhase(p, secs) {
+    phase = p; remain = secs;
+    const t = document.getElementById('s-timer');
+    t.className = 'timer ' + (p === 'prep' ? 'prep' : p === 'talk' ? 'talk' : '');
+    t.textContent = fmtTime(remain);
+    document.getElementById('s-phase').textContent = { ready: 'Ready', prep: 'Preparation · 1 minute', talk: 'Speak now · up to 2 minutes', done: 'Time is up' }[p];
+    document.getElementById('s-start').disabled = p === 'prep' || p === 'talk';
+    document.getElementById('s-skip').disabled = p !== 'prep';
+    document.getElementById('s-stop').disabled = !(p === 'prep' || p === 'talk');
+  }
+  function tick() {
+    remain--; document.getElementById('s-timer').textContent = fmtTime(Math.max(0, remain));
+    if (remain <= 0) { if (phase === 'prep') { setPhase('talk', 120); } else { stopTimer(); setPhase('done', 0); } }
+  }
+  function stopTimer() { if (timer) clearInterval(timer); timer = null; }
+  document.getElementById('s-start').addEventListener('click', () => { stopTimer(); setPhase('prep', 60); timer = setInterval(tick, 1000); });
+  document.getElementById('s-skip').addEventListener('click', () => setPhase('talk', 120));
+  document.getElementById('s-stop').addEventListener('click', () => { stopTimer(); setPhase('ready', 60); });
+  document.getElementById('s-next').addEventListener('click', () => { cueIdx = (cueIdx + 1) % CUES.length; document.getElementById('s-notes').value = ''; renderCue(); });
+  const sSel = document.getElementById('s-self');
+  sSel.innerHTML = [9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3].map(b => `<option value="${b}">Band ${fmtBand(b)}</option>`).join('');
+  sSel.value = state.speaking != null ? String(state.speaking) : '6';
+  document.getElementById('s-save').addEventListener('click', e => { state.speaking = parseFloat(sSel.value); save(); renderTRF(); e.target.textContent = 'Saved'; setTimeout(() => e.target.textContent = 'Save to report', 1500); });
+
+  // ---------- conversion table ----------
+  function renderConv(L, R) {
+    const rows = [[39, 40], [37, 38], [35, 36], [32, 34], [30, 31], [26, 29], [23, 25], [18, 22], [16, 17], [13, 15], [11, 12], [9, 10], [7, 8], [5, 6], [3, 4], [1, 2]];
+    const mark = (lo, hi) => [L && L.raw40 >= lo && L.raw40 <= hi ? 'Listening' : '', R && R.raw40 >= lo && R.raw40 <= hi ? 'Reading' : ''].filter(Boolean).join(', ');
+    document.getElementById('conv').innerHTML = `<thead><tr><th>Raw score /40</th><th>IELTS band</th><th>PTE score</th><th>You</th></tr></thead><tbody>` +
+      rows.map(([lo, hi]) => { const b = band(hi), m = mark(lo, hi); return `<tr class="${m ? 'hl' : ''}"><td>${lo}–${hi}</td><td>${fmtBand(b)}</td><td>${PTE[b]}</td><td>${m || ''}</td></tr>`; }).join('') + '</tbody>';
+  }
+
+  document.getElementById('reset-all').addEventListener('click', e => {
+    const b = e.target;
+    if (b.dataset.armed) { state = { listening: {}, reading: {}, writing: {}, speaking: null }; save(); renderAll(); b.textContent = 'Clear my scores'; delete b.dataset.armed; return; }
+    b.dataset.armed = '1'; b.textContent = 'Click again to clear';
+    setTimeout(() => { if (b.dataset.armed) { delete b.dataset.armed; b.textContent = 'Clear my scores'; } }, 3000);
+  });
+
+  function renderAll() { renderListening(); renderReading(); renderWriting(); renderCue(); renderTRF(); }
+  renderAll();
+})();
+</script>
+</body>
+</html>
