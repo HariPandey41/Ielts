@@ -226,6 +226,13 @@ footer a { color: inherit; }
       <h2>Reading · short answers</h2>
       <span class="trf-meta" id="r-progress"></span>
     </div>
+    <a class="test2-card" href="reading-test-1.html">
+      <span class="label">Exam conditions · 60 minutes</span>
+      <strong>Academic Reading Practice Test 1</strong>
+      <span>Three passages and 40 questions in the real exam format: True/False/Not Given, matching headings, which paragraph, sentence and summary completion, multiple choice and Yes/No/Not Given. Split-screen layout with highlighting, a 60-minute timer and explanations for every answer.</span>
+      <span class="test2-go">Start Reading Test 1 →</span>
+    </a>
+    <p class="label">Quick practice</p>
     <div class="passage-picker" id="r-picker" aria-label="Choose a passage"></div>
     <div class="split">
       <article class="passage" id="r-passage"></article>
@@ -367,13 +374,14 @@ footer a { color: inherit; }
     const originalListening = originalFullResult
       ? { correct: originalFullResult.correct, attempted: 40, raw40: originalFullResult.correct, band: band(originalFullResult.correct), pte: PTE[band(originalFullResult.correct)] }
       : null;
-    const L = originalListening || projection(state.listening), R = projection(state.reading);
+    const readingFull = state.readingTest1 ? { correct: state.readingTest1.correct, attempted: 40, raw40: state.readingTest1.correct, band: state.readingTest1.band, pte: PTE[state.readingTest1.band] } : null;
+    const L = originalListening || projection(state.listening), R = readingFull || projection(state.reading);
     const wVals = Object.values(state.writing);
     const W = wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
     const S = state.speaking;
     const cells = [
       ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${originalListening ? 'full practice exam' : `≈${L.raw40}/40`}` : 'not started'],
-      ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ≈${R.raw40}/40` : 'not started'],
+      ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ${readingFull ? 'full practice test' : `≈${R.raw40}/40`}` : 'not started'],
       ['Writing', W, wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
       ['Speaking', S, S != null ? 'self-assessed' : 'not rated'],
     ];

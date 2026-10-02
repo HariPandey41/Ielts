@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Reading Test 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: computer-delivered reading screen — status bar on top, passage and questions side by side (stacked on phones), question navigator along the bottom. */
+:root {
+  --paper: #f2f5f3;
+  --sheet: #ffffff;
+  --ink: #1b2430;
+  --pencil: #5b6672;
+  --rule: #ccd5d2;
+  --omr: #c2334d;
+  --omr-soft: #f7e1e5;
+  --ok: #2b7a4b;
+  --ok-soft: #dff0e5;
+  --bad: #b23a2a;
+  --bad-soft: #f6e0dc;
+  --warn: #9a6512;
+  --hl: #fff2b3;
+  --f-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+    --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --bad-soft: #3b201b; --warn: #e3b25c; --hl: #4a4116;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+  --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --bad-soft: #3b201b; --warn: #e3b25c; --hl: #4a4116;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.6; }
+h1, h2, h3, h4 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.2; }
+p { margin: 0; }
+.label { font-family: var(--f-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil); }
+.muted { color: var(--pencil); }
+a { color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--omr); outline-offset: 2px; }
+.btn { font-family: var(--f-display); font-weight: 700; font-size: 0.95rem; border: 1.5px solid var(--ink); background: var(--ink); color: var(--sheet); padding: 9px 16px; border-radius: 3px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: var(--ink); color: var(--sheet); padding-inline: 16px; padding-block: 10px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between; }
+.bar .who { font-family: var(--f-display); font-weight: 700; }
+.clock { font-family: var(--f-mono); font-weight: 600; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.clock.low { color: #f3c049; }
+.bar a { color: var(--sheet); font-family: var(--f-display); font-size: 0.85rem; }
+.bar .tip { font-family: var(--f-display); font-size: 0.8rem; opacity: 0.8; }
+
+.intro-wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 40px; }
+.intro { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.intro h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; }
+.intro ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; max-width: 68ch; }
+
+/* exam screen */
+.screen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; height: calc(100dvh - 52px - 64px); }
+.pane { overflow-y: auto; padding: 22px 26px 90px; min-width: 0; }
+.pane.passage { background: var(--sheet); border-right: 1.5px solid var(--ink); }
+.pane.questions { background: var(--paper); }
+@media (max-width: 860px) {
+  .screen { display: block; height: auto; }
+  .pane { overflow: visible; padding: 18px 16px 28px; }
+  .pane.passage { border-right: 0; border-bottom: 1.5px solid var(--ink); }
+  .pane.questions { padding-bottom: 150px; }
+}
+.passage h2 { font-size: 1.45rem; margin-bottom: 4px; }
+.passage .sub { font-style: italic; color: var(--pencil); margin-bottom: 14px; }
+.passage .txt { display: flex; flex-direction: column; gap: 12px; max-width: 68ch; }
+.passage .pl { font-family: var(--f-display); font-weight: 800; margin-right: 6px; }
+.passage mark, .review mark { background: var(--hl); color: inherit; border-radius: 2px; padding: 0 1px; }
+.hl-btn { position: fixed; z-index: 8; font-family: var(--f-display); font-weight: 700; font-size: 0.8rem; background: var(--ink); color: var(--sheet); border: 0; border-radius: 3px; padding: 6px 10px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+
+.qset { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+.qset h3 { font-size: 1.02rem; }
+.instr { font-size: 0.98rem; }
+.instr b { font-family: var(--f-display); letter-spacing: 0.02em; }
+.key-box { background: var(--sheet); border: 1px solid var(--ink); border-radius: 2px; padding: 10px 14px; font-size: 0.95rem; }
+.key-box dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px 14px; }
+.key-box dt { font-family: var(--f-display); font-weight: 700; }
+.key-box dd { margin: 0; }
+
+.q { background: var(--sheet); border: 1px solid var(--rule); border-radius: 3px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.q .stem { display: flex; gap: 10px; align-items: baseline; }
+.qn { font-family: var(--f-mono); font-weight: 600; font-size: 0.8rem; border: 1.5px solid var(--omr); color: var(--omr); border-radius: 2px; min-width: 1.9rem; height: 1.6rem; display: inline-grid; place-items: center; flex: none; }
+.opts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-left: 2.4rem; }
+.opts.col { flex-direction: column; }
+.opts label { display: flex; gap: 8px; align-items: baseline; cursor: pointer; padding: 2px 6px; border-radius: 3px; }
+.opts label:hover { background: var(--paper); }
+.opts input { accent-color: var(--omr); }
+.opts label b { font-family: var(--f-display); }
+.q select { font: inherit; font-size: 0.95rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-bottom: 1.5px solid var(--ink); border-radius: 2px; padding: 3px 8px; margin-left: 2.4rem; max-width: calc(100% - 2.4rem); }
+.gap-in { font: inherit; font-size: 0.98rem; color: var(--ink); background: var(--paper); border: 0; border-bottom: 1.5px solid var(--ink); padding: 1px 6px; width: 9.5rem; max-width: 50vw; }
+.notes { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; padding: 14px 18px; display: flex; flex-direction: column; gap: 6px; }
+.notes h4 { text-align: center; font-size: 1rem; margin-bottom: 4px; }
+.notes .h { font-family: var(--f-display); font-weight: 700; margin-top: 6px; }
+.notes ul { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 8px; }
+.inline-q { display: inline-flex; align-items: center; gap: 4px; }
+
+.q.correct .qn, .inline-q.correct .qn { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.q.wrong .qn, .inline-q.wrong .qn { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+.fix { font-family: var(--f-mono); font-size: 0.8rem; color: var(--ok); margin-left: 4px; }
+.opts label.key { background: var(--ok-soft); }
+
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--sheet); border-top: 1.5px solid var(--ink); padding-inline: 16px; padding-block: 8px calc(8px + env(safe-area-inset-bottom, 0px)); }
+.nav-inner { display: flex; gap: 10px 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.nav-parts { display: flex; gap: 8px 16px; flex-wrap: wrap; min-width: 0; }
+.nav-part { display: flex; gap: 3px; align-items: center; flex-wrap: wrap; }
+.nav-part > button.pp { font-family: var(--f-display); font-weight: 700; font-size: 0.8rem; margin-right: 4px; background: none; border: 0; color: var(--pencil); cursor: pointer; padding: 2px 4px; }
+.nav-part.cur > button.pp { color: var(--omr); text-decoration: underline; text-underline-offset: 3px; }
+.nav button.qb { font-family: var(--f-mono); font-size: 0.68rem; width: 1.55rem; height: 1.55rem; padding: 0; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); border-radius: 2px; cursor: pointer; }
+.nav button.qb.done { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+.nav button.qb.ok { background: var(--ok); color: var(--sheet); border-color: var(--ok); }
+.nav button.qb.no { background: var(--bad); color: var(--sheet); border-color: var(--bad); }
+.nav .cnt { font-family: var(--f-mono); font-size: 0.72rem; }
+@media (max-width: 860px) { .bar .tip { display: none; } }
+@media (max-width: 640px) {
+  .nav button.qb { display: none; }
+  .nav .btn { padding: 6px 12px; font-size: 0.85rem; }
+}
+
+.result-wrap { max-width: 980px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 120px; display: flex; flex-direction: column; gap: 18px; }
+.result { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 4px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.scorebox { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.band-box { font-family: var(--f-mono); font-weight: 600; font-size: 2.2rem; line-height: 1; border: 2px solid var(--omr); color: var(--omr); min-width: 4.4rem; height: 3.6rem; display: grid; place-items: center; border-radius: 3px; padding-inline: 8px; }
+.split-score { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.split-score div { border: 1px solid var(--rule); border-radius: 3px; padding: 8px 12px; }
+.split-score b { font-family: var(--f-mono); font-size: 1.1rem; }
+.tbl-wrap { overflow-x: auto; }
+table.rev { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+table.rev th, table.rev td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.rev th { font-family: var(--f-display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil); }
+table.rev td.n { font-family: var(--f-mono); }
+table.rev .ok { color: var(--ok); font-weight: 600; }
+table.rev .no { color: var(--bad); font-weight: 600; }
+table.rev .ev { color: var(--pencil); font-style: italic; min-width: 16rem; }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="who">IELTS Academic Reading · Practice Test 1</span>
+  <span class="tip" id="tip">Select text in a passage to highlight it</span>
+  <span class="row" style="gap:14px"><span class="clock" id="clock">60:00</span><a href="./#reading">Back to trainer</a></span>
+</div>
+
+<div class="intro-wrap" id="intro">
+  <section class="intro">
+    <span class="label">Academic Reading</span>
+    <h1>Reading Practice Test 1</h1>
+    <ul>
+      <li>You have <b>60 minutes</b> to read three passages and answer 40 questions. There is no extra time to transfer answers.</li>
+      <li>Each question carries one mark. Spelling must be correct.</li>
+      <li>Follow the word limit in each instruction. Answers that go over it are marked wrong.</li>
+      <li>You can move between passages at any time using the bar at the bottom of the screen.</li>
+      <li>To highlight words in a passage, select them and press <b>Highlight</b>.</li>
+      <li>The test submits automatically when the time runs out.</li>
+    </ul>
+    <p class="muted">Suggested timing: about 20 minutes per passage. Passage 3 is the hardest.</p>
+    <div class="row"><button class="btn" id="start" type="button">Start the test</button></div>
+  </section>
+</div>
+
+<div class="screen" id="screen" hidden>
+  <article class="pane passage" id="passage-pane"></article>
+  <section class="pane questions" id="question-pane"></section>
+</div>
+
+<div class="result-wrap" id="result-wrap" hidden><section class="result" id="result"></section></div>
+
+<button class="hl-btn" id="hl-btn" type="button" hidden>Highlight</button>
+
+<nav class="nav" id="nav" hidden>
+  <div class="nav-inner">
+    <div class="nav-parts" id="nav-parts"></div>
+    <button class="btn" id="submit" type="button">Submit answers</button>
+  </div>
+</nav>
+
+<script>
+(() => {
+  'use strict';
+
+  // ================= PASSAGES =================
+  const PASSAGES = [
+    {
+      title: 'The Return of the Night Train',
+      sub: 'You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.',
+      paras: [
+        ['', 'For much of the twentieth century, overnight trains were an ordinary part of European travel. A passenger could board a sleeper carriage in Paris in the evening and wake up in Rome, Vienna or Barcelona the following morning, having saved the cost of a hotel room. At their peak in the 1970s, more than a hundred international night services crossed the continent every evening.'],
+        ['', 'The decline began slowly. As motorways expanded and car ownership rose, fewer families travelled long distances by rail. High-speed daytime trains, introduced in France in 1981, cut journey times so dramatically that many routes no longer needed an overnight option. The final blow came from low-cost airlines, which from the late 1990s offered fares that rail operators could not match. Sleeper trains were also expensive to run: each carriage carried only around thirty passengers, compared with more than eighty in a standard seated carriage, and the trains made just one journey in every twenty-four hours. By 2016, Germany’s national operator, Deutsche Bahn, had withdrawn all of its own sleeper services, declaring them commercially unviable.'],
+        ['', 'Yet at the very moment the industry seemed to be giving up, the Austrian operator ÖBB took the opposite view. It bought a number of Deutsche Bahn’s old carriages, took over several of its routes and relaunched them under the name Nightjet. Within three years, Nightjet was carrying more than one and a half million passengers a year, and several of its routes were regularly sold out during holiday periods. The company’s managers argued that night trains had failed not because people had stopped wanting them, but because operators had stopped investing in them.'],
+        ['', 'Much of the renewed interest has been driven by concern about climate change. A journey by train produces only a fraction of the carbon emissions of the same journey by plane, and a growing number of travellers, particularly younger ones, say they are prepared to spend longer travelling in order to reduce their environmental impact. In Sweden, this attitude even has its own word, flygskam, meaning ‘flight shame’. Governments have responded too. In 2020, several European countries signed an agreement to support new international sleeper routes, and France announced plans to reopen ten of the night lines it had closed in previous decades.'],
+        ['', 'Nevertheless, operators face considerable practical difficulties. Each country in Europe charges its own fees for the use of its tracks, and these charges can make up as much as a third of the cost of a ticket. Night trains must also share the network with freight trains, which often run at night, and this can force sleeper services onto slower routes. Perhaps the most serious problem is a shortage of rolling stock. Very few new sleeper carriages were built between 1990 and 2015, and manufacturers now report waiting lists of several years for new orders.'],
+        ['', 'Passenger expectations have also changed. Travellers today are less willing to share a compartment with strangers, and new carriage designs reflect this. Some of Nightjet’s newest trains include ‘mini cabins’: small private pods for one person, with a bed, a locker and a reading light, sold at a price between that of a seat and that of a full compartment. Operators have also discovered that reliable Wi-Fi and a decent breakfast matter more to many passengers than the traditional restaurant car, which several companies have now replaced with a trolley service.'],
+        ['', 'Whether the revival will last remains uncertain. Supporters point out that a night train can replace a short-haul flight while also saving travellers the price of a night’s accommodation. Critics respond that, without permanent public funding, the services will struggle to compete on price with airlines, whose fuel is not taxed in the same way as the electricity used by trains.'],
+      ],
+    },
+    {
+      title: 'Why Music Sticks',
+      sub: 'You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.',
+      paras: [
+        ['A', 'Almost everyone has experienced it: a fragment of a song that plays over and over in the mind, sometimes for hours. Psychologists call these fragments ‘involuntary musical imagery’, although they are more widely known as earworms. Surveys suggest that around nine in ten people experience an earworm at least once a week, and for most of them the experience is mildly annoying rather than distressing.'],
+        ['B', 'Research into earworms only began in earnest in the early 2000s. Before then, the phenomenon was considered too subjective to measure: unlike a reaction time or a memory test score, a tune in someone’s head cannot be observed directly. The breakthrough came when researchers began to collect large numbers of diary reports, in which volunteers recorded each earworm as it happened, noting the song, the time of day and what they were doing at the time.'],
+        ['C', 'These diaries revealed clear patterns. Earworms were most likely to occur during routine activities that require little concentration, such as washing up, walking or showering. They were also strongly linked to recent exposure: in the majority of cases, the person had heard the song within the previous twenty-four hours. Interestingly, the tunes were rarely complete. Most people reported a loop of between fifteen and thirty seconds, usually taken from the chorus.'],
+        ['D', 'What makes some songs more ‘sticky’ than others? In 2016, a team led by Kelly Jakubowski compared the songs most frequently named as earworms with songs that had been equally popular in the charts but were rarely reported. The earworm songs tended to have faster tempos and melodies whose overall shape was common in Western pop music, but they also contained some unusual intervals – small surprises that the listener did not quite expect. Jakubowski suggested that this combination of the familiar and the unexpected makes a tune both easy to remember and difficult to forget.'],
+        ['E', 'Not everyone is equally affected. Studies have found that people who score highly on measures of neuroticism, a personality trait associated with a tendency to worry, report longer and more troublesome earworms. Musical training also plays a part, although not in the way one might expect: musicians experience earworms more often than non-musicians, but they are less bothered by them, perhaps because they are used to having music in their heads.'],
+        ['F', 'For those who want to get rid of an earworm, the evidence offers some practical advice. In one study, volunteers who chewed gum after listening to a catchy song reported fewer earworms afterwards, possibly because chewing interferes with the ‘inner voice’ that the brain uses to rehearse music. Others have found that deliberately listening to the whole song can help, as the brain seems to stop repeating a fragment once it has been completed. Simply trying not to think about the tune, by contrast, tends to make it return more often.'],
+        ['G', 'Some researchers now believe that earworms may once have served a useful purpose. Victoria Williamson has pointed out that, before writing was invented, songs and rhymes were one of the main ways in which communities passed on knowledge, and a mind that rehearsed tunes automatically would have been well suited to this task. If so, the earworm may be less a fault in our memory than a reminder of how that memory evolved.'],
+      ],
+    },
+    {
+      title: 'In Praise of Boredom',
+      sub: 'You should spend about 20 minutes on Questions 27–40, which are based on Reading Passage 3 below.',
+      paras: [
+        ['', 'Few emotions have been as consistently disapproved of as boredom. Philosophers have described it as a kind of spiritual emptiness; teachers often treat it as a sign of laziness; and the modern technology industry has devoted extraordinary effort to ensuring that we need never experience it at all. A smartphone offers an escape from even the briefest moment of inactivity, and research suggests that many people now check their phones within seconds of having nothing else to do. Yet a growing number of psychologists argue that, in our eagerness to eliminate boredom, we may be losing something of value.'],
+        ['', 'The case for boredom begins with its definition. Boredom, according to the psychologist John Eastwood, is not simply having nothing to do. It is the uncomfortable state of wanting to engage in a satisfying activity but being unable to find one. Understood in this way, boredom is less a lack of motivation than a signal: an internal alarm that tells us our current situation is not meeting our needs. Like hunger, it is unpleasant precisely because it is meant to make us act.'],
+        ['', 'What kind of action does it encourage? A well-known study by Sandi Mann and Rebekah Cadman offers one answer. Some participants were first asked to copy numbers from a telephone directory for fifteen minutes, while a control group went straight to the next task. All were then asked to think of as many uses as possible for a pair of plastic cups. Those who had completed the dull copying task produced significantly more ideas, and more original ones, than the control group. A third group, who had merely read the directory rather than copying from it, did better still. Mann concluded that boredom pushes the mind to search for stimulation internally, through daydreaming, and that daydreaming is closely associated with creative thought.'],
+        ['', 'Not all researchers are convinced. Critics note that laboratory boredom, lasting a few minutes, may have little in common with the long, empty afternoons that people experience in real life, and some studies have failed to reproduce Mann’s results. Moreover, chronic boredom – boredom experienced frequently and over long periods – has been linked to a range of harmful behaviours, from overeating to gambling. Even the strongest supporters of boredom accept that it is not always beneficial; what matters, they argue, is how we respond to it.'],
+        ['', 'It is here that technology becomes significant. When we reach for a phone at the first sign of boredom, we answer the signal in the quickest possible way, but not necessarily the most useful one. The brief distraction of a news feed or a game relieves the discomfort without addressing its cause, and because that relief is so easily available, we may never reach the point at which the mind begins to wander productively. The psychologist James Danckert compares this to eating sweets whenever we feel hungry: the feeling disappears, but we are no better nourished.'],
+        ['', 'Some educators have begun to take these ideas seriously. A number of schools in Scandinavia and the Netherlands have introduced periods of unstructured time in which pupils are given no instructions and no devices. Teachers report that children are frequently restless at first, but that after several weeks many begin to invent their own games and projects. It is too early to say whether such programmes have lasting effects, and their supporters admit that they are difficult to evaluate using conventional tests.'],
+        ['', 'None of this means that we should seek out boredom for its own sake. A world without stimulation would be intolerable, and there is nothing creative about a mind that has simply given up. The researchers’ argument is a modest one: that boredom is not a problem to be solved instantly, but a message worth listening to. The next time we find ourselves with nothing to do, they suggest, we might wait a few minutes before reaching for our phones, and see where our thoughts lead.'],
+      ],
+    },
+  ];
+
+  // ================= QUESTIONS =================
+  // kind: tfng | ynng | gap | heading | para | mcq | box   ·   ev = evidence shown after marking
+  const TFNG = ['TRUE', 'FALSE', 'NOT GIVEN'], YNNG = ['YES', 'NO', 'NOT GIVEN'];
+  const HEADINGS = { i: 'Differences between individuals', ii: 'The commercial value of catchy songs', iii: 'Ways of stopping an unwanted tune', iv: 'How a difficult subject became possible to study', v: 'Why musicians dislike earworms', vi: 'A possible benefit from the past', vii: 'When earworms tend to appear', viii: 'The musical features of memorable songs', ix: 'The risks of listening to music while working', x: 'A common experience' };
+  const BOX = { A: 'costs', B: 'tests', C: 'restless', D: 'friends', E: 'instructions', F: 'effects', G: 'grades', H: 'creative' };
+  const Q = {
+    1: { kind: 'tfng', s: 'Sleeper trains in the 1970s carried more passengers than any other kind of international train.', a: 'NOT GIVEN', ev: 'The passage gives the number of night services (“more than a hundred”) but never compares their passenger numbers with other trains.' },
+    2: { kind: 'tfng', s: 'The arrival of high-speed trains made some overnight services unnecessary.', a: 'TRUE', ev: '“High-speed daytime trains… cut journey times so dramatically that many routes no longer needed an overnight option.”' },
+    3: { kind: 'tfng', s: 'A sleeper carriage holds more passengers than a seated carriage.', a: 'FALSE', ev: '“each carriage carried only around thirty passengers, compared with more than eighty in a standard seated carriage”' },
+    4: { kind: 'tfng', s: 'ÖBB believed that night trains had declined because of a lack of investment.', a: 'TRUE', ev: '“night trains had failed not because people had stopped wanting them, but because operators had stopped investing in them.”' },
+    5: { kind: 'tfng', s: 'Most Nightjet passengers are under the age of thirty.', a: 'NOT GIVEN', ev: 'Younger travellers are mentioned as being willing to travel longer, but the age of Nightjet passengers is never given.' },
+    6: { kind: 'tfng', s: 'The fees for using railway tracks are the same throughout Europe.', a: 'FALSE', ev: '“Each country in Europe charges its own fees for the use of its tracks”' },
+    7: { kind: 'gap', a: ['tracks', 'track'], limit: 1, ev: '“Each country in Europe charges its own fees for the use of its tracks… as much as a third of the cost of a ticket.”' },
+    8: { kind: 'gap', a: ['freight'], limit: 1, ev: '“Night trains must also share the network with freight trains… this can force sleeper services onto slower routes.”' },
+    9: { kind: 'gap', a: ['waiting'], limit: 1, ev: '“manufacturers now report waiting lists of several years for new orders.”' },
+    10: { kind: 'gap', a: ['strangers'], limit: 1, ev: '“Travellers today are less willing to share a compartment with strangers”' },
+    11: { kind: 'gap', a: ['locker'], limit: 1, ev: '“small private pods for one person, with a bed, a locker and a reading light”' },
+    12: { kind: 'gap', a: ['breakfast'], limit: 1, ev: '“reliable Wi-Fi and a decent breakfast matter more to many passengers”' },
+    13: { kind: 'gap', a: ['trolley'], limit: 1, ev: '“the traditional restaurant car, which several companies have now replaced with a trolley service.”' },
+    14: { kind: 'heading', p: 'B', a: 'iv', ev: 'The tune “cannot be observed directly”, until “researchers began to collect large numbers of diary reports”.' },
+    15: { kind: 'heading', p: 'C', a: 'vii', ev: '“Earworms were most likely to occur during routine activities… strongly linked to recent exposure”' },
+    16: { kind: 'heading', p: 'D', a: 'viii', ev: '“faster tempos… melodies whose overall shape was common… some unusual intervals”' },
+    17: { kind: 'heading', p: 'E', a: 'i', ev: '“Not everyone is equally affected”: neuroticism and musical training. Heading v is wrong: musicians are “less bothered”.' },
+    18: { kind: 'heading', p: 'F', a: 'iii', ev: '“For those who want to get rid of an earworm…”: chewing gum, listening to the whole song.' },
+    19: { kind: 'heading', p: 'G', a: 'vi', ev: '“earworms may once have served a useful purpose… before writing was invented”' },
+    20: { kind: 'para', s: 'a description of how researchers collected information about earworms', a: 'B', ev: '“volunteers recorded each earworm as it happened, noting the song, the time of day and what they were doing”' },
+    21: { kind: 'para', s: 'a reference to the usual length of the repeated music', a: 'C', ev: '“Most people reported a loop of between fifteen and thirty seconds”' },
+    22: { kind: 'para', s: 'a comparison between two groups of songs', a: 'D', ev: '“compared the songs most frequently named as earworms with songs that had been equally popular… but were rarely reported”' },
+    23: { kind: 'para', s: 'a mention of an approach that makes an earworm return more frequently', a: 'F', ev: '“Simply trying not to think about the tune, by contrast, tends to make it return more often.”' },
+    24: { kind: 'gap', a: ['concentration'], limit: 2, ev: '“routine activities that require little concentration”' },
+    25: { kind: 'gap', a: ['inner voice'], limit: 2, ev: '“chewing interferes with the ‘inner voice’ that the brain uses to rehearse music”' },
+    26: { kind: 'gap', a: ['knowledge'], limit: 2, ev: '“songs and rhymes were one of the main ways in which communities passed on knowledge”' },
+    27: { kind: 'mcq', s: 'In the first paragraph, the writer suggests that', o: { A: 'boredom has only recently been regarded as negative.', B: 'technology companies try to stop people from feeling bored.', C: 'most people dislike using their phones.', D: 'psychologists have always defended boredom.' }, a: 'B', ev: '“the modern technology industry has devoted extraordinary effort to ensuring that we need never experience it at all.”' },
+    28: { kind: 'mcq', s: 'According to John Eastwood, boredom is best understood as', o: { A: 'a lack of physical energy.', B: 'a reaction similar to hunger.', C: 'a sign that a need is not being met.', D: 'the result of having too many choices.' }, a: 'C', ev: '“a signal: an internal alarm that tells us our current situation is not meeting our needs.” Hunger is only a comparison.' },
+    29: { kind: 'mcq', s: 'In the study by Mann and Cadman, which group performed best on the creative task?', o: { A: 'the group who went straight to the task', B: 'the group who copied numbers', C: 'the group who read the telephone directory', D: 'the group who were given plastic cups first' }, a: 'C', ev: '“A third group, who had merely read the directory rather than copying from it, did better still.”' },
+    30: { kind: 'mcq', s: 'What is the main purpose of the fourth paragraph?', o: { A: 'to present doubts about research into boredom', B: 'to explain how laboratory experiments are designed', C: 'to show that boredom always leads to harmful behaviour', D: 'to describe a new study that supports Mann’s findings' }, a: 'A', ev: '“Not all researchers are convinced… some studies have failed to reproduce Mann’s results.”' },
+    31: { kind: 'mcq', s: 'James Danckert compares checking a phone when bored to', o: { A: 'missing a meal.', B: 'eating sweets instead of proper food.', C: 'exercising when tired.', D: 'reading the news every day.' }, a: 'B', ev: '“compares this to eating sweets whenever we feel hungry: the feeling disappears, but we are no better nourished.”' },
+    32: { kind: 'ynng', s: 'Boredom is mainly caused by laziness.', a: 'NO', ev: 'Teachers may see it that way, but the writer says boredom “is less a lack of motivation than a signal”.' },
+    33: { kind: 'ynng', s: 'Boredom that continues for long periods can have negative consequences.', a: 'YES', ev: '“chronic boredom… has been linked to a range of harmful behaviours, from overeating to gambling.”' },
+    34: { kind: 'ynng', s: 'Using a phone relieves boredom without dealing with its cause.', a: 'YES', ev: '“relieves the discomfort without addressing its cause”' },
+    35: { kind: 'ynng', s: 'Schools in Scandinavia achieve better exam results than schools in other countries.', a: 'NOT GIVEN', ev: 'Scandinavian schools are mentioned only for unstructured time; exam results are never compared.' },
+    36: { kind: 'ynng', s: 'People should try to experience boredom as often as possible.', a: 'NO', ev: '“None of this means that we should seek out boredom for its own sake.”' },
+    37: { kind: 'box', a: 'E', ev: '“pupils are given no instructions and no devices”' },
+    38: { kind: 'box', a: 'C', ev: '“children are frequently restless at first”' },
+    39: { kind: 'box', a: 'F', ev: '“It is too early to say whether such programmes have lasting effects”' },
+    40: { kind: 'box', a: 'B', ev: '“difficult to evaluate using conventional tests”' },
+  };
+
+  // ================= RENDER =================
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const radios = (n, opts, col) => `<div class="opts ${col ? 'col' : ''}" role="radiogroup" aria-label="Question ${n}">${opts.map(([v, t]) => `<label data-opt="${esc(v)}"><input type="radio" name="q${n}" value="${esc(v)}" data-q="${n}">${t}</label>`).join('')}</div>`;
+  const tf = n => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>${esc(Q[n].s)}</span></div>${radios(n, (Q[n].kind === 'tfng' ? TFNG : YNNG).map(v => [v, v]))}</div>`;
+  const gapIn = n => `<span class="inline-q" data-q="${n}"><span class="qn">${n}</span><input class="gap-in" type="text" id="q${n}" data-q="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}"></span>`;
+  const select = (n, opts, ph) => `<select id="q${n}" data-q="${n}" aria-label="Question ${n}"><option value="">${ph}</option>${opts.map(([v, t]) => `<option value="${esc(v)}">${esc(t)}</option>`).join('')}</select>`;
+  const mcq = n => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>${esc(Q[n].s)}</span></div>${radios(n, Object.entries(Q[n].o).map(([k, v]) => [k, `<b>${k}</b><span>${esc(v)}</span>`]), true)}</div>`;
+
+  const QUESTIONS = [
+    `<div class="qset"><h3>Questions 1–6</h3>
+      <p class="instr">Do the following statements agree with the information given in Reading Passage 1? Choose</p>
+      <div class="key-box"><dl><dt>TRUE</dt><dd>if the statement agrees with the information</dd><dt>FALSE</dt><dd>if the statement contradicts the information</dd><dt>NOT GIVEN</dt><dd>if there is no information on this</dd></dl></div>
+      ${[1, 2, 3, 4, 5, 6].map(tf).join('')}</div>
+    <div class="qset"><h3>Questions 7–13</h3>
+      <p class="instr">Complete the notes below. Choose <b>ONE WORD ONLY</b> from the passage for each answer.</p>
+      <div class="notes"><h4>Night trains today</h4>
+        <span class="h">Practical difficulties</span>
+        <ul>
+          <li>Fees for using the ${gapIn(7)} may be a third of the ticket price.</li>
+          <li>${gapIn(8)} trains can force sleepers onto slower routes.</li>
+          <li>Manufacturers have long ${gapIn(9)} lists for new carriages.</li>
+        </ul>
+        <span class="h">Passenger expectations</span>
+        <ul>
+          <li>Many passengers do not want to share with ${gapIn(10)}.</li>
+          <li>‘Mini cabins’ contain a bed, a ${gapIn(11)} and a reading light.</li>
+          <li>Wi-Fi and a good ${gapIn(12)} are valued more than a restaurant car.</li>
+          <li>Some restaurant cars have been replaced by a ${gapIn(13)} service.</li>
+        </ul>
+      </div></div>`,
+    `<div class="qset"><h3>Questions 14–19</h3>
+      <p class="instr">Reading Passage 2 has seven paragraphs, <b>A–G</b>. Choose the correct heading for paragraphs <b>B–G</b> from the list of headings below.</p>
+      <div class="key-box"><span class="label">List of headings</span><dl>${Object.entries(HEADINGS).map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>
+      <p class="muted"><i>Example: Paragraph A — x</i></p>
+      ${[14, 15, 16, 17, 18, 19].map(n => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>Paragraph ${Q[n].p}</span></div>${select(n, Object.keys(HEADINGS).filter(k => k !== 'x').map(k => [k, k]), 'Choose a heading')}</div>`).join('')}</div>
+    <div class="qset"><h3>Questions 20–23</h3>
+      <p class="instr">Reading Passage 2 has seven paragraphs, <b>A–G</b>. Which paragraph contains the following information? <b>NB</b> You may use any letter more than once.</p>
+      ${[20, 21, 22, 23].map(n => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>${esc(Q[n].s)}</span></div>${select(n, 'ABCDEFG'.split('').map(k => [k, k]), 'Choose A–G')}</div>`).join('')}</div>
+    <div class="qset"><h3>Questions 24–26</h3>
+      <p class="instr">Complete the sentences below. Choose <b>NO MORE THAN TWO WORDS</b> from the passage for each answer.</p>
+      <div class="q" data-q="24"><span>Earworms are most common during activities that need little ${gapIn(24)}.</span></div>
+      <div class="q" data-q="25"><span>Chewing gum may disrupt the brain’s ${gapIn(25)}.</span></div>
+      <div class="q" data-q="26"><span>Before writing existed, songs helped communities to pass on ${gapIn(26)}.</span></div></div>`,
+    `<div class="qset"><h3>Questions 27–31</h3>
+      <p class="instr">Choose the correct letter, <b>A, B, C or D</b>.</p>
+      ${[27, 28, 29, 30, 31].map(mcq).join('')}</div>
+    <div class="qset"><h3>Questions 32–36</h3>
+      <p class="instr">Do the following statements agree with the claims of the writer in Reading Passage 3? Choose</p>
+      <div class="key-box"><dl><dt>YES</dt><dd>if the statement agrees with the claims of the writer</dd><dt>NO</dt><dd>if the statement contradicts the claims of the writer</dd><dt>NOT GIVEN</dt><dd>if it is impossible to say what the writer thinks about this</dd></dl></div>
+      ${[32, 33, 34, 35, 36].map(tf).join('')}</div>
+    <div class="qset"><h3>Questions 37–40</h3>
+      <p class="instr">Complete the summary using the list of words, <b>A–H</b>, below.</p>
+      <div class="notes"><h4>Unstructured time in schools</h4>
+        <p>Some schools have introduced periods in which pupils receive no ${boxSel(37)} and cannot use devices. At first the children are often ${boxSel(38)}, but after a few weeks many create their own games and projects. Supporters admit that the long-term ${boxSel(39)} of these programmes are not yet known, and that they are hard to measure with conventional ${boxSel(40)}.</p>
+      </div>
+      <div class="key-box"><dl>${Object.entries(BOX).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div></div>`,
+  ];
+  function boxSel(n) { return `<span class="inline-q" data-q="${n}"><span class="qn">${n}</span><select id="q${n}" data-q="${n}" aria-label="Question ${n}" style="margin-left:0"><option value="">A–H</option>${Object.keys(BOX).map(k => `<option>${k}</option>`).join('')}</select></span>`; }
+
+  // ================= STATE =================
+  const $ = id => document.getElementById(id);
+  const answers = {};
+  let cur = 0, submitted = false, endAt = 0, timer = null;
+  const passageHTML = PASSAGES.map((p, i) => `<h2>Reading Passage ${i + 1}</h2><p class="sub">${esc(p.sub)}</p><h3 style="font-size:1.3rem;margin-bottom:12px">${esc(p.title)}</h3><div class="txt">${p.paras.map(([l, t]) => `<p>${l ? `<span class="pl">${l}</span>` : ''}${esc(t)}</p>`).join('')}</div>`);
+  const passageNodes = [], questionNodes = [];
+  PASSAGES.forEach((_, i) => {
+    const a = document.createElement('div'); a.innerHTML = passageHTML[i]; a.hidden = i !== 0; $('passage-pane').appendChild(a); passageNodes.push(a);
+    const b = document.createElement('div'); b.innerHTML = QUESTIONS[i]; b.hidden = i !== 0; $('question-pane').appendChild(b); questionNodes.push(b);
+  });
+  const RANGES = [[1, 13], [14, 26], [27, 40]];
+  const partOf = n => RANGES.findIndex(([a, b]) => n >= a && n <= b);
+
+  function show(i) {
+    cur = i;
+    passageNodes.forEach((n, k) => n.hidden = k !== i);
+    questionNodes.forEach((n, k) => n.hidden = k !== i);
+    $('passage-pane').scrollTop = 0; $('question-pane').scrollTop = 0;
+    if (window.innerWidth <= 860) window.scrollTo({ top: 0 });
+    renderNav();
+  }
+
+  $('question-pane').addEventListener('input', e => { const t = e.target; if (!submitted && t.dataset.q) { answers[t.dataset.q] = t.value; renderNav(); } });
+  $('question-pane').addEventListener('change', e => { const t = e.target; if (!submitted && t.dataset.q) { answers[t.dataset.q] = t.value; renderNav(); } });
+
+  // ================= MARKING =================
+  const norm = s => String(s || '').toLowerCase().replace(/[’‘']/g, "'").replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ').trim();
+  function mark(n) {
+    const q = Q[n], g = answers[n] || '';
+    if (q.kind === 'gap') {
+      const v = norm(g);
+      if (!v || v.split(' ').length > q.limit) return false;
+      return q.a.includes(v);
+    }
+    return g === q.a;
+  }
+  const keyText = n => { const q = Q[n]; if (q.kind === 'gap') return q.a[0]; if (q.kind === 'box') return `${q.a} (${BOX[q.a]})`; if (q.kind === 'heading') return `${q.a} (${HEADINGS[q.a]})`; return q.a; };
+  const BAND = s => s >= 39 ? 9 : s >= 37 ? 8.5 : s >= 35 ? 8 : s >= 33 ? 7.5 : s >= 30 ? 7 : s >= 27 ? 6.5 : s >= 23 ? 6 : s >= 19 ? 5.5 : s >= 15 ? 5 : s >= 13 ? 4.5 : s >= 10 ? 4 : s >= 8 ? 3.5 : s >= 6 ? 3 : s >= 4 ? 2.5 : s >= 2 ? 2 : s >= 1 ? 1 : 0;
+  const PTE = { 9: 88, 8.5: 81, 8: 75.5, 7.5: 68.5, 7: 61, 6.5: 53.5, 6: 45.5, 5.5: 38.5, 5: 32.5, 4.5: 26, 4: 19, 3.5: 12.5, 3: 8.5, 2.5: 6.5, 2: 4.5, 1.5: 2.5, 1: 1, 0: 0 };
+  const fmtBand = b => Number.isInteger(b) ? b.toFixed(1) : String(b);
+
+  // ================= NAV =================
+  const answered = n => String(answers[n] || '').trim() !== '';
+  function renderNav() {
+    $('nav-parts').innerHTML = RANGES.map(([a, b], i) => {
+      const nums = Array.from({ length: b - a + 1 }, (_, k) => a + k);
+      const tally = submitted ? `${nums.filter(mark).length}/${nums.length} ✓` : `${nums.filter(answered).length}/${nums.length}`;
+      return `<div class="nav-part ${i === cur ? 'cur' : ''}"><button type="button" class="pp" data-part="${i}">Passage ${i + 1} <span class="cnt">${tally}</span></button>${i !== cur ? '' : nums.map(n => `<button type="button" class="qb ${submitted ? (mark(n) ? 'ok' : 'no') : answered(n) ? 'done' : ''}" data-go="${n}" aria-label="Question ${n}">${n}</button>`).join('')}</div>`;
+    }).join('');
+  }
+  $('nav-parts').addEventListener('click', e => {
+    const pp = e.target.closest('[data-part]');
+    if (pp) return show(+pp.dataset.part);
+    const b = e.target.closest('[data-go]'); if (!b) return;
+    const n = +b.dataset.go;
+    if (partOf(n) !== cur) show(partOf(n));
+    const el = $('question-pane').querySelector(`.q[data-q="${n}"], .inline-q[data-q="${n}"]`);
+    if (el) { el.scrollIntoView({ block: 'center' }); const f = el.querySelector('input,select'); if (f) f.focus({ preventScroll: true }); }
+  });
+
+  // ================= HIGHLIGHT =================
+  const hlBtn = $('hl-btn');
+  let hlRange = null;
+  document.addEventListener('selectionchange', () => {
+    const sel = document.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) { hlBtn.hidden = true; return; }
+    const r = sel.getRangeAt(0);
+    if (!$('passage-pane').contains(r.commonAncestorContainer)) { hlBtn.hidden = true; return; }
+    hlRange = r.cloneRange();
+    const box = r.getBoundingClientRect();
+    hlBtn.style.left = Math.max(8, Math.min(window.innerWidth - 100, box.left + box.width / 2 - 40)) + 'px';
+    hlBtn.style.top = Math.max(60, box.top - 40) + 'px';
+    hlBtn.hidden = false;
+  });
+  hlBtn.addEventListener('mousedown', e => e.preventDefault());
+  hlBtn.addEventListener('click', () => {
+    if (!hlRange) return;
+    try { const m = document.createElement('mark'); hlRange.surroundContents(m); }
+    catch (e) {
+      // selection spans several paragraphs: highlight each text node separately
+      const walker = document.createTreeWalker(hlRange.commonAncestorContainer, NodeFilter.SHOW_TEXT);
+      const nodes = []; while (walker.nextNode()) if (hlRange.intersectsNode(walker.currentNode)) nodes.push(walker.currentNode);
+      nodes.forEach(tn => {
+        const r = document.createRange(); r.selectNodeContents(tn);
+        if (tn === hlRange.startContainer) r.setStart(tn, hlRange.startOffset);
+        if (tn === hlRange.endContainer) r.setEnd(tn, hlRange.endOffset);
+        if (!r.toString().trim()) return;
+        try { r.surroundContents(document.createElement('mark')); } catch (err) {}
+      });
+    }
+    document.getSelection().removeAllRanges(); hlBtn.hidden = true;
+  });
+  $('passage-pane').addEventListener('click', e => { const m = e.target.closest('mark'); if (m && document.getSelection().isCollapsed) { m.replaceWith(...m.childNodes); } });
+
+  // ================= TIMER =================
+  const fmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  function tick() {
+    const left = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
+    $('clock').textContent = fmt(left);
+    $('clock').classList.toggle('low', left <= 600);
+    if (left <= 600 && !$('tip').dataset.warned) { $('tip').dataset.warned = 1; $('tip').textContent = '10 minutes remaining'; }
+    if (left === 0) submit(true);
+  }
+
+  // ================= SUBMIT =================
+  let armed = false;
+  $('submit').addEventListener('click', () => {
+    if (submitted) return;
+    const blanks = 40 - Array.from({ length: 40 }, (_, i) => i + 1).filter(answered).length;
+    if (!armed) {
+      armed = true; $('submit').textContent = blanks ? `${blanks} unanswered · click again to submit` : 'Click again to submit';
+      setTimeout(() => { armed = false; if (!submitted) $('submit').textContent = 'Submit answers'; }, 4000);
+      return;
+    }
+    submit(false);
+  });
+
+  function submit(auto) {
+    if (submitted) return;
+    submitted = true; clearInterval(timer);
+    document.querySelectorAll('#question-pane input, #question-pane select').forEach(el => el.disabled = true);
+    let score = 0; const per = [0, 0, 0];
+    for (let n = 1; n <= 40; n++) if (mark(n)) { score++; per[partOf(n)]++; }
+    const band = BAND(score);
+
+    for (let n = 1; n <= 40; n++) {
+      const ok = mark(n), q = Q[n];
+      const host = $('question-pane').querySelector(`.inline-q[data-q="${n}"]`) || $('question-pane').querySelector(`.q[data-q="${n}"]`);
+      if (!host) continue;
+      host.classList.add(ok ? 'correct' : 'wrong');
+      const opt = host.querySelector(`label[data-opt="${q.a}"]`);
+      if (opt) opt.classList.add('key');
+      else if (!ok) host.insertAdjacentHTML('beforeend', `<span class="fix">${esc(q.kind === 'gap' ? q.a[0] : q.a)}</span>`);
+    }
+    renderNav();
+
+    try {
+      const KEY = 'ielts-band-trainer-v1';
+      const st = JSON.parse(localStorage.getItem(KEY) || '{}') || {};
+      st.readingTest1 = { correct: score, band, recordedAt: new Date().toISOString() };
+      localStorage.setItem(KEY, JSON.stringify(st));
+    } catch (e) {}
+
+    const rows = Array.from({ length: 40 }, (_, i) => i + 1).map(n => {
+      const ok = mark(n), g = answers[n] || '';
+      return `<tr><td class="n">${n}</td><td>${g ? esc(g) : '<span class="muted">blank</span>'}</td><td>${esc(keyText(n))}</td><td class="${ok ? 'ok' : 'no'}">${ok ? '✓' : '✗'}</td><td class="ev">${esc(Q[n].ev)}</td></tr>`;
+    }).join('');
+
+    $('result').innerHTML = `
+      <span class="label">${auto ? 'Time is up · ' : ''}Result</span>
+      <div class="scorebox"><div class="band-box">${fmtBand(band)}</div>
+        <div><h2>${score} / 40 correct</h2><p class="muted">IELTS Academic Reading band ${fmtBand(band)} · PTE equivalent ≈ ${PTE[band]}</p></div></div>
+      <div class="split-score">${per.map((c, i) => `<div><span class="label">Passage ${i + 1}</span><br><b>${c}/${RANGES[i][1] - RANGES[i][0] + 1}</b></div>`).join('')}</div>
+      <p class="muted">Your band has been added to the Test Report Form on the trainer page. Use the bar at the bottom to go back through the passages: correct answers are shown in green.</p>
+      <div class="row"><a class="btn" href="./#reading">Back to trainer</a><button class="btn ghost" type="button" id="review">Review the passages</button><button class="btn ghost" type="button" id="again">Take the test again</button></div>
+      <h3>Answers and explanations</h3>
+      <div class="tbl-wrap"><table class="rev"><thead><tr><th>Q</th><th>Your answer</th><th>Correct</th><th></th><th>Where to find it</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    $('screen').hidden = true; $('result-wrap').hidden = false; window.scrollTo({ top: 0 });
+    $('again').addEventListener('click', () => location.reload());
+    $('review').addEventListener('click', () => { $('result-wrap').hidden = true; $('screen').hidden = false; show(0); });
+    $('submit').textContent = 'Show result';
+    $('submit').onclick = () => { $('screen').hidden = true; $('result-wrap').hidden = false; window.scrollTo({ top: 0 }); };
+    $('clock').textContent = `${score}/40`;
+  }
+
+  // ================= START =================
+  $('start').addEventListener('click', () => {
+    $('intro').hidden = true; $('screen').hidden = false; $('nav').hidden = false;
+    endAt = Date.now() + 60 * 60 * 1000;
+    timer = setInterval(tick, 500); tick();
+    show(0);
+  });
+  window.addEventListener('beforeunload', e => { if (timer && !submitted) { e.preventDefault(); e.returnValue = ''; } });
+  renderNav();
+})();
+</script>
+</body>
+</html>
