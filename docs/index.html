@@ -290,7 +290,7 @@ footer a { color: inherit; }
   </footer>
 </div>
 
-<script src="assets/official-listening-tests.js?v=20261002-2"></script>
+<script src="assets/official-listening-tests.js?v=20261002-5"></script>
 <script>
 (() => {
   // ---------- storage ----------
@@ -343,7 +343,7 @@ footer a { color: inherit; }
 
   // ---------- Test Report Form ----------
   function renderTRF() {
-    const officialFullResult = state.officialListening?.results?.familiarisation;
+    const officialFullResult = state.officialListening?.answerSheet?.marked ? state.officialListening?.results?.familiarisation : null;
     const officialListening = officialFullResult && officialFullResult.total === 40
       ? { correct: officialFullResult.correct, attempted: 40, raw40: officialFullResult.correct, band: band(officialFullResult.correct), pte: PTE[band(officialFullResult.correct)] }
       : null;
