@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Writing Test 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: computer-delivered writing screen — task prompt on the left, answer editor with live word count on the right, task switcher along the bottom. */
+:root {
+  --paper: #f2f5f3;
+  --sheet: #ffffff;
+  --ink: #1b2430;
+  --pencil: #5b6672;
+  --rule: #ccd5d2;
+  --omr: #c2334d;
+  --omr-soft: #f7e1e5;
+  --ok: #2b7a4b;
+  --ok-soft: #dff0e5;
+  --bad: #b23a2a;
+  --warn: #9a6512;
+  --f-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+    --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --warn: #e3b25c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+  --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --bad: #f08a7a; --warn: #e3b25c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.6; }
+h1, h2, h3, h4 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.2; }
+p { margin: 0; }
+.label { font-family: var(--f-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil); }
+.muted { color: var(--pencil); }
+.mono { font-family: var(--f-mono); }
+a { color: inherit; }
+button:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--omr); outline-offset: 2px; }
+.btn { font-family: var(--f-display); font-weight: 700; font-size: 0.95rem; border: 1.5px solid var(--ink); background: var(--ink); color: var(--sheet); padding: 9px 16px; border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-block; line-height: 1.3; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: var(--ink); color: var(--sheet); padding-inline: 16px; padding-block: 10px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: space-between; }
+.bar .who { font-family: var(--f-display); font-weight: 700; }
+.clock { font-family: var(--f-mono); font-weight: 600; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.clock.low { color: #f3c049; }
+.bar a { color: var(--sheet); font-family: var(--f-display); font-size: 0.85rem; }
+.bar .tip { font-family: var(--f-display); font-size: 0.8rem; opacity: 0.8; }
+@media (max-width: 860px) { .bar .tip { display: none; } }
+
+.intro-wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 40px; }
+.intro { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.intro h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; }
+.intro ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; max-width: 68ch; }
+.resume-note { border-left: 3px solid var(--warn); padding: 6px 12px; color: var(--warn); }
+
+.screen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); height: calc(100dvh - 52px - 60px); }
+.pane { overflow-y: auto; padding: 22px 26px 40px; min-width: 0; }
+.pane.task { background: var(--sheet); border-right: 1.5px solid var(--ink); }
+.pane.answer { background: var(--paper); display: flex; flex-direction: column; gap: 10px; }
+@media (max-width: 860px) {
+  .screen { display: block; height: auto; }
+  .pane { overflow: visible; padding: 18px 16px 24px; }
+  .pane.task { border-right: 0; border-bottom: 1.5px solid var(--ink); }
+  .pane.answer { padding-bottom: 120px; }
+}
+.task h2 { font-size: 1.4rem; margin-bottom: 4px; }
+.task .time { font-style: italic; color: var(--pencil); margin-bottom: 14px; }
+.task .prompt { border: 1.5px solid var(--ink); border-radius: 2px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; max-width: 66ch; }
+.task .prompt .q { font-weight: 600; }
+.chart { width: 100%; height: auto; display: block; margin-top: 4px; }
+.chart text { font-family: var(--f-display); fill: var(--ink); }
+.chart .axis { stroke: var(--ink); stroke-width: 1.2; }
+.chart .grid { stroke: var(--rule); stroke-width: 1; }
+.chart .ln { fill: none; stroke: var(--ink); stroke-width: 2.2; }
+.chart .mk { fill: var(--sheet); stroke: var(--ink); stroke-width: 1.8; }
+.chart .mk.solid { fill: var(--ink); }
+
+.answer-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+.wc { font-family: var(--f-mono); font-size: 0.9rem; }
+.wc.short { color: var(--warn); }
+.wc.ok { color: var(--ok); }
+textarea { flex: 1; min-height: 340px; width: 100%; font-family: var(--f-body); font-size: 1.02rem; line-height: 1.7; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 2px; padding: 14px 16px; resize: vertical; }
+textarea:disabled { opacity: 0.85; }
+.saved { font-family: var(--f-display); font-size: 0.78rem; color: var(--pencil); }
+
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--sheet); border-top: 1.5px solid var(--ink); padding-inline: 16px; padding-block: 8px calc(8px + env(safe-area-inset-bottom, 0px)); }
+.nav-inner { display: flex; gap: 10px 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.tabs button { font-family: var(--f-display); font-weight: 700; font-size: 0.9rem; border: 1.5px solid var(--rule); background: var(--paper); color: var(--ink); padding: 6px 12px; border-radius: 3px; cursor: pointer; }
+.tabs button[aria-current="true"] { border-color: var(--omr); color: var(--omr); background: var(--omr-soft); }
+.tabs .n { font-family: var(--f-mono); font-weight: 400; font-size: 0.78rem; margin-left: 6px; }
+
+.result-wrap { max-width: 1000px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 80px; display: flex; flex-direction: column; gap: 18px; }
+.card { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 4px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.scorebox { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.band-box { font-family: var(--f-mono); font-weight: 600; font-size: 2.2rem; line-height: 1; border: 2px solid var(--omr); color: var(--omr); min-width: 4.4rem; height: 3.6rem; display: grid; place-items: center; border-radius: 3px; padding-inline: 8px; }
+.tbl-wrap { overflow-x: auto; }
+table.crit { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
+table.crit th, table.crit td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.crit th { font-family: var(--f-display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil); }
+table.crit td.b { font-family: var(--f-mono); font-weight: 600; color: var(--omr); white-space: nowrap; }
+table.crit select { font: inherit; font-size: 0.9rem; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 2px; padding: 2px 6px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.metric { border: 1px solid var(--rule); border-radius: 3px; padding: 8px 10px; display: flex; flex-direction: column; }
+.metric .v { font-family: var(--f-mono); font-weight: 600; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 760px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.essay { border: 1px solid var(--rule); border-radius: 3px; padding: 12px 14px; white-space: pre-wrap; font-size: 0.97rem; max-height: 420px; overflow-y: auto; }
+details > summary { font-family: var(--f-display); font-weight: 700; cursor: pointer; }
+.note { font-size: 0.92rem; color: var(--pencil); }
+.teacher { border: 1.5px dashed var(--ink); border-radius: 3px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="who">IELTS Academic Writing · Practice Test 1</span>
+  <span class="tip" id="tip">Your answers are saved in this browser as you type</span>
+  <span class="row" style="gap:14px"><span class="clock" id="clock">60:00</span><a href="./#writing">Back to trainer</a></span>
+</div>
+
+<div class="intro-wrap" id="intro">
+  <section class="intro">
+    <span class="label">Academic Writing</span>
+    <h1>Writing Practice Test 1</h1>
+    <ul>
+      <li>You have <b>60 minutes</b> to complete two tasks.</li>
+      <li><b>Task 1:</b> describe a graph in at least <b>150 words</b>. Spend about 20 minutes on it.</li>
+      <li><b>Task 2:</b> write an essay of at least <b>250 words</b>. Spend about 40 minutes on it. Task 2 counts for twice as much as Task 1.</li>
+      <li>You can switch between the tasks at any time. The word count updates as you type.</li>
+      <li>Your writing is saved in this browser, so a refresh will not lose it. The test submits automatically when the time runs out.</li>
+    </ul>
+    <p class="resume-note" id="resume-note" hidden>You have an unfinished attempt saved in this browser. Starting will continue it with the time that was left.</p>
+    <div class="row"><button class="btn" id="start" type="button">Start the test</button><button class="btn ghost" id="fresh" type="button" hidden>Start a new attempt</button></div>
+  </section>
+</div>
+
+<div class="screen" id="screen" hidden>
+  <article class="pane task" id="task-pane"></article>
+  <section class="pane answer">
+    <div class="answer-head"><span class="label" id="answer-label">Task 1 answer</span><span class="wc" id="wc">0 words</span></div>
+    <textarea id="editor" spellcheck="false" autocapitalize="sentences" aria-label="Your answer"></textarea>
+    <span class="saved" id="saved">&nbsp;</span>
+  </section>
+</div>
+
+<div class="result-wrap" id="result-wrap" hidden></div>
+
+<nav class="nav" id="nav" hidden>
+  <div class="nav-inner">
+    <div class="tabs" id="tabs">
+      <button type="button" data-t="0" aria-current="true">Task 1<span class="n" id="n0">0/150</span></button>
+      <button type="button" data-t="1" aria-current="false">Task 2<span class="n" id="n1">0/250</span></button>
+    </div>
+    <button class="btn" id="submit" type="button">Submit both tasks</button>
+  </div>
+</nav>
+
+<script>
+(() => {
+  'use strict';
+
+  // ================= CONTENT =================
+  // Task 1 data: % of household waste recycled
+  const YEARS = [2000, 2005, 2010, 2015, 2020];
+  const SERIES = [
+    { name: 'Germany', v: [33, 45, 56, 62, 66], dash: '', mk: 'circle', solid: true },
+    { name: 'UK', v: [11, 22, 38, 43, 44], dash: '7 5', mk: 'square', solid: false },
+    { name: 'Spain', v: [15, 18, 22, 30, 39], dash: '2 4', mk: 'triangle', solid: true },
+    { name: 'Japan', v: [16, 19, 20, 20, 21], dash: '12 4 3 4', mk: 'diamond', solid: false },
+  ];
+  function chartSVG() {
+    const X0 = 70, X1 = 500, Y0 = 330, Y1 = 40, MAX = 70;
+    const x = i => X0 + (X1 - X0) * i / (YEARS.length - 1);
+    const y = v => Y0 - (Y0 - Y1) * v / MAX;
+    let g = '';
+    for (let v = 0; v <= MAX; v += 10) g += `<line class="grid" x1="${X0}" x2="${X1}" y1="${y(v)}" y2="${y(v)}"/><text x="${X0 - 10}" y="${y(v) + 4}" text-anchor="end" font-size="12">${v}</text>`;
+    YEARS.forEach((yr, i) => g += `<text x="${x(i)}" y="${Y0 + 20}" text-anchor="middle" font-size="12">${yr}</text>`);
+    const marker = (m, cx, cy, solid) => {
+      const c = `class="mk ${solid ? 'solid' : ''}"`;
+      if (m === 'circle') return `<circle ${c} cx="${cx}" cy="${cy}" r="4.5"/>`;
+      if (m === 'square') return `<rect ${c} x="${cx - 4}" y="${cy - 4}" width="8" height="8"/>`;
+      if (m === 'triangle') return `<path ${c} d="M${cx} ${cy - 5.5} L${cx + 5} ${cy + 4} L${cx - 5} ${cy + 4} Z"/>`;
+      return `<path ${c} d="M${cx} ${cy - 5.5} L${cx + 5.5} ${cy} L${cx} ${cy + 5.5} L${cx - 5.5} ${cy} Z"/>`;
+    };
+    SERIES.forEach(s => {
+      g += `<polyline class="ln" stroke-dasharray="${s.dash}" points="${s.v.map((v, i) => `${x(i)},${y(v)}`).join(' ')}"/>`;
+      s.v.forEach((v, i) => g += marker(s.mk, x(i), y(v), s.solid));
+      g += `<text x="${X1 + 12}" y="${y(s.v[4]) + 4}" font-size="13" font-weight="700">${s.name}</text>`;
+    });
+    g += `<line class="axis" x1="${X0}" x2="${X0}" y1="${Y1 - 8}" y2="${Y0}"/><line class="axis" x1="${X0}" x2="${X1}" y1="${Y0}" y2="${Y0}"/>`;
+    g += `<text x="18" y="${(Y0 + Y1) / 2}" font-size="12" text-anchor="middle" transform="rotate(-90 18 ${(Y0 + Y1) / 2})">% of household waste recycled</text>`;
+    g += `<text x="${(X0 + X1) / 2}" y="20" text-anchor="middle" font-size="14" font-weight="700">Household waste recycled in four countries, 2000–2020</text>`;
+    return `<svg class="chart" viewBox="0 0 600 370" role="img" aria-label="Line graph of the percentage of household waste recycled in Germany, the UK, Spain and Japan from 2000 to 2020. Germany rose from 33% to 66%, the UK from 11% to 44%, Spain from 15% to 39%, and Japan from 16% to 21%.">${g}</svg>`;
+  }
+
+  const TASKS = [
+    {
+      key: 'task1', min: 150, minutes: 20,
+      html: () => `<h2>Writing Task 1</h2><p class="time">You should spend about 20 minutes on this task.</p>
+        <div class="prompt">
+          <p class="q">The graph below shows the percentage of household waste that was recycled in four countries between 2000 and 2020.</p>
+          <p class="q">Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</p>
+          ${chartSVG()}
+        </div>
+        <p class="time" style="margin-top:12px">Write at least 150 words.</p>`,
+      keywords: ['recycl', 'waste', 'household', 'germany', 'uk', 'spain', 'japan', 'percent', '2000', '2020'],
+      model: `The line graph compares the proportion of household waste that was recycled in Germany, the UK, Spain and Japan over a twenty-year period from 2000.
+
+Overall, recycling rates increased in all four countries, although the scale of the rise varied considerably. Germany recycled the highest proportion of its waste throughout the period, while Japan showed the least change.
+
+In 2000, Germany already recycled a third of its household waste, roughly double the figures for Spain (15%) and Japan (16%), and three times the UK's rate of just 11%. Over the following two decades, the German figure climbed steadily to reach 66% in 2020.
+
+The UK saw the most dramatic improvement. Its rate quadrupled, rising sharply to 38% by 2010 before levelling off at 44% in 2020. Spain's progress was slower at first, with only a small increase to 22% by 2010, but it then accelerated, reaching 39% by the end of the period.
+
+Japan, by contrast, remained almost unchanged, edging up from 16% to just 21%, which meant that it went from having the second-highest rate in 2000 to the lowest in 2020.`,
+    },
+    {
+      key: 'task2', min: 250, minutes: 40,
+      html: () => `<h2>Writing Task 2</h2><p class="time">You should spend about 40 minutes on this task.</p>
+        <div class="prompt">
+          <p>Write about the following topic:</p>
+          <p class="q">Some people believe that university education should be free for all students. Others think that students should pay for their own studies.</p>
+          <p class="q">Discuss both these views and give your own opinion.</p>
+          <p>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p>
+        </div>
+        <p class="time" style="margin-top:12px">Write at least 250 words.</p>`,
+      keywords: ['universit', 'free', 'pay', 'student', 'educat', 'fee', 'government', 'tax', 'cost', 'degree'],
+      model: `Whether university education should be paid for by the state or by students themselves is a question that divides opinion in many countries. While there are reasonable arguments on both sides, I believe that higher education should be largely free, provided that places are allocated fairly.
+
+Those who argue that students should pay point out that graduates usually earn considerably more than people without a degree. From this perspective, it seems unfair to ask taxpayers, many of whom never attended university, to fund an investment that mainly benefits the individual. Supporters of fees also claim that paying for a course encourages students to take their studies more seriously and to choose subjects that lead to employment.
+
+On the other hand, there are strong reasons for making university free. Firstly, fees discourage talented young people from poorer families, who may be unwilling to take on large debts. As a result, a country risks wasting the abilities of a significant part of its population. Secondly, society as a whole benefits from a highly educated workforce. Doctors, engineers and teachers trained at public expense go on to provide essential services and, because they earn more, they also pay higher taxes throughout their working lives. In Germany, for example, tuition is free at public universities, yet the country continues to have one of the strongest economies in Europe.
+
+In my view, the advantages of free higher education outweigh the costs. However, to keep the system affordable, governments should link funding to the needs of the economy and maintain high entry standards. In conclusion, although graduates do gain personally from their degrees, education is ultimately an investment in the whole of society and should therefore be funded by the state.`,
+    },
+  ];
+
+  // ================= STATE =================
+  const $ = id => document.getElementById(id);
+  const KEY = 'ielts-writing-test1-attempt';
+  let st = { texts: ['', ''], endAt: 0, submitted: false };
+  try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s && Array.isArray(s.texts)) st = s; } catch (e) {}
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+  let cur = 0, timer = null;
+
+  const words = s => (String(s).match(/[A-Za-z0-9]+(?:['’\-.,][A-Za-z0-9]+)*/g) || []);
+  const wc = s => words(s).length;
+
+  let editorLoaded = false;
+  function showTask(i) {
+    if (editorLoaded) st.texts[cur] = $('editor').value;
+    editorLoaded = true;
+    cur = i;
+    $('task-pane').innerHTML = TASKS[i].html();
+    $('editor').value = st.texts[i];
+    $('answer-label').textContent = `Task ${i + 1} answer`;
+    $('tabs').querySelectorAll('button').forEach(b => b.setAttribute('aria-current', String(+b.dataset.t === i)));
+    $('task-pane').scrollTop = 0;
+    updateCount();
+  }
+  function updateCount() {
+    const n = wc($('editor').value), min = TASKS[cur].min;
+    $('wc').textContent = `${n} word${n === 1 ? '' : 's'} · minimum ${min}`;
+    $('wc').className = 'wc ' + (n >= min ? 'ok' : n ? 'short' : '');
+    [0, 1].forEach(i => { const t = i === cur ? $('editor').value : st.texts[i]; $('n' + i).textContent = `${wc(t)}/${TASKS[i].min}`; });
+  }
+  let saveT = null;
+  $('editor').addEventListener('input', () => {
+    st.texts[cur] = $('editor').value; updateCount();
+    clearTimeout(saveT); saveT = setTimeout(() => { persist(); $('saved').textContent = 'Saved ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }, 400);
+  });
+  $('tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) showTask(+b.dataset.t); });
+
+  // ================= TIMER =================
+  const fmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  function tick() {
+    const left = Math.max(0, Math.ceil((st.endAt - Date.now()) / 1000));
+    $('clock').textContent = fmt(left);
+    $('clock').classList.toggle('low', left <= 600);
+    if (left <= 600 && !$('tip').dataset.w) { $('tip').dataset.w = 1; $('tip').textContent = '10 minutes remaining'; }
+    if (left === 0) submit(true);
+  }
+
+  // ================= ASSESSMENT =================
+  // Text-feature estimate only: an examiner (or teacher) gives the real band.
+  const LINKERS = ['however', 'moreover', 'furthermore', 'in addition', 'additionally', 'therefore', 'consequently', 'as a result', 'thus', 'hence', 'although', 'even though', 'whereas', 'while', 'on the other hand', 'in contrast', 'by contrast', 'nevertheless', 'for example', 'for instance', 'such as', 'firstly', 'secondly', 'finally', 'in conclusion', 'to conclude', 'overall', 'meanwhile', 'subsequently', 'after that', 'because', 'since', 'similarly', 'likewise', 'instead', 'despite', 'in spite of', 'to sum up', 'in my view', 'in my opinion'];
+  const SUBORD = /\b(because|although|though|while|whereas|which|who|whom|whose|that|if|unless|when|since|until|after|before|once|provided)\b/;
+  const roundHalf = x => Math.round(x * 2) / 2;
+  const clampB = b => Math.max(2.5, Math.min(8.5, roundHalf(b)));
+  const fmtBand = b => Number.isInteger(b) ? b.toFixed(1) : String(b);
+  function assess(text, t, idx) {
+    const w = words(text.toLowerCase()), n = w.length;
+    const paras = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
+    const sents = text.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(s => words(s).length);
+    const lens = sents.map(s => words(s).length);
+    const avg = lens.reduce((a, b) => a + b, 0) / (lens.length || 1);
+    const sd = Math.sqrt(lens.reduce((a, b) => a + (b - avg) ** 2, 0) / (lens.length || 1));
+    let mattr = 0;
+    if (n >= 50) { let sum = 0, k = 0; for (let i = 0; i + 50 <= n; i += 5) { sum += new Set(w.slice(i, i + 50)).size / 50; k++; } mattr = sum / k; } else mattr = n ? new Set(w).size / n : 0;
+    const lower = ' ' + text.toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+    const linkUsed = LINKERS.filter(l => lower.includes(' ' + l + ' '));
+    const complex = sents.filter(s => SUBORD.test(s.toLowerCase())).length / (sents.length || 1);
+    const longW = w.filter(x => x.length >= 8).length / (n || 1);
+    const keyHit = t.keywords.filter(k => w.some(x => x.startsWith(k))).length / t.keywords.length;
+    const caps = sents.filter(s => /^[A-Z“"'(0-9]/.test(s)).length / (sents.length || 1);
+    const lowerI = (text.match(/\bi\b/g) || []).length;
+    const numbers = (text.match(/\d+(\.\d+)?\s?(%|per ?cent)?/g) || []).length;
+    const overview = /\b(overall|in general|generally|it is clear|it can be seen|in summary)\b/i.test(text);
+    const position = /\b(i believe|i think|in my (view|opinion)|i (strongly )?(agree|disagree)|i would argue|personally)\b/i.test(text);
+    const conclusion = /\b(in conclusion|to conclude|to sum up|in summary|overall,)\b/i.test(text);
+    const ratio = n / t.min;
+
+    let TA, taNote;
+    if (idx === 0) {
+      TA = 4 + Math.min(1.5, ratio * 1.5) + keyHit * 1.2 + (overview ? 1 : 0) + Math.min(1, numbers / 8) - (ratio < 0.7 ? 1.5 : 0);
+      taNote = !overview ? 'No clear overview. Add a sentence starting “Overall,” that sums up the main trends.' : numbers < 6 ? 'Support the description with more figures from the graph (percentages and years).' : ratio < 1 ? `Under 150 words: examiners lower the score for short answers.` : 'Overview and supporting figures are present.';
+    } else {
+      TA = 4 + Math.min(1.5, ratio * 1.5) + keyHit * 1.2 + (position ? 1 : 0) + (conclusion ? 0.5 : 0) - (ratio < 0.7 ? 1.5 : 0);
+      taNote = !position ? 'Your own opinion is not clear. The question asks for it: state it in the introduction and conclusion.' : ratio < 1 ? 'Under 250 words: examiners lower the score for short essays.' : !conclusion ? 'Add a clear conclusion that restates your view.' : 'Both views are addressed and your opinion is clear.';
+    }
+    const CC = 4 + Math.min(2, linkUsed.length / 3) + Math.min(1.5, (paras.length - 1) * 0.5) + (avg >= 10 && avg <= 26 ? 0.5 : 0);
+    const LR = 3 + (mattr - 0.55) * 12 + longW * 10;
+    const GRA = 4 + complex * 3 + Math.min(1.5, sd / 5) + (caps - 0.8) * 5 - Math.min(1.5, lowerI * 0.5);
+    const crit = [
+      [idx === 0 ? 'Task achievement' : 'Task response', clampB(TA), taNote],
+      ['Coherence and cohesion', clampB(CC), paras.length < (idx === 0 ? 3 : 4) ? `Use more paragraphs: ${idx === 0 ? 'introduction, overview and two body paragraphs' : 'introduction, two body paragraphs and a conclusion'}.` : linkUsed.length < 4 ? 'Use a wider range of linking words.' : `Clear paragraphing. Linkers used: ${linkUsed.slice(0, 6).join(', ')}.`],
+      ['Lexical resource', clampB(LR), mattr < 0.62 ? 'Some words are repeated often. Use synonyms and more precise vocabulary.' : 'A reasonable range of vocabulary.'],
+      ['Grammatical range and accuracy', clampB(GRA), complex < 0.3 ? 'Mostly simple sentences. Add complex ones with although, which, because or when.' : lowerI ? 'Capitalise the pronoun “I”.' : 'A good mix of sentence types. Proofread for errors this tool cannot see.'],
+    ];
+    // short answers: examiners cap the score, most heavily for Task response / achievement
+    const cap = ratio < 0.4 ? [2.5, 3.5] : ratio < 0.7 ? [4, 4.5] : ratio < 0.9 ? [5, 6] : ratio < 1 ? [6, 7] : [9, 9];
+    crit.forEach((c, k) => { c[1] = Math.min(c[1], k === 0 ? cap[0] : cap[1]); });
+    const band = roundHalf(crit.reduce((a, c) => a + c[1], 0) / 4);
+    return { n, crit, band: n < 20 ? 0 : band, metrics: [['Words', n], ['Paragraphs', paras.length], ['Sentences', sents.length], ['Avg sentence', avg.toFixed(1)], ['Linking words', linkUsed.length], ['Complex sentences', Math.round(complex * 100) + '%']] };
+  }
+  // Writing band: Task 2 counts double
+  const writingBand = (b1, b2) => roundHalf((b1 + 2 * b2) / 3);
+  const PTE = { 9: 88, 8.5: 81, 8: 75.5, 7.5: 68.5, 7: 61, 6.5: 53.5, 6: 45.5, 5.5: 38.5, 5: 32.5, 4.5: 26, 4: 19, 3.5: 12.5, 3: 8.5, 2.5: 6.5, 2: 4.5, 1.5: 2.5, 1: 1, 0: 0 };
+  function saveBand(band, source) {
+    try {
+      const K = 'ielts-band-trainer-v1';
+      const s = JSON.parse(localStorage.getItem(K) || '{}') || {};
+      s.writingTest1 = { band, source, recordedAt: new Date().toISOString() };
+      localStorage.setItem(K, JSON.stringify(s));
+    } catch (e) {}
+  }
+
+  // ================= SUBMIT =================
+  let armed = false;
+  $('submit').addEventListener('click', () => {
+    if (st.submitted) return;
+    const short = [0, 1].filter(i => wc(i === cur ? $('editor').value : st.texts[i]) < TASKS[i].min).map(i => `Task ${i + 1}`);
+    if (!armed) {
+      armed = true; $('submit').textContent = short.length ? `${short.join(' and ')} under the word limit · click again to submit` : 'Click again to submit';
+      setTimeout(() => { armed = false; if (!st.submitted) $('submit').textContent = 'Submit both tasks'; }, 4000);
+      return;
+    }
+    submit(false);
+  });
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function submit(auto) {
+    if (st.submitted) return;
+    st.texts[cur] = $('editor').value;
+    st.submitted = true; st.auto = auto; persist();
+    clearInterval(timer);
+    renderResult();
+  }
+
+  function renderResult() {
+    const r = [0, 1].map(i => assess(st.texts[i], TASKS[i], i));
+    const est = writingBand(r[0].band, r[1].band);
+    saveBand(est, 'estimate');
+    $('intro').hidden = true; $('screen').hidden = true; $('nav').hidden = true; $('result-wrap').hidden = false;
+    $('clock').textContent = 'Finished'; $('tip').textContent = '';
+    const bandOpts = sel => [9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1, 0].map(b => `<option value="${b}" ${b === sel ? 'selected' : ''}>${fmtBand(b)}</option>`).join('');
+    $('result-wrap').innerHTML = `
+      <section class="card">
+        <span class="label">${st.auto ? 'Time is up · ' : ''}Writing result</span>
+        <div class="scorebox"><div class="band-box" id="final-band">${fmtBand(est)}</div>
+          <div><h2>Estimated Writing band ${fmtBand(est)}</h2><p class="muted">Task 1 ≈ ${fmtBand(r[0].band)} · Task 2 ≈ ${fmtBand(r[1].band)} (Task 2 counts double) · PTE equivalent ≈ ${PTE[est] ?? '–'}</p></div></div>
+        <p class="note">This estimate comes from measurable features of your writing: length, paragraphs, key ideas, linking words, vocabulary range and sentence variety. It cannot judge meaning, accuracy or spelling the way an examiner does, so ask your teacher to mark it with the panel at the bottom of this page.</p>
+        <div class="row"><button class="btn" type="button" id="copy">Copy both answers</button><button class="btn ghost" type="button" id="download">Download as a text file</button><a class="btn ghost" href="./#writing">Back to trainer</a><button class="btn ghost" type="button" id="again">Start a new attempt</button></div>
+        <span class="note" id="copy-msg"></span>
+      </section>
+      ${[0, 1].map(i => `
+      <section class="card">
+        <div class="row" style="justify-content:space-between"><h2>Task ${i + 1}</h2><span class="label">${r[i].n} words · minimum ${TASKS[i].min}</span></div>
+        <div class="metrics">${r[i].metrics.map(([k, v]) => `<div class="metric"><span class="label">${k}</span><span class="v">${v}</span></div>`).join('')}</div>
+        <div class="tbl-wrap"><table class="crit"><thead><tr><th>Criterion</th><th>Estimate</th><th>Feedback</th></tr></thead><tbody>${r[i].crit.map(([c, b, f]) => `<tr><td>${c}</td><td class="b">${fmtBand(b)}</td><td>${esc(f)}</td></tr>`).join('')}</tbody></table></div>
+        <div class="two">
+          <div><span class="label">Your answer</span><div class="essay">${st.texts[i].trim() ? esc(st.texts[i]) : '<span class="muted">No answer written.</span>'}</div></div>
+          <div><span class="label">Model answer (about band 8)</span><div class="essay">${esc(TASKS[i].model)}</div></div>
+        </div>
+      </section>`).join('')}
+      <section class="card">
+        <h2>Teacher marking</h2>
+        <p class="note">Teachers: read both answers and choose a band for each criterion. The Writing band is worked out the official way (the four criteria are averaged for each task, and Task 2 counts double). Saving replaces the estimate in this student’s score summary.</p>
+        <div class="teacher">
+          <div class="tbl-wrap"><table class="crit"><thead><tr><th>Criterion</th><th>Task 1</th><th>Task 2</th></tr></thead><tbody>
+            ${r[0].crit.map((c, k) => `<tr><td>${k === 0 ? 'Task achievement / response' : c[0]}</td><td><select data-t="0" data-k="${k}" aria-label="Task 1 ${c[0]}">${bandOpts(r[0].crit[k][1])}</select></td><td><select data-t="1" data-k="${k}" aria-label="Task 2 ${c[0]}">${bandOpts(r[1].crit[k][1])}</select></td></tr>`).join('')}
+            <tr><td><b>Task band</b></td><td class="b" id="tb0"></td><td class="b" id="tb1"></td></tr>
+          </tbody></table></div>
+          <div class="row"><span>Writing band: <b id="tw" class="mono"></b></span><button class="btn" type="button" id="save-teacher">Save teacher’s band</button><span class="note" id="teacher-msg"></span></div>
+        </div>
+      </section>`;
+    const teacherCalc = () => {
+      const tb = [0, 1].map(t => { const v = [...document.querySelectorAll(`select[data-t="${t}"]`)].map(s => +s.value); return Math.floor(v.reduce((a, b) => a + b, 0) / 4 * 2) / 2; });
+      $('tb0').textContent = fmtBand(tb[0]); $('tb1').textContent = fmtBand(tb[1]);
+      const w = writingBand(tb[0], tb[1]); $('tw').textContent = fmtBand(w); return w;
+    };
+    teacherCalc();
+    $('result-wrap').addEventListener('change', e => { if (e.target.matches('select[data-t]')) teacherCalc(); });
+    $('save-teacher').addEventListener('click', () => { const w = teacherCalc(); saveBand(w, 'teacher'); $('final-band').textContent = fmtBand(w); $('teacher-msg').textContent = `Saved: Writing band ${fmtBand(w)}.`; });
+    const plain = () => `IELTS Academic Writing · Practice Test 1\n\nTASK 1 (${wc(st.texts[0])} words)\n\n${st.texts[0]}\n\n\nTASK 2 (${wc(st.texts[1])} words)\n\n${st.texts[1]}\n`;
+    $('copy').addEventListener('click', () => {
+      navigator.clipboard.writeText(plain()).then(() => $('copy-msg').textContent = 'Copied. Paste into an email or message to your teacher.')
+        .catch(() => $('copy-msg').textContent = 'Copying is blocked here. Use Download instead.');
+    });
+    $('download').addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([plain()], { type: 'text/plain' }));
+      a.download = 'ielts-writing-test-1.txt'; document.body.appendChild(a); a.click(); a.remove();
+    });
+    $('again').addEventListener('click', () => { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); });
+    window.scrollTo({ top: 0 });
+  }
+
+  // ================= START =================
+  function begin() {
+    if (!st.endAt) st.endAt = Date.now() + 60 * 60 * 1000;
+    persist();
+    $('intro').hidden = true; $('screen').hidden = false; $('nav').hidden = false;
+    cur = 0; showTask(0);
+    timer = setInterval(tick, 500); tick();
+    $('editor').focus();
+  }
+  $('start').addEventListener('click', begin);
+  $('fresh').addEventListener('click', () => { st = { texts: ['', ''], endAt: 0, submitted: false }; persist(); begin(); });
+  if (st.submitted) renderResult();
+  else if (st.endAt) {
+    if (Date.now() >= st.endAt) { st.submitted = true; st.auto = true; persist(); renderResult(); }
+    else { $('resume-note').hidden = false; $('start').textContent = 'Continue the test'; $('fresh').hidden = false; }
+  }
+})();
+</script>
+</body>
+</html>
