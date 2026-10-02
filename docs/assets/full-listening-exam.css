@@ -1,0 +1,62 @@
+/* Original 40-question Listening examination */
+.full-listening-exam { display: flex; flex-direction: column; gap: 16px; }
+.full-exam-start, .full-exam-shell { border: 1.5px solid var(--ink); background: var(--paper); border-radius: 4px; }
+.full-exam-start { padding: 22px; }
+.full-exam-start h3 { font-size: 1.45rem; margin-top: 4px; }
+.full-exam-start > p { color: var(--pencil); margin-top: 6px; max-width: 74ch; line-height: 1.45; }
+.exam-structure { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 18px 0; }
+.exam-structure div { background: var(--sheet); padding: 12px; display: flex; flex-direction: column; gap: 3px; }
+.exam-structure b { font-family: var(--f-mono); color: var(--omr); font-size: .82rem; text-transform: uppercase; }
+.exam-structure span { font-size: .9rem; color: var(--pencil); }
+.exam-start-btn { padding: 10px 15px; }
+.exam-small { font: .79rem var(--f-mono); color: var(--pencil); margin-top: 12px !important; }
+.full-exam-shell { overflow: hidden; }
+.exam-topbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 18px; padding: 17px 18px; background: var(--ink); color: var(--sheet); }
+.exam-topbar .label { color: color-mix(in srgb, var(--sheet) 66%, transparent); }
+.exam-topbar h3 { margin-top: 3px; font-size: 1.2rem; }
+.exam-progress { min-width: 112px; padding: 7px 10px; border: 1px solid color-mix(in srgb, var(--sheet) 56%, transparent); text-align: center; font: .75rem var(--f-mono); color: color-mix(in srgb, var(--sheet) 75%, transparent); }
+.exam-progress b { display: block; font-family: var(--f-display); font-size: 1.35rem; color: var(--sheet); }
+.exam-top-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: end; gap: 8px; }
+.exam-top-actions .btn.ghost { color: var(--sheet); border-color: color-mix(in srgb, var(--sheet) 62%, transparent); background: transparent; font-size: .78rem; padding: 6px 8px; }
+.exam-part-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--rule); border-bottom: 1px solid var(--rule); gap: 1px; }
+.exam-part-nav button { min-height: 60px; border: 0; background: var(--sheet); color: var(--ink); padding: 8px; display: flex; flex-direction: column; align-items: start; justify-content: center; gap: 2px; cursor: pointer; text-align: left; }
+.exam-part-nav button b { font: 600 .79rem var(--f-mono); }
+.exam-part-nav button span { font-size: .77rem; color: var(--pencil); }
+.exam-part-nav button[aria-current="step"] { background: var(--omr-soft); box-shadow: inset 0 -3px 0 var(--omr); }
+.exam-part-nav button:disabled { cursor: not-allowed; color: var(--pencil); opacity: .62; }
+.exam-instruction { padding: 14px 18px; border-bottom: 1px solid var(--rule); background: linear-gradient(90deg, var(--omr-soft), transparent 72%); }
+.exam-instruction .label { color: var(--omr); }
+.exam-instruction p { margin-top: 3px; font-size: .92rem; line-height: 1.42; }
+.exam-audio { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 16px 18px; padding: 13px; background: var(--ink); border-radius: 3px; color: var(--sheet); }
+.exam-audio .btn { background: var(--sheet); border-color: var(--sheet); color: var(--ink); }
+.exam-audio .btn:disabled { opacity: .68; cursor: not-allowed; }
+.exam-audio span { color: color-mix(in srgb, var(--sheet) 76%, transparent); font: .8rem var(--f-mono); }
+.exam-question-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 18px; padding: 0 18px 12px; }
+.exam-question-head .label { color: var(--omr); }
+.exam-question-head p { color: var(--pencil); font-size: .85rem; }
+.exam-questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; padding: 0 18px 18px; }
+.exam-question { position: relative; min-width: 0; border: 1px solid var(--rule); background: var(--sheet); padding: 12px 12px 11px 50px; display: flex; flex-direction: column; gap: 8px; }
+fieldset.exam-question { margin: 0; min-inline-size: 0; }
+fieldset.exam-question legend { padding: 0; display: block; font-weight: 600; line-height: 1.4; }
+.exam-qnum { position: absolute; left: 11px; top: 11px; color: var(--omr); font: 600 .83rem var(--f-mono); }
+.exam-prompt { font-weight: 600; line-height: 1.42; }
+.text-question input { width: 100%; background: transparent; color: var(--ink); border: 0; border-bottom: 1.5px solid var(--ink); border-radius: 0; padding: 5px 2px; font: .96rem var(--f-mono); }
+.select-question select { width: 100%; padding: 7px; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); font: .87rem var(--f-mono); }
+.exam-options { display: flex; flex-direction: column; gap: 5px; }
+.exam-options label { display: flex; gap: 7px; align-items: start; font-size: .91rem; line-height: 1.32; cursor: pointer; }
+.exam-options input { margin-top: 3px; accent-color: var(--omr); }
+.exam-options b { min-width: 1.1rem; color: var(--omr); font-family: var(--f-mono); }
+.exam-question.correct { border-color: var(--ok); background: var(--ok-soft); }
+.exam-question.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.exam-question :disabled { cursor: default; }
+.exam-feedback { margin: 0; font: .79rem var(--f-mono); }
+.exam-feedback.correct { color: var(--ok); }
+.exam-feedback.wrong { color: var(--bad); }
+.exam-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 18px; padding: 14px 18px; border-top: 1px solid var(--rule); background: var(--paper); color: var(--pencil); font-size: .88rem; }
+.exam-footer .btn { flex: 0 0 auto; }
+.exam-result { border-top: 1px solid var(--ok); background: var(--ok-soft); padding: 17px 18px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 13px; }
+.exam-result .label { color: var(--ok); }
+.exam-result h3 { margin: 2px 0; font-size: 1.25rem; }
+.exam-result p { color: var(--pencil); max-width: 62ch; font-size: .9rem; }
+.exam-result .btn.ghost { color: var(--ink); background: transparent; border-color: var(--rule); }
+@media (max-width: 700px) { .exam-structure { grid-template-columns: repeat(2, minmax(0, 1fr)); } .exam-questions { grid-template-columns: 1fr; padding: 0 12px 14px; } .exam-audio, .exam-question-head { margin-left: 12px; margin-right: 12px; } .exam-instruction, .exam-footer, .exam-topbar, .exam-result { padding-left: 13px; padding-right: 13px; } .exam-part-nav button { min-height: 56px; padding: 7px; } .exam-part-nav button span { font-size: .68rem; } }

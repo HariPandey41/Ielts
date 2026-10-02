@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="assets/official-listening-tests.css">
-<link rel="stylesheet" href="assets/one-question-test.css">
+<link rel="stylesheet" href="assets/full-listening-exam.css">
 <style>
 /* Layout: a Test Report Form strip of band boxes on top, then one module sheet at a time below it. */
 :root {
@@ -166,7 +166,7 @@ footer a { color: inherit; }
 
   <nav class="tabs" role="tablist" aria-label="Modules">
     <button role="tab" id="tab-listening" aria-selected="true" data-tab="listening">Listening</button>
-    <button role="tab" id="tab-one-test" aria-selected="false" data-tab="one-test">One-write test</button>
+    <button role="tab" id="tab-full-exam" aria-selected="false" data-tab="full-exam">Full Listening exam</button>
     <button role="tab" id="tab-exam" aria-selected="false" data-tab="exam">Official listening tests</button>
     <button role="tab" id="tab-reading" aria-selected="false" data-tab="reading">Reading</button>
     <button role="tab" id="tab-writing" aria-selected="false" data-tab="writing">Writing</button>
@@ -193,13 +193,13 @@ footer a { color: inherit; }
     <ol class="items" id="l-items"></ol>
   </section>
 
-  <!-- ONE-WRITE LISTENING PROTOTYPE -->
-  <section class="sheet" id="panel-one-test" role="tabpanel" hidden>
+  <!-- FULL ORIGINAL LISTENING EXAM -->
+  <section class="sheet" id="panel-full-exam" role="tabpanel" hidden>
     <div class="sheet-head">
-      <h2>Listening · one-write test</h2>
-      <span class="trf-meta">Self-contained audio · one answer · automatic marking</span>
+      <h2>Listening · full practice exam</h2>
+      <span class="trf-meta">4 parts · 40 questions · self-contained audio · automatic marking</span>
     </div>
-    <div class="one-question-test" id="one-question-test"></div>
+    <div class="full-listening-exam" id="full-listening-exam"></div>
   </section>
 
   <!-- FULL LISTENING TEST -->
@@ -208,7 +208,7 @@ footer a { color: inherit; }
       <h2>Listening · official practice tests</h2>
       <span class="trf-meta">Official audio · computer tests · answers & transcripts</span>
     </div>
-    <div class="full-test" id="full-listening-test"></div>
+    <div class="full-test official-listening" id="full-listening-test"></div>
   </section>
 
   <!-- READING -->
@@ -301,13 +301,13 @@ footer a { color: inherit; }
   </footer>
 </div>
 
-<script src="assets/official-listening-tests.js?v=20261002-6"></script>
-<script src="assets/one-question-test.js?v=20261002-1"></script>
+<script src="assets/official-listening-tests.js?v=20261002-7"></script>
+<script src="assets/full-listening-exam.js?v=20261002-2"></script>
 <script>
 (() => {
   // ---------- storage ----------
   const KEY = 'ielts-band-trainer-v1';
-  let state = { listening: {}, oneQuestion: { answer: '', played: false, submitted: false }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null };
+  let state = { listening: {}, fullListeningExam: { started: false, currentPart: 1, unlockedPart: 1, played: {}, completed: {}, answers: {}, submitted: false, result: null }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null };
   try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s) state = Object.assign(state, s); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
 
@@ -355,16 +355,16 @@ footer a { color: inherit; }
 
   // ---------- Test Report Form ----------
   function renderTRF() {
-    const officialFullResult = state.officialListening?.answerSheet?.marked ? state.officialListening?.results?.familiarisation : null;
-    const officialListening = officialFullResult && officialFullResult.total === 40
-      ? { correct: officialFullResult.correct, attempted: 40, raw40: officialFullResult.correct, band: band(officialFullResult.correct), pte: PTE[band(officialFullResult.correct)] }
+    const originalFullResult = state.fullListeningExam?.submitted ? state.fullListeningExam?.result : null;
+    const originalListening = originalFullResult
+      ? { correct: originalFullResult.correct, attempted: 40, raw40: originalFullResult.correct, band: band(originalFullResult.correct), pte: PTE[band(originalFullResult.correct)] }
       : null;
-    const L = officialListening || projection(state.listening), R = projection(state.reading);
+    const L = originalListening || projection(state.listening), R = projection(state.reading);
     const wVals = Object.values(state.writing);
     const W = wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
     const S = state.speaking;
     const cells = [
-      ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${officialListening ? 'official full test' : `≈${L.raw40}/40`}` : 'not started'],
+      ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${originalListening ? 'full practice exam' : `≈${L.raw40}/40`}` : 'not started'],
       ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ≈${R.raw40}/40` : 'not started'],
       ['Writing', W, wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
       ['Speaking', S, S != null ? 'self-assessed' : 'not rated'],
@@ -379,7 +379,7 @@ footer a { color: inherit; }
         <div class="band-box ${b == null ? 'empty' : ''}">${fmtBand(b)}</div>
         <span class="trf-meta">${meta}</span>
       </div>`).join('');
-    document.getElementById('l-progress').textContent = L ? `${L.correct} of ${L.attempted} correct · band ${fmtBand(L.band)} · PTE ${L.pte}${officialListening ? ' · official full test' : ''}` : `${LISTEN.length} sentences`;
+    document.getElementById('l-progress').textContent = L ? `${L.correct} of ${L.attempted} correct · band ${fmtBand(L.band)} · PTE ${L.pte}${originalListening ? ' · full practice exam' : ''}` : `${LISTEN.length} sentences`;
     document.getElementById('r-progress').textContent = R ? `${R.correct} of ${R.attempted} correct · band ${fmtBand(R.band)} · PTE ${R.pte}` : `${PASSAGES.reduce((a, p) => a + p.qs.length, 0)} questions`;
     renderConv(L, R);
   }
@@ -719,11 +719,11 @@ footer a { color: inherit; }
   }
 
   let officialListeningLibrary = null;
-  let oneQuestionTest = null;
-  function renderOneQuestionTest() {
-    if (!window.createOneQuestionTest) return;
-    if (!oneQuestionTest) oneQuestionTest = window.createOneQuestionTest({ root: document.getElementById('one-question-test'), getState: () => state, save });
-    oneQuestionTest.render();
+  let fullListeningExam = null;
+  function renderFullListeningExam() {
+    if (!window.createFullListeningExam) return;
+    if (!fullListeningExam) fullListeningExam = window.createFullListeningExam({ root: document.getElementById('full-listening-exam'), getState: () => state, save, band, fmtBand, onResult: renderTRF });
+    fullListeningExam.render();
   }
   function renderOfficialListeningLibrary() {
     if (!window.createOfficialListeningLibrary) return;
@@ -740,12 +740,12 @@ footer a { color: inherit; }
 
   document.getElementById('reset-all').addEventListener('click', e => {
     const b = e.target;
-    if (b.dataset.armed) { state = { listening: {}, oneQuestion: { answer: '', played: false, submitted: false }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null }; save(); renderAll(); b.textContent = 'Clear my scores'; delete b.dataset.armed; return; }
+    if (b.dataset.armed) { state = { listening: {}, fullListeningExam: { started: false, currentPart: 1, unlockedPart: 1, played: {}, completed: {}, answers: {}, submitted: false, result: null }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null }; save(); renderAll(); b.textContent = 'Clear my scores'; delete b.dataset.armed; return; }
     b.dataset.armed = '1'; b.textContent = 'Click again to clear';
     setTimeout(() => { if (b.dataset.armed) { delete b.dataset.armed; b.textContent = 'Clear my scores'; } }, 3000);
   });
 
-  function renderAll() { renderListening(); renderOneQuestionTest(); renderOfficialListeningLibrary(); renderReading(); renderWriting(); renderCue(); renderTRF(); }
+  function renderAll() { renderListening(); renderFullListeningExam(); renderOfficialListeningLibrary(); renderReading(); renderWriting(); renderCue(); renderTRF(); }
   renderAll();
 })();
 </script>
