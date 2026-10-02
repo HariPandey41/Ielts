@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="assets/official-listening-tests.css">
-<link rel="stylesheet" href="assets/full-listening-exam.css">
 <style>
 /* Layout: a Test Report Form strip of band boxes on top, then one module sheet at a time below it. */
 :root {
@@ -202,15 +201,14 @@ footer a { color: inherit; }
   <section class="sheet" id="panel-full-exam" role="tabpanel" hidden>
     <div class="sheet-head">
       <h2>Listening · full practice exam</h2>
-      <span class="trf-meta">4 parts · 40 questions · self-contained audio · automatic marking</span>
+      <span class="trf-meta">4 parts · 40 questions · automatic marking</span>
     </div>
-    <a class="test2-card" href="listening-test-2.html">
-      <span class="label">New · exam conditions</span>
-      <strong>Listening Practice Test 2</strong>
+    <a class="test2-card" href="listening-test-1.html">
+      <span class="label">Exam conditions</span>
+      <strong>Listening Practice Test 1</strong>
       <span>Real exam format: membership form, map labelling, choose-two and matching questions, lecture notes. Narrator, reading time and checking time between parts, recording played once only. Opens full screen.</span>
-      <span class="test2-go">Start Test 2 →</span>
+      <span class="test2-go">Start Test 1 →</span>
     </a>
-    <div class="full-listening-exam" id="full-listening-exam"></div>
   </section>
 
   <!-- FULL LISTENING TEST -->
@@ -313,12 +311,11 @@ footer a { color: inherit; }
 </div>
 
 <script src="assets/official-listening-tests.js?v=20261002-8"></script>
-<script src="assets/full-listening-exam.js?v=20261002-2"></script>
 <script>
 (() => {
   // ---------- storage ----------
   const KEY = 'ielts-band-trainer-v1';
-  let state = { listening: {}, fullListeningExam: { started: false, currentPart: 1, unlockedPart: 1, played: {}, completed: {}, answers: {}, submitted: false, result: null }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null };
+  let state = { listening: {}, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null };
   try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s) state = Object.assign(state, s); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
 
@@ -366,9 +363,7 @@ footer a { color: inherit; }
 
   // ---------- Test Report Form ----------
   function renderTRF() {
-    const examA = state.fullListeningExam?.submitted ? state.fullListeningExam?.result : null;
-    const examB = state.listeningTest2 || null;
-    const originalFullResult = examA && examB ? ((examB.recordedAt || '') > (examA.recordedAt || '') ? examB : examA) : (examA || examB);
+    const originalFullResult = state.listeningTest1 || null;
     const originalListening = originalFullResult
       ? { correct: originalFullResult.correct, attempted: 40, raw40: originalFullResult.correct, band: band(originalFullResult.correct), pte: PTE[band(originalFullResult.correct)] }
       : null;
@@ -732,12 +727,6 @@ footer a { color: inherit; }
   }
 
   let officialListeningLibrary = null;
-  let fullListeningExam = null;
-  function renderFullListeningExam() {
-    if (!window.createFullListeningExam) return;
-    if (!fullListeningExam) fullListeningExam = window.createFullListeningExam({ root: document.getElementById('full-listening-exam'), getState: () => state, save, band, fmtBand, onResult: renderTRF });
-    fullListeningExam.render();
-  }
   function renderOfficialListeningLibrary() {
     if (!window.createOfficialListeningLibrary) return;
     if (!officialListeningLibrary) officialListeningLibrary = window.createOfficialListeningLibrary({
@@ -753,12 +742,12 @@ footer a { color: inherit; }
 
   document.getElementById('reset-all').addEventListener('click', e => {
     const b = e.target;
-    if (b.dataset.armed) { state = { listening: {}, fullListeningExam: { started: false, currentPart: 1, unlockedPart: 1, played: {}, completed: {}, answers: {}, submitted: false, result: null }, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null }; save(); renderAll(); b.textContent = 'Clear my scores'; delete b.dataset.armed; return; }
+    if (b.dataset.armed) { state = { listening: {}, officialListening: { reviewed: [] }, reading: {}, writing: {}, speaking: null }; save(); renderAll(); b.textContent = 'Clear my scores'; delete b.dataset.armed; return; }
     b.dataset.armed = '1'; b.textContent = 'Click again to clear';
     setTimeout(() => { if (b.dataset.armed) { delete b.dataset.armed; b.textContent = 'Clear my scores'; } }, 3000);
   });
 
-  function renderAll() { renderListening(); renderFullListeningExam(); renderOfficialListeningLibrary(); renderReading(); renderWriting(); renderCue(); renderTRF(); }
+  function renderAll() { renderListening(); renderOfficialListeningLibrary(); renderReading(); renderWriting(); renderCue(); renderTRF(); }
   renderAll();
 })();
 </script>
