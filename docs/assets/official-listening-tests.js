@@ -4,7 +4,7 @@
   const IDP_PAGE = 'https://ielts.idp.com/nepal/prepare/listening/free-practice-tests';
   const TESTS = [
     {
-      id: 'familiarisation', featured: true, type: 'Full practice test',
+      id: 'familiarisation', featured: true, type: 'Full practice test', total: 40,
       title: 'Computer-delivered Listening familiarisation test',
       description: 'A complete official computer-delivered Listening practice experience. Use this first to practise test navigation, four sections, timing and answer entry.',
       test: 'https://demo-ielts.inspera.com/player/?assessmentRunId=131012334&context=exam#/section/128121996/question/128121965/scorableItem/1',
@@ -50,7 +50,7 @@
       id: 'short-answer', type: 'Short answer', title: 'Short answer questions',
       description: 'Practise extracting precisely the requested information and checking the word limit.',
       test: 'https://ielts.inspera.com/player/?assessmentRunId=189694459&context=exam#/section/174309255/question/174309254/scorableItem/1',
-      answers: 'https://assets.ctfassets.net/unrdeg6se4ke/2a66aRB5bC3myLISAJ4up6/a46fed0f583e743709bcd520fa3432d8/ielts-listening-computer-delivered-short-answer-transcript___Answer_key.pdf',
+      answers: 'https://assets.ctfassets.net/unrdeg6se4ke/2a66aRB5bC3myLISAJ4up6/a46fed0f583e743709bcd520fa3432d8/ielts-listening-computer-delivered-short-answer-transcript___Answer_Key.pdf',
     },
     {
       id: 'table', type: 'Completion', title: 'Table completion',
@@ -62,17 +62,39 @@
 
   const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 
-  window.createOfficialListeningLibrary = function createOfficialListeningLibrary({ root, getState, save }) {
+  window.createOfficialListeningLibrary = function createOfficialListeningLibrary({ root, getState, save, band, fmtBand, onResult }) {
     const progress = () => {
       const state = getState();
-      if (!state.officialListening || !Array.isArray(state.officialListening.reviewed)) state.officialListening = { reviewed: [] };
+      if (!state.officialListening || typeof state.officialListening !== 'object') state.officialListening = {};
+      if (!Array.isArray(state.officialListening.reviewed)) state.officialListening.reviewed = [];
+      if (!state.officialListening.results || typeof state.officialListening.results !== 'object') state.officialListening.results = {};
       return state.officialListening;
     };
 
+    const scoreMarkup = (item, result) => {
+      const fullTest = item.total === 40;
+      const record = result ? `<div class="score-result"><span class="label">Recorded result</span><strong>${result.correct}/${result.total} correct</strong><span class="score-band">Band ${fmtBand(result.band)}</span><small>${fullTest ? 'Exact 40-question Listening band conversion. Test Report Form updated.' : `Normalised to ${result.raw40}/40 · practice estimate.`}</small><button type="button" class="score-clear" data-clear-score="${item.id}">Clear result</button></div>` : '';
+      return `<div class="score-panel" data-score-panel="${item.id}">
+        <div class="score-panel-copy"><span class="label">After checking the official answers</span><p>${fullTest ? 'Enter the total number of correct answers. This full test updates the Listening Test Report Form.' : 'Enter your correct answers and the number of questions in this practice task to get a normalised 40-question band estimate.'}</p></div>
+        <div class="score-form" aria-label="Record score for ${escapeHtml(item.title)}">
+          <label>Correct <input data-score-correct="${item.id}" type="number" min="0" max="40" step="1" inputmode="numeric" value="${result ? result.correct : ''}" placeholder="0"></label>
+          <span class="score-divider">out of</span>
+          <label class="sr-only" for="total-${item.id}">Total questions</label>
+          <input id="total-${item.id}" data-score-total="${item.id}" type="number" min="1" max="40" step="1" inputmode="numeric" value="${result ? result.total : (item.total || '')}" placeholder="${item.total || 'total'}" ${item.total ? 'readonly' : ''}>
+          <button type="button" class="btn" data-score-submit="${item.id}">${result ? 'Update mark' : 'Get my mark'}</button>
+        </div>
+        <p class="score-error" data-score-error="${item.id}" role="alert"></p>${record}
+      </div>`;
+    };
+
     const render = () => {
-      const reviewed = progress().reviewed;
+      const state = progress();
+      const reviewed = state.reviewed;
+      const fullResult = state.results.familiarisation;
+      const resultSummary = fullResult ? `<p class="official-score-summary"><b>Latest full-test mark:</b> ${fullResult.correct}/40 correct · <b>Listening Band ${fmtBand(fullResult.band)}</b></p>` : '';
       const cards = TESTS.map(item => {
         const done = reviewed.includes(item.id);
+        const result = state.results[item.id];
         return `<article class="practice-card ${item.featured ? 'featured' : ''} ${done ? 'reviewed' : ''}">
           <div class="card-top"><span class="source-badge">Official IDP IELTS</span><span class="type-pill">${escapeHtml(item.type)}</span></div>
           <h4>${escapeHtml(item.title)}</h4>
@@ -82,17 +104,18 @@
             <a class="btn ghost" href="${item.answers}" target="_blank" rel="noopener noreferrer">Answers & transcript ↗</a>
             <button type="button" class="btn ghost" data-review="${item.id}">${done ? 'Reviewed ✓' : 'Mark reviewed'}</button>
           </div>
+          ${scoreMarkup(item, result)}
         </article>`;
       }).join('');
 
       root.innerHTML = `<div class="official-hero">
-          <div><span class="label">Official free Listening resources</span><h3>Real computer-delivered IELTS practice</h3><p>Open a test, listen through the official exam player, then use the official answer key and transcript to review. The full material stays with IDP IELTS, so students practise with the genuine audio and test interface.</p></div>
+          <div><span class="label">Official free Listening resources</span><h3>Real computer-delivered IELTS practice</h3><p>Open a test, listen through the official exam player, then use the official answer key and transcript to review. Return here to enter your mark and get a Listening band result.</p>${resultSummary}</div>
           <div class="hero-count"><b>${reviewed.length}/${TESTS.length}</b>reviewed here</div>
         </div>
         <div class="official-rules">
           <div class="official-rule"><span class="label">1 · Test first</span><p>Open the official test in a new tab. It includes the audio and computer-based question format.</p></div>
-          <div class="official-rule"><span class="label">2 · Check after</span><p>Only open the answer and transcript PDF after you have finished your attempt.</p></div>
-          <div class="official-rule"><span class="label">3 · Track progress</span><p>Return here and mark a resource reviewed. Your checklist is saved in this browser.</p></div>
+          <div class="official-rule"><span class="label">2 · Check after</span><p>Open the answer and transcript PDF after finishing, then count your correct answers.</p></div>
+          <div class="official-rule"><span class="label">3 · Get your mark</span><p>Enter your score below the test card. The full 40-question test updates your Listening band here.</p></div>
         </div>
         <div class="official-section-head"><div><span class="label">IDP IELTS · free practice library</span><h3>Choose a Listening question type</h3></div><p>All links are taken from IDP IELTS’s official free Listening practice-test page.</p></div>
         <div class="practice-grid">${cards}</div>
@@ -100,11 +123,35 @@
     };
 
     root.addEventListener('click', event => {
-      const button = event.target.closest('[data-review]');
-      if (!button) return;
-      const state = progress(), id = button.dataset.review;
-      state.reviewed = state.reviewed.includes(id) ? state.reviewed.filter(item => item !== id) : [...state.reviewed, id];
-      save(); render();
+      const review = event.target.closest('[data-review]');
+      if (review) {
+        const state = progress(), id = review.dataset.review;
+        state.reviewed = state.reviewed.includes(id) ? state.reviewed.filter(item => item !== id) : [...state.reviewed, id];
+        save(); render(); return;
+      }
+
+      const clear = event.target.closest('[data-clear-score]');
+      if (clear) {
+        const state = progress(); delete state.results[clear.dataset.clearScore]; save(); render(); onResult(); return;
+      }
+
+      const submit = event.target.closest('[data-score-submit]');
+      if (!submit) return;
+      const id = submit.dataset.scoreSubmit;
+      const card = submit.closest('.practice-card');
+      const correctValue = card.querySelector(`[data-score-correct="${id}"]`).value.trim();
+      const totalValue = card.querySelector(`[data-score-total="${id}"]`).value.trim();
+      const correct = Number(correctValue), total = Number(totalValue);
+      const error = card.querySelector(`[data-score-error="${id}"]`);
+      if (!Number.isInteger(correct) || !Number.isInteger(total) || total < 1 || total > 40 || correct < 0 || correct > total) {
+        error.textContent = 'Enter whole numbers: a correct-answer count from 0 to the total, and a total from 1 to 40.';
+        return;
+      }
+      const raw40 = Math.round((correct / total) * 40);
+      const state = progress();
+      state.results[id] = { correct, total, raw40, band: band(raw40), recordedAt: new Date().toISOString() };
+      if (!state.reviewed.includes(id)) state.reviewed.push(id);
+      save(); render(); onResult();
     });
 
     return { render };

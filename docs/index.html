@@ -290,7 +290,7 @@ footer a { color: inherit; }
   </footer>
 </div>
 
-<script src="assets/official-listening-tests.js?v=20261002-1"></script>
+<script src="assets/official-listening-tests.js?v=20261002-2"></script>
 <script>
 (() => {
   // ---------- storage ----------
@@ -343,12 +343,16 @@ footer a { color: inherit; }
 
   // ---------- Test Report Form ----------
   function renderTRF() {
-    const L = projection(state.listening), R = projection(state.reading);
+    const officialFullResult = state.officialListening?.results?.familiarisation;
+    const officialListening = officialFullResult && officialFullResult.total === 40
+      ? { correct: officialFullResult.correct, attempted: 40, raw40: officialFullResult.correct, band: band(officialFullResult.correct), pte: PTE[band(officialFullResult.correct)] }
+      : null;
+    const L = officialListening || projection(state.listening), R = projection(state.reading);
     const wVals = Object.values(state.writing);
     const W = wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
     const S = state.speaking;
     const cells = [
-      ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ≈${L.raw40}/40` : 'not started'],
+      ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${officialListening ? 'official full test' : `≈${L.raw40}/40`}` : 'not started'],
       ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ≈${R.raw40}/40` : 'not started'],
       ['Writing', W, wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
       ['Speaking', S, S != null ? 'self-assessed' : 'not rated'],
@@ -363,7 +367,7 @@ footer a { color: inherit; }
         <div class="band-box ${b == null ? 'empty' : ''}">${fmtBand(b)}</div>
         <span class="trf-meta">${meta}</span>
       </div>`).join('');
-    document.getElementById('l-progress').textContent = L ? `${L.correct} of ${L.attempted} correct · band ${fmtBand(L.band)} · PTE ${L.pte}` : `${LISTEN.length} sentences`;
+    document.getElementById('l-progress').textContent = L ? `${L.correct} of ${L.attempted} correct · band ${fmtBand(L.band)} · PTE ${L.pte}${officialListening ? ' · official full test' : ''}` : `${LISTEN.length} sentences`;
     document.getElementById('r-progress').textContent = R ? `${R.correct} of ${R.attempted} correct · band ${fmtBand(R.band)} · PTE ${R.pte}` : `${PASSAGES.reduce((a, p) => a + p.qs.length, 0)} questions`;
     renderConv(L, R);
   }
@@ -709,6 +713,9 @@ footer a { color: inherit; }
       root: document.getElementById('full-listening-test'),
       getState: () => state,
       save,
+      band,
+      fmtBand,
+      onResult: renderTRF,
     });
     officialListeningLibrary.render();
   }
