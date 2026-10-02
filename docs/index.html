@@ -249,6 +249,13 @@ footer a { color: inherit; }
       <h2>Writing</h2>
       <div class="passage-picker" id="w-picker"></div>
     </div>
+    <a class="test2-card" href="writing-test-1.html">
+      <span class="label">Exam conditions · 60 minutes</span>
+      <strong>Academic Writing Practice Test 1</strong>
+      <span>Task 1 line graph (150 words) and Task 2 discussion essay (250 words) with a live word count and a 60-minute timer. Your work is saved as you type. Afterwards you get an estimated band, band-8 model answers, a file to send your teacher, and a teacher marking panel.</span>
+      <span class="test2-go">Start Writing Test 1 →</span>
+    </a>
+    <p class="label">Quick practice</p>
     <div class="split">
       <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
         <p class="instr" id="w-prompt"></p>
@@ -377,12 +384,13 @@ footer a { color: inherit; }
     const readingFull = state.readingTest1 ? { correct: state.readingTest1.correct, attempted: 40, raw40: state.readingTest1.correct, band: state.readingTest1.band, pte: PTE[state.readingTest1.band] } : null;
     const L = originalListening || projection(state.listening), R = readingFull || projection(state.reading);
     const wVals = Object.values(state.writing);
-    const W = wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
+    const wFull = state.writingTest1 || null;
+    const W = wFull ? wFull.band : wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
     const S = state.speaking;
     const cells = [
       ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${originalListening ? 'full practice exam' : `≈${L.raw40}/40`}` : 'not started'],
       ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ${readingFull ? 'full practice test' : `≈${R.raw40}/40`}` : 'not started'],
-      ['Writing', W, wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
+      ['Writing', W, wFull ? `full practice test · ${wFull.source === 'teacher' ? 'teacher marked' : 'estimate'}` : wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
       ['Speaking', S, S != null ? 'self-assessed' : 'not rated'],
     ];
     const parts = [L && L.band, R && R.band, W, S];
