@@ -48,14 +48,12 @@
       const sheet = progress().answerSheet;
       const count = answeredCount(sheet);
       const indicator = root.querySelector('[data-answer-progress]');
-      const check = root.querySelector('[data-check-full]');
-      if (indicator) indicator.textContent = `${count}/40 answers entered`;
-      if (check) check.disabled = count !== 40;
+      const unanswered = 40 - count;
+      if (indicator) indicator.textContent = `${count}/40 entered · ${unanswered} blank`;
     };
 
     const fullTestBoard = (fullTest, state) => {
       const sheet = state.answerSheet;
-      const complete = answeredCount(sheet) === 40;
       const result = state.results.familiarisation;
       const answerInputs = Array.from({ length: 40 }, (_, index) => {
         const number = index + 1;
@@ -64,13 +62,13 @@
         const feedback = sheet.marked ? `<small>${isCorrect(number, given) ? 'Correct' : `Answer: ${escapeHtml(ANSWER_KEY[number][0])}`}</small>` : '';
         return `<label class="answer-cell ${status}"><span>Q${number}</span><input data-answer="${number}" type="text" autocomplete="off" value="${escapeHtml(given)}" aria-label="Answer for question ${number}">${feedback}</label>`;
       }).join('');
-      const resultMarkup = sheet.marked && result ? `<div class="full-score-result"><div><span class="label">Your official familiarisation-test result</span><h3>${result.correct}/40 correct · Listening Band ${fmtBand(result.band)}</h3><p>Your answer sheet has been checked against the saved official answer key. The Listening Test Report Form above has been updated.</p></div><button type="button" class="btn ghost" data-reset-full>Clear answers and try again</button></div>` : '';
+      const resultMarkup = sheet.marked && result ? `<div class="full-score-result"><div><span class="label">Your official familiarisation-test result</span><h3>${result.correct}/40 correct · Listening Band ${fmtBand(result.band)}</h3><p>Your answer sheet has been checked against the saved official answer key. ${result.unanswered ? `${result.unanswered} unanswered question${result.unanswered === 1 ? ' was' : 's were'} counted incorrect. ` : ''}The Listening Test Report Form above has been updated.</p></div><button type="button" class="btn ghost" data-reset-full>Clear answers and try again</button></div>` : '';
       return `<section class="full-marking-board">
-        <div class="full-board-head"><div><span class="label">Self-marking full Listening test</span><h3>${escapeHtml(fullTest.title)}</h3><p>Take the official test, then enter your answers 1–40 below. The button becomes available once every answer field is completed.</p></div><span class="answer-progress" data-answer-progress>${answeredCount(sheet)}/40 answers entered</span></div>
+        <div class="full-board-head"><div><span class="label">Self-marking full Listening test</span><h3>${escapeHtml(fullTest.title)}</h3><p>Take the official test, then enter the answers you know below. You may leave any question blank and still finish the test.</p></div><span class="answer-progress" data-answer-progress>${answeredCount(sheet)}/40 entered · ${40 - answeredCount(sheet)} blank</span></div>
         <div class="full-test-actions"><a class="btn" href="${fullTest.test}" target="_blank" rel="noopener noreferrer">Open official test ↗</a><a class="btn ghost" href="${fullTest.answers}" target="_blank" rel="noopener noreferrer">Official answers & transcript ↗</a></div>
-        <p class="full-board-note">The official test opens in its own tab so its authentic audio and exam player work correctly. Return to this 40-answer sheet to receive automatic marking. Open the answer PDF only after submitting your answers.</p>
+        <p class="full-board-note">The official test opens in its own tab so its authentic audio and exam player work correctly. Return to this 40-answer sheet to receive automatic marking. You can leave unanswered questions blank; blank answers count as incorrect. Open the answer PDF only after submitting your answers.</p>
         <div class="answer-grid">${answerInputs}</div>
-        <div class="full-board-footer"><span class="score-error" data-full-error role="alert"></span><button type="button" class="btn" data-check-full ${complete ? '' : 'disabled'}>Submit all answers & get my mark</button></div>
+        <div class="full-board-footer"><span class="score-error" data-full-error role="alert"></span><button type="button" class="btn" data-check-full>Finish test & see my mark</button></div>
         ${resultMarkup}
       </section>`;
     };
@@ -103,7 +101,7 @@
       }).join('');
 
       root.innerHTML = `<div class="official-hero"><div><span class="label">Official free Listening resources</span><h3>Real computer-delivered IELTS practice</h3><p>Take the official full test and enter your answers in the self-marking board. The site compares all 40 answers with the saved official key and gives your band score automatically.</p>${resultSummary}</div><div class="hero-count"><b>${reviewed.length}/${TESTS.length}</b>reviewed here</div></div>
-        <div class="official-rules"><div class="official-rule"><span class="label">1 · Take the test</span><p>Use the official player for authentic questions and audio.</p></div><div class="official-rule"><span class="label">2 · Enter 40 answers</span><p>Complete every answer field in the marking board below.</p></div><div class="official-rule"><span class="label">3 · Get your mark</span><p>Submit once to receive correct answers, score and Listening band.</p></div></div>
+        <div class="official-rules"><div class="official-rule"><span class="label">1 · Take the test</span><p>Use the official player for authentic questions and audio.</p></div><div class="official-rule"><span class="label">2 · Enter what you know</span><p>Enter answers in the marking board, or leave difficult questions blank.</p></div><div class="official-rule"><span class="label">3 · Get your mark</span><p>Finish the test to receive your score and Listening band. Blanks count incorrect.</p></div></div>
         ${fullTestBoard(fullTest, state)}
         <div class="official-section-head"><div><span class="label">IDP IELTS · more practice</span><h3>Practise individual Listening question types</h3></div><p>These shorter official resources can also be recorded as a normalised practice estimate.</p></div>
         <div class="practice-grid">${cards}</div>
@@ -130,10 +128,10 @@
       const checkFull = event.target.closest('[data-check-full]');
       if (checkFull) {
         const state = progress(), sheet = state.answerSheet;
-        if (answeredCount(sheet) !== 40) { const error = root.querySelector('[data-full-error]'); if (error) error.textContent = `Please complete all 40 answers first (${answeredCount(sheet)}/40 entered).`; return; }
+        const attempted = answeredCount(sheet);
         const correct = Array.from({ length: 40 }, (_, index) => index + 1).filter(number => isCorrect(number, sheet.answers[number])).length;
         sheet.marked = true;
-        state.results.familiarisation = { correct, total: 40, raw40: correct, band: band(correct), recordedAt: new Date().toISOString() };
+        state.results.familiarisation = { correct, total: 40, attempted, unanswered: 40 - attempted, raw40: correct, band: band(correct), recordedAt: new Date().toISOString() };
         if (!state.reviewed.includes('familiarisation')) state.reviewed.push('familiarisation');
         save(); render(); onResult(); return;
       }

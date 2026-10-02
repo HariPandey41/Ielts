@@ -70,7 +70,7 @@
 .answer-cell.wrong { border-color: var(--bad); background: var(--bad-soft); }
 .answer-cell.wrong small { color: var(--bad); }
 .full-board-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 9px; border-top: 1px solid var(--rule); padding-top: 13px; }
-.full-board-footer .btn:disabled { opacity: .42; cursor: not-allowed; }
+.full-board-footer .btn { min-width: 13rem; }
 .full-score-result { background: var(--ok-soft); border: 1px solid var(--ok); border-left-width: 4px; padding: 13px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
 .full-score-result h3 { margin: 2px 0; font-size: 1.1rem; }
 .full-score-result p { color: var(--pencil); font-size: .88rem; max-width: 62ch; }
