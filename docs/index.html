@@ -283,6 +283,13 @@ footer a { color: inherit; }
       <h2>Speaking · Part 2 long turn</h2>
       <button class="btn ghost" id="s-next" type="button">New cue card</button>
     </div>
+    <a class="test2-card" href="speaking-test-1.html">
+      <span class="label">Exam conditions · 11–14 minutes</span>
+      <strong>Speaking Practice Test 1</strong>
+      <span>A full interview with a spoken examiner: Part 1 questions, a Part 2 cue card with one minute to prepare and two minutes to talk, and a Part 3 discussion. Your interview is recorded so you can listen back or send it to your teacher, with a transcript in Chrome and Edge.</span>
+      <span class="test2-go">Start Speaking Test 1 →</span>
+    </a>
+    <p class="label">Quick practice</p>
     <div class="split">
       <div class="cue" id="s-card"></div>
       <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
@@ -386,12 +393,13 @@ footer a { color: inherit; }
     const wVals = Object.values(state.writing);
     const wFull = state.writingTest1 || null;
     const W = wFull ? wFull.band : wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
-    const S = state.speaking;
+    const sFull = state.speakingTest1 || null;
+    const S = sFull ? sFull.band : state.speaking;
     const cells = [
       ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${originalListening ? 'full practice exam' : `≈${L.raw40}/40`}` : 'not started'],
       ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ${readingFull ? 'full practice test' : `≈${R.raw40}/40`}` : 'not started'],
       ['Writing', W, wFull ? `full practice test · ${wFull.source === 'teacher' ? 'teacher marked' : 'estimate'}` : wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
-      ['Speaking', S, S != null ? 'self-assessed' : 'not rated'],
+      ['Speaking', S, sFull ? `full practice test · ${sFull.source === 'teacher' ? 'teacher marked' : 'self-assessed'}` : S != null ? 'self-assessed' : 'not rated'],
     ];
     const parts = [L && L.band, R && R.band, W, S];
     const ov = parts.every(v => v != null) ? overallBand(parts) : null;
