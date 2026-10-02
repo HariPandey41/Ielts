@@ -185,7 +185,7 @@ mark sup { font-family: var(--f-mono); font-size: 0.65rem; color: var(--omr); ma
 <div class="bar">
   <span class="who">IELTS Listening · Practice Test 1</span>
   <span class="status"><span class="dot" id="dot"></span><span id="status">Not started</span></span>
-  <span class="row" style="gap:14px"><span class="clock" id="clock">30:00</span><a href="./#full-exam">Back to trainer</a></span>
+  <span class="row" style="gap:14px"><button class="btn" id="resume" type="button" hidden style="background:var(--omr);border-color:var(--omr);padding:4px 10px">Resume recording</button><span class="clock" id="clock">30:00</span><a href="./#full-exam">Back to trainer</a></span>
 </div>
 
 <div class="wrap">
@@ -200,13 +200,13 @@ mark sup { font-family: var(--f-mono); font-size: 0.65rem; color: var(--omr); ma
       <li>Answer the questions as you listen. Watch the word limit in each instruction: answers that go over it are marked wrong.</li>
       <li>When the recording ends you have <b>2 minutes</b> to check your answers. The test then submits automatically.</li>
     </ul>
-    <p class="voices" id="voice-info">Checking the voices available in your browser…</p>
-    <p class="warnbox" id="no-tts" hidden>This browser cannot play synthetic speech. Open the test in Chrome, Edge or Safari on a computer or phone.</p>
+    <p class="voices">The recording lasts about 21 minutes, including reading and checking time, and is about 10 MB. Use Wi-Fi if you can.</p>
+    <p class="warnbox" id="load-err" hidden>The recording could not start. Check your internet connection, then press Start again.</p>
     <div class="row">
       <button class="btn ghost" id="sound-check" type="button">Sound check</button>
       <button class="btn" id="start" type="button">Start the test</button>
     </div>
-    <p class="muted" style="font-size:0.9rem">Use headphones for the most realistic experience. Keep this tab in the foreground while the recording plays. Microsoft Edge has the most natural voices.</p>
+    <p class="muted" style="font-size:0.9rem">Use headphones for the most realistic experience. Press Sound check first and set your volume.</p>
   </section>
 
   <div id="paper" hidden></div>
@@ -556,88 +556,21 @@ mark sup { font-family: var(--f-mono); font-size: 0.65rem; color: var(--omr); ma
   const paper = $('paper');
   paper.innerHTML = PAPER;
 
-  // ================= VOICES =================
-  const synth = window.speechSynthesis;
-  const FEMALE = /female|woman|zira|hazel|susan|libby|sonia|maisie|mia|abbi|bella|hollie|olivia|natasha|annette|carly|elsie|freya|joanne|kim|tina|karen|catherine|samantha|serena|kate|moira|tessa|fiona|victoria|allison|ava|aria|jenny|michelle|emma|amy|nicole|joanna|salli|kimberly|ivy|ruth|clara|sara|libby|google uk english female/i;
-  const MALE = /\bmale\b|daniel|george|ryan|thomas|arthur|oliver|alfie|elliot|ethan|noah|william|james|darren|duncan|ken|neil|tim|lee|gordon|david|mark|guy|christopher|eric|roger|steffan|brian|russell|matthew|joey|justin|fred|alex|aaron|google uk english male/i;
-  const genderOf = v => (MALE.test(v.name) && !/female/i.test(v.name)) ? 'm' : FEMALE.test(v.name) ? 'f' : '?';
-  const quality = v => /natural|neural|online|premium|enhanced/i.test(v.name) ? 2 : /google/i.test(v.name) ? 1 : 0;
-  let cast = {};
-  function loadVoices() {
-    return new Promise(resolve => {
-      if (!synth) return resolve([]);
-      let vs = synth.getVoices();
-      if (vs.length) return resolve(vs);
-      const t = setTimeout(() => resolve(synth.getVoices()), 1500);
-      synth.addEventListener('voiceschanged', () => { clearTimeout(t); resolve(synth.getVoices()); }, { once: true });
-    });
-  }
-  function castVoices(all) {
-    const en = all.filter(v => /^en[-_]/i.test(v.lang) || /^en$/i.test(v.lang));
-    const used = new Map();
-    cast = {};
-    // assign roles that share a conversation so partners differ
-    const order = ['narrator', 'tom', 'laura', 'claire', 'evans', 'mia', 'jake', 'lecturer'];
-    const partners = { tom: ['laura'], laura: ['tom'], evans: ['mia', 'jake'], mia: ['evans', 'jake'], jake: ['evans', 'mia'], claire: [], lecturer: [], narrator: [] };
-    for (const role of order) {
-      const want = ROLES[role];
-      let best = null, bestScore = -1e9;
-      for (const v of en) {
-        const lang = v.lang.replace('_', '-');
-        let s = 0;
-        if (lang.toLowerCase() === want.lang.toLowerCase()) s += 4;
-        else if (/en-(gb|au|ie|nz)/i.test(lang)) s += 2;
-        else if (/en-us/i.test(lang)) s += 1;
-        const g = genderOf(v);
-        s += g === want.gender ? 3 : g === '?' ? 0 : -4;
-        s += quality(v);
-        if ((partners[role] || []).some(p => cast[p] && cast[p].voice === v)) s -= 8;
-        s -= (used.get(v) || 0) * 1.5;
-        if (s > bestScore) { bestScore = s; best = v; }
-      }
-      const clash = (partners[role] || []).some(p => cast[p] && cast[p].voice === best);
-      cast[role] = { voice: best, pitch: clash ? (want.gender === 'f' ? 1.25 : 0.8) : 1, rate: role === 'narrator' ? 0.95 : 0.98 };
-      if (best) used.set(best, (used.get(best) || 0) + 1);
-    }
-    const names = Object.entries(cast).filter(([r]) => r !== 'narrator').map(([r, c]) => `${ROLES[r].label}: ${c.voice ? c.voice.name.replace(/Microsoft |Online |\(Natural\)| - English.*$/g, '').trim() : 'default'}`);
-    $('voice-info').textContent = en.length ? `${en.length} English voices found. Cast: ${names.join(' · ')}.` : 'No English voices found. The browser default voice will be used.';
-  }
-
-  const stripMarks = s => s.replace(/\{\{(.+?)\|\d+\}\}/g, '$1');
-  function chunks(text) {
-    // keep utterances short; long ones get cut off in some browsers
-    const parts = text.match(/[^.!?]+[.!?]*\s*/g) || [text];
-    const out = [];
-    for (const p of parts) { const s = p.trim(); if (!s) continue; if (out.length && (out[out.length - 1] + ' ' + s).length < 160) out[out.length - 1] += ' ' + s; else out.push(s); }
-    return out;
-  }
-  function sayOne(text, role) {
-    return new Promise(resolve => {
-      if (!synth) return setTimeout(resolve, 400);
-      const u = new SpeechSynthesisUtterance(text);
-      const c = cast[role] || {};
-      if (c.voice) { u.voice = c.voice; u.lang = c.voice.lang; } else u.lang = ROLES[role].lang;
-      u.pitch = c.pitch || 1; u.rate = c.rate || 1;
-      let done = false;
-      const finish = () => { if (!done) { done = true; clearTimeout(guard); resolve(); } };
-      const guard = setTimeout(finish, 4000 + text.split(/\s+/).length * 650);
-      u.onend = finish; u.onerror = finish;
-      synth.speak(u);
-    });
-  }
-  async function say(role, text) {
-    for (const c of chunks(stripMarks(text))) {
-      if (!running) return;
-      await sayOne(c, role);
-      if (!running) return;
-      await wait(120);
-    }
-  }
-  const wait = ms => new Promise(r => setTimeout(r, ms));
+  // ================= RECORDING =================
+  // Studio-style recording generated from SCRIPT; TIMELINE marks part changes and reading/checking pauses (seconds).
+  const TIMELINE = [{"t":1.0,"focus":1},{"t":35.89,"pause":30,"label":"Reading time \u00b7 Questions 1\u20135"},{"t":65.89,"speech":1,"part":1},{"t":217.83,"pause":30,"label":"Reading time \u00b7 Questions 6\u201310"},{"t":247.83,"speech":1,"part":1},{"t":345.79,"pause":30,"label":"Checking time \u00b7 Part 1"},{"t":375.79,"focus":2},{"t":389.65,"pause":30,"label":"Reading time \u00b7 Questions 11\u201314"},{"t":419.65,"speech":1,"part":2},{"t":528.13,"pause":30,"label":"Reading time \u00b7 Questions 15\u201320"},{"t":558.13,"speech":1,"part":2},{"t":657.51,"pause":30,"label":"Checking time \u00b7 Part 2"},{"t":687.51,"focus":3},{"t":705.53,"pause":30,"label":"Reading time \u00b7 Questions 21\u201326"},{"t":735.53,"speech":1,"part":3},{"t":900.99,"pause":30,"label":"Reading time \u00b7 Questions 27\u201330"},{"t":930.99,"speech":1,"part":3},{"t":1009.67,"pause":30,"label":"Checking time \u00b7 Part 3"},{"t":1039.67,"focus":4},{"t":1050.92,"pause":45,"label":"Reading time \u00b7 Questions 31\u201340"},{"t":1095.92,"speech":1,"part":4}];
+  const audio = new Audio();
+  audio.preload = 'auto';
+  audio.src = 'audio/listening-test1.mp3';
+  const checkClip = new Audio('audio/listening-soundcheck.mp3');
 
   // ================= CLOCK =================
-  let examStart = 0, clockTimer = null, reviewEnd = 0, pauseEnd = 0;
+  let examStart = 0, clockTimer = null, reviewEnd = 0, applied = -1, buffering = false;
   const fmt = s => `${Math.floor(s / 60)}:${String(Math.max(0, s) % 60).padStart(2, '0')}`;
+  function setStatus(text, mode) {
+    $('status').textContent = text;
+    $('dot').className = 'dot' + (mode === 'on' ? ' on' : mode === 'pause' ? ' pause' : '');
+  }
   function tickClock() {
     const now = Date.now();
     if (reviewEnd) {
@@ -646,41 +579,42 @@ mark sup { font-family: var(--f-mono); font-size: 0.65rem; color: var(--omr); ma
       if (left <= 0) submit(true);
       return;
     }
-    const elapsed = Math.floor((now - examStart) / 1000);
-    $('clock').textContent = fmt(Math.max(0, 30 * 60 - elapsed));
-    if (pauseEnd) {
-      const p = Math.ceil((pauseEnd - now) / 1000);
-      const lbl = $('status').dataset.base || '';
-      $('status').textContent = `${lbl} · ${p}s`;
+    $('clock').textContent = fmt(Math.max(0, 30 * 60 - Math.floor((now - examStart) / 1000)));
+    if (!running) return;
+    const t = audio.currentTime;
+    for (let i = applied + 1; i < TIMELINE.length && TIMELINE[i].t <= t; i++) {
+      applied = i;
+      if (TIMELINE[i].focus) { livePart = TIMELINE[i].focus; showPart(livePart); renderNav(); }
     }
-  }
-  function setStatus(text, mode) {
-    $('status').textContent = text; $('status').dataset.base = text;
-    $('dot').className = 'dot' + (mode === 'on' ? ' on' : mode === 'pause' ? ' pause' : '');
+    if (buffering) return setStatus('Loading the recording…', 'pause');
+    let cur = null;
+    for (const e of TIMELINE) { if (e.t > t) break; if (!e.focus) cur = e; }
+    if (cur && cur.pause && t < cur.t + cur.pause) setStatus(`${cur.label} · ${Math.ceil(cur.t + cur.pause - t)}s`, 'pause');
+    else setStatus(`Recording playing · Part ${livePart}`, 'on');
   }
 
   // ================= RUN =================
   async function run() {
     running = true;
+    try { await audio.play(); }
+    catch (e) { running = false; return false; }
     examStart = Date.now();
     clockTimer = setInterval(tickClock, 250);
-    for (const line of SCRIPT) {
-      if (!running) return;
-      if (line[0] === 'focus') { livePart = line[1]; showPart(line[1]); renderNav(); continue; }
-      if (line[0] === 'pause') {
-        setStatus(line[2], 'pause');
-        pauseEnd = Date.now() + line[1] * 1000;
-        while (running && Date.now() < pauseEnd) await wait(200);
-        pauseEnd = 0;
-        continue;
-      }
-      setStatus(`Recording playing · Part ${livePart}`, 'on');
-      await say(line[0], line[1]);
-    }
-    if (!running) return;
+    return true;
+  }
+  audio.addEventListener('ended', () => {
+    if (!running || submitted) return;
     setStatus('Recording finished · check your answers', 'pause');
     reviewEnd = Date.now() + 2 * 60 * 1000;
-  }
+  });
+  // The recording cannot be paused: if the device pauses it (call, lock screen), carry on as soon as possible.
+  audio.addEventListener('pause', () => {
+    if (!running || submitted || audio.ended) return;
+    audio.play().catch(() => { $('resume').hidden = false; setStatus('Recording interrupted', ''); });
+  });
+  audio.addEventListener('waiting', () => { buffering = true; });
+  audio.addEventListener('playing', () => { buffering = false; $('resume').hidden = true; });
+  audio.addEventListener('error', () => { if (running) setStatus('The recording failed to load. Check your connection.', ''); });
 
   function showPart(p) {
     viewPart = p;
@@ -774,7 +708,7 @@ mark sup { font-family: var(--f-mono); font-size: 0.65rem; color: var(--omr); ma
   function submit(auto) {
     if (submitted) return;
     submitted = true; running = false;
-    if (synth) synth.cancel();
+    audio.pause();
     clearInterval(clockTimer);
     setStatus(auto ? 'Time is up · answers submitted' : 'Answers submitted', '');
     $('clock').textContent = '0:00';
@@ -853,21 +787,19 @@ mark sup { font-family: var(--f-mono); font-size: 0.65rem; color: var(--omr); ma
   }
 
   // ================= START =================
-  loadVoices().then(vs => { castVoices(vs); });
-  if (!synth) { $('no-tts').hidden = false; $('start').disabled = true; $('sound-check').disabled = true; }
-  $('sound-check').addEventListener('click', async () => {
-    if (!synth) return;
-    synth.cancel(); running = true;
-    await say('narrator', 'This is a sound check. You should be able to hear this voice clearly. Adjust your volume now.');
-    await say('laura', 'And this is one of the speakers you will hear in the test.');
-    running = false;
-  });
+  $('sound-check').addEventListener('click', () => { checkClip.currentTime = 0; checkClip.play().catch(() => {}); });
+  $('resume').addEventListener('click', () => { audio.play().catch(() => {}); });
   $('start').addEventListener('click', async () => {
-    if (!Object.keys(cast).length) castVoices(await loadVoices());
-    synth && synth.cancel();
+    checkClip.pause();
+    $('start').disabled = true; $('start').textContent = 'Loading the recording…';
     $('intro').hidden = true; paper.hidden = false; $('nav').hidden = false;
-    renderNav();
-    run();
+    livePart = 1; showPart(1); renderNav();
+    setStatus('Loading the recording…', 'pause');
+    if (!(await run())) {
+      $('intro').hidden = false; paper.hidden = true; $('nav').hidden = true;
+      $('start').disabled = false; $('start').textContent = 'Start the test';
+      $('load-err').hidden = false; setStatus('Not started', '');
+    }
   });
   window.addEventListener('beforeunload', e => { if (running && !submitted) { e.preventDefault(); e.returnValue = ''; } });
   renderNav();
