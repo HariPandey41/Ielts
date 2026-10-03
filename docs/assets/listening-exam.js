@@ -54,7 +54,8 @@
   // ================= RECORDING =================
   // Studio-style recording generated from T.script; TIMELINE marks part changes and reading/checking pauses (seconds).
   const TIMELINE = T.timeline;
-  const TWO = Object.values(T.Q).find(q => q.kind === 'two');
+  // "Choose TWO" blocks: one per pair, rendered as .mcq[data-two][data-q=<first question of the pair>]
+  const twoBlock = n => paper.querySelector(`.mcq[data-two][data-q="${T.Q[n].pair[0]}"]`);
   const audio = new Audio();
   audio.preload = 'auto';
   audio.src = T.audio;
@@ -123,11 +124,12 @@
     const t = e.target;
     if (submitted) return;
     if (t.dataset.two) {
-      const boxes = [...paper.querySelectorAll('input[data-two]')];
+      const block = t.closest('.mcq[data-two]'), pair = T.Q[block.dataset.q].pair;
+      const boxes = [...block.querySelectorAll('input[data-two]')];
       const on = boxes.filter(b => b.checked);
       if (on.length > 2) { t.checked = false; }
       const picked = boxes.filter(b => b.checked).map(b => b.value);
-      answers[TWO.pair[0]] = picked[0] || ''; answers[TWO.pair[1]] = picked[1] || '';
+      answers[pair[0]] = picked[0] || ''; answers[pair[1]] = picked[1] || '';
     } else if (t.dataset.q) {
       answers[t.dataset.q] = t.value;
     }
@@ -179,7 +181,7 @@
     const n = +b.dataset.go, p = Math.ceil(n / 10);
     showPart(p);
     setTimeout(() => {
-      const el = paper.querySelector(`[data-q="${n}"]`) || paper.querySelector(`[data-q="${TWO ? TWO.pair[0] : 0}"]`);
+      const el = paper.querySelector(`[data-q="${n}"]`) || (T.Q[n].kind === 'two' ? twoBlock(n) : null);
       if (el) { el.scrollIntoView({ block: 'center' }); const f = el.querySelector('input,select') || (el.matches('input,select') ? el : null); if (f) f.focus({ preventScroll: true }); }
     }, 50);
   });
@@ -231,9 +233,11 @@
         if (!ok) r.insertAdjacentHTML('beforeend', `<span class="fix">${q.ans}</span>`);
       }
     }
-    const two = paper.querySelector('.mcq[data-two]');
-    if (two) two.classList.add(mark(TWO.pair[0]) && mark(TWO.pair[1]) ? 'correct' : 'wrong');
-    if (two) TWO.ans.forEach(k => two.querySelector(`label[data-opt="${k}"]`).classList.add('key'));
+    paper.querySelectorAll('.mcq[data-two]').forEach(two => {
+      const q = T.Q[two.dataset.q];
+      two.classList.add(mark(q.pair[0]) && mark(q.pair[1]) ? 'correct' : 'wrong');
+      q.ans.forEach(k => two.querySelector(`label[data-opt="${k}"]`).classList.add('key'));
+    });
     renderNav();
 
     // save to the trainer's report form (same browser)
