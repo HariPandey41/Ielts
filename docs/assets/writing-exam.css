@@ -112,3 +112,12 @@ table.crit select { font: inherit; font-size: 0.9rem; color: var(--ink); backgro
 details > summary { font-family: var(--f-display); font-weight: 700; cursor: pointer; }
 .note { font-size: 0.92rem; color: var(--pencil); }
 .teacher { border: 1.5px dashed var(--ink); border-radius: 3px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Task 1 data tables */
+.datatable-wrap { overflow-x: auto; margin-top: 4px; }
+table.datatable { width: 100%; border-collapse: collapse; font-family: var(--f-display); font-size: 0.92rem; border: 1.5px solid var(--ink); }
+table.datatable caption { font-weight: 700; padding-bottom: 8px; }
+table.datatable th, table.datatable td { border: 1px solid var(--ink); padding: 7px 10px; text-align: right; }
+table.datatable thead th { background: var(--paper); text-align: center; }
+table.datatable tbody th { text-align: left; font-weight: 600; }
+.datanote { font-size: 0.85rem; color: var(--pencil); margin-top: 6px; }
