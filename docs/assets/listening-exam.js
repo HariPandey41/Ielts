@@ -137,8 +137,8 @@
   });
   paper.addEventListener('change', e => { const t = e.target; if (!submitted && t.dataset.q && t.type !== 'checkbox') { answers[t.dataset.q] = t.value; renderNav(); } });
 
-  // Times: '7:15' is read as '7.15'
-  const normAns = s => String(s || '').toLowerCase().replace(/(\d):(\d)/g, '$1.$2').replace(/[£$€]/g, '').replace(/[’']/g, "'").replace(/[^a-z0-9.\-' ]+/g, ' ').replace(/\.$/, '').replace(/\s+/g, ' ').trim();
+  // Times: '7:15' is read as '7.15', and '7.15 p.m.' as '7.15pm'
+  const normAns = s => String(s || '').toLowerCase().replace(/(\d):(\d)/g, '$1.$2').replace(/(\d)\s*([ap])\.?\s?m\b\.?/g, '$1$2m').replace(/[£$€]/g, '').replace(/[’']/g, "'").replace(/[^a-z0-9.\-' ]+/g, ' ').replace(/\.$/, '').replace(/\s+/g, ' ').trim();
   function withinLimit(raw, limit) {
     const toks = normAns(raw).split(' ').filter(Boolean);
     if (!limit) return true;
