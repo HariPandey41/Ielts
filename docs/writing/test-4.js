@@ -1,51 +1,48 @@
 // IELTS Academic Writing · Practice Test 4 — content only. The exam engine is assets/writing-exam.js.
 (() => {
   'use strict';
-  const CHART = {"title": "Average monthly household spending in two countries", "yLabel": "US dollars per month", "x": ["Housing", "Food", "Transport", "Leisure"], "series": [{"name": "Country A", "v": [1200, 850, 620, 430]}, {"name": "Country B", "v": [1500, 1000, 700, 500]}], "yMax": 1600, "step": 200};
+  const CHART = { title: 'Household energy use in one country', cats: ['Heating', 'Hot water', 'Lighting', 'Appliances and electronics', 'Cooking'], pies: [{ label: '2000', v: [52, 20, 10, 12, 6] }, { label: '2020', v: [41, 17, 5, 31, 6] }] };
 
   const tasks = [
     {
       key: 'task1', min: 150, minutes: 20,
       html: () => `<h2>Writing Task 1</h2><p class="time">You should spend about 20 minutes on this task.</p>
         <div class="prompt">
-          <p class="q">The bar chart compares average monthly household spending, in US dollars, on four categories in two different countries.</p>
+          <p class="q">The pie charts below show how energy was used in homes in one country in 2000 and 2020.</p>
           <p class="q">Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</p>
-          ${window.IELTSChart.bar(CHART)}
+          ${window.IELTSChart.pie(CHART)}
         </div>
         <p class="time" style="margin-top:12px">Write at least 150 words.</p>`,
-      keywords: ["spend", "household", "housing", "food", "transport", "leisure", "country", "month"],
-      model: `The bar chart compares how much households in two countries spent each month, on average, on housing, food, transport and leisure.
+      keywords: ['energy', 'home', 'heating', 'water', 'lighting', 'appliance', 'electronic', 'cooking', '2000', '2020'],
+      model: `The pie charts show how household energy in one country was divided between five uses in 2000 and 2020.
 
-Overall, housing was the largest expense in both countries, followed by food, transport and leisure in that order. Households in Country B spent more than those in Country A in every category.
+Overall, heating accounted for the largest share of energy used in homes in both years, although its proportion fell. The most significant change was the sharp rise in the share used by appliances and electronic devices.
 
-Housing costs stood at $1,200 a month in Country A and $1,500 in Country B, making this the category with the greatest difference between the two countries, at $300. Food was the second-largest item, with households spending $850 and $1,000 respectively.
+In 2000, more than half of all household energy (52%) went on heating, while hot water made up a fifth. Appliances and electronics accounted for 12%, lighting for 10% and cooking for only 6%.
 
-The gaps were smaller for the remaining two categories. Monthly transport spending was $620 in Country A, compared with $700 in Country B, while leisure accounted for the lowest amounts, at $430 and $500.
-
-Taken together, a typical household in Country B spent $3,700 a month on these four items, around $600 more than a household in Country A, which spent $3,100. However, the order of spending priorities was exactly the same in both countries.`,
+By 2020, the picture had changed considerably. The proportion used for heating had dropped by 11 percentage points to 41%, and the figure for hot water had also fallen slightly, to 17%. Lighting saw the largest relative decline, halving from 10% to just 5%. In contrast, the share taken by appliances and electronic devices more than doubled, from 12% to 31%, which made it the second-largest category after heating. The share of energy used for cooking was the only one that stayed the same, at 6% in both years.`,
     },
     {
       key: 'task2', min: 250, minutes: 40,
       html: () => `<h2>Writing Task 2</h2><p class="time">You should spend about 40 minutes on this task.</p>
         <div class="prompt">
           <p>Write about the following topic:</p>
-          <p class="q">Many people believe that children should begin learning a foreign language at primary school rather than secondary school.</p>
-          <p class="q">Do the advantages of this outweigh the disadvantages?</p>
+          <p class="q">In many cities, young people can no longer afford to buy or rent a home of their own.</p>
+          <p class="q">What problems does this cause? What solutions can you suggest?</p>
           <p>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p>
         </div>
         <p class="time" style="margin-top:12px">Write at least 250 words.</p>`,
-      keywords: ["child", "language", "primary", "secondary", "school", "learn", "teacher", "advantage"],
-      model: `In many countries, children now begin learning a foreign language at primary school instead of waiting until secondary school. Although this approach has some drawbacks, I believe its advantages are far greater.
+      opinion: false,
+      keywords: ['young', 'home', 'hous', 'rent', 'afford', 'city', 'problem', 'solution', 'government', 'parent'],
+      model: `In many large cities, house prices and rents have risen so quickly that young adults cannot afford a home of their own. This essay will outline the main problems this causes and suggest some ways of tackling it.
 
-The main benefit of starting early is that young children learn languages more naturally. They are generally less afraid of making mistakes than teenagers, and they are good at imitating sounds, so they often develop more accurate pronunciation. Starting at the age of seven or eight also gives pupils several extra years of study, which means that by the time they leave school they can reach a much higher level. In addition, learning another language at an early age can make children more curious about other cultures and more open to people from different backgrounds.
+The most obvious problem is that young people's lives are put on hold. Many stay in their parents' homes well into their thirties, which can create tension in families and delays decisions such as getting married or having children. Those who do rent often spend half their income on housing, leaving little to save for the future. A second problem affects cities themselves. When teachers, nurses and other essential workers cannot afford to live near their jobs, they either face long and expensive commutes or move away altogether, and public services suffer as a result. Finally, high housing costs can widen the gap between generations, because young people whose parents cannot help them have little chance of ever owning property.
 
-There are, however, some disadvantages. Primary schools may not have enough teachers who speak the language well, and a poor teacher could give children bad habits that are difficult to correct later. Some parents also worry that time spent on a foreign language will reduce the time available for reading, writing and mathematics in the child's first language.
+There are several possible solutions. The most important is to build more homes, particularly small, affordable flats near public transport, and governments can speed this up by releasing unused public land and simplifying planning rules. Secondly, cities could expand social housing, in which rents are set according to income rather than the market, as Vienna has done successfully for decades. In addition, governments could protect tenants by limiting how much rents can rise each year, although this needs to be done carefully so that landlords do not stop renting out property.
 
-These problems are real, but they can be managed. Governments can train primary teachers in language teaching or share specialist teachers between several schools. Lessons for young children do not need to be long either: twenty minutes a day of songs, games and simple conversation can be very effective without taking much time from other subjects.
-
-In conclusion, the difficulties of teaching foreign languages in primary schools are mainly practical and can be overcome with careful planning. Because younger learners have natural advantages and more time to make progress, I believe the benefits clearly outweigh the drawbacks.`,
+In conclusion, unaffordable housing delays young people's independence, weakens public services and increases inequality. A combination of more house building, more social housing and fairer rules for renters offers the best chance of solving the problem.`,
     },
   ];
 
-  window.WRITING_TEST = { num: 4, task1Intro: 'describe a bar chart', tasks };
+  window.WRITING_TEST = { num: 4, task1Intro: 'describe two pie charts', tasks };
 })();

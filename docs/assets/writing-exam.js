@@ -2,12 +2,15 @@
 // (which sets window.WRITING_TEST) and then this script.
 
 // Exam-style black-and-white charts for Task 1. Content files call these from their task html().
-// spec: { title, yLabel, xLabel?, x: [labels], series: [{ name, v: [values] }], yMax, step }
+// line/bar spec: { title, yLabel, xLabel?, x: [labels], series: [{ name, v: [values] }], yMax, step }
+// pie spec: { title, pies: [{ label, v: [percentages] }], cats: [names] }   (each pie in the order of cats)
+// table spec: { title, head: [column headings], rows: [[cells]], note? }
+// flow spec: { title, steps: [text], cycle?: true }   (a process diagram; cycle joins the last step to the first)
 window.IELTSChart = (() => {
   const DASH = ['', '7 5', '2 4', '12 4 3 4'];
-  const FILL = ['fill:var(--ink)', 'fill:var(--sheet)', 'fill:url(#ielts-hatch)', 'fill:url(#ielts-dots)'];
+  const FILL = ['fill:var(--ink)', 'fill:var(--sheet)', 'fill:url(#ielts-hatch)', 'fill:url(#ielts-dots)', 'fill:url(#ielts-cross)', 'fill:url(#ielts-hlines)'];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const defs = '<defs><pattern id="ielts-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--ink)" stroke-width="2"/></pattern><pattern id="ielts-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" style="fill:var(--ink)"/></pattern></defs>';
+  const defs = '<defs><pattern id="ielts-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--ink)" stroke-width="2"/></pattern><pattern id="ielts-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" style="fill:var(--ink)"/></pattern><pattern id="ielts-cross" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 0L8 8M8 0L0 8" style="stroke:var(--ink)" stroke-width="1"/></pattern><pattern id="ielts-hlines" width="6" height="6" patternUnits="userSpaceOnUse"><line x1="0" y1="3" x2="6" y2="3" style="stroke:var(--ink)" stroke-width="1.4"/></pattern><marker id="ielts-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink)"/></marker></defs>';
   function frame(spec, X0, X1, Y0, Y1) {
     const y = v => Y0 - (Y0 - Y1) * v / spec.yMax;
     let g = defs;
@@ -45,7 +48,64 @@ window.IELTSChart = (() => {
     g += legend(spec, (k, lx) => `<rect x="${lx}" y="33" width="16" height="12" style="${FILL[k]};stroke:var(--ink)" stroke-width="1.2"/>`);
     return wrap(spec, g);
   }
-  return { line, bar };
+  function pie(spec) {
+    const n = spec.pies.length, R = n > 1 ? 92 : 110, W = 600, top = spec.title ? 46 : 16;
+    const H = top + 44 + 2 * R + 40 + Math.ceil(spec.cats.length / 3) * 24 + 10;
+    let g = defs + (spec.title ? `<text x="300" y="22" text-anchor="middle" font-size="14" font-weight="700">${esc(spec.title)}</text>` : '');
+    spec.pies.forEach((p, i) => {
+      const cx = W / (n * 2) * (2 * i + 1), cy = top + 44 + R;
+      g += `<text x="${cx}" y="${top + 6}" text-anchor="middle" font-size="13" font-weight="700">${esc(p.label)}</text>`;
+      const total = p.v.reduce((a, b) => a + b, 0);
+      let a0 = -Math.PI / 2;
+      p.v.forEach((v, k) => {
+        const a1 = a0 + 2 * Math.PI * v / total, big = a1 - a0 > Math.PI ? 1 : 0;
+        const P = (a, r) => `${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`;
+        g += `<path d="M${cx},${cy} L${P(a0, R)} A${R},${R} 0 ${big} 1 ${P(a1, R)} Z" style="${FILL[k]};stroke:var(--ink)" stroke-width="1.3"/>`;
+        const m = (a0 + a1) / 2, [lx, ly] = P(m, R + 17).split(',').map(Number);
+        g += `<text x="${lx}" y="${ly + 4}" text-anchor="middle" font-size="12">${v}%</text>`;
+        a0 = a1;
+      });
+    });
+    const ly0 = top + 44 + 2 * R + 40;
+    spec.cats.forEach((c, k) => {
+      const lx = 40 + (k % 3) * 185, ly = ly0 + Math.floor(k / 3) * 24;
+      g += `<rect x="${lx}" y="${ly - 11}" width="16" height="13" style="${FILL[k]};stroke:var(--ink)" stroke-width="1.2"/><text x="${lx + 22}" y="${ly}" font-size="12">${esc(c)}</text>`;
+    });
+    const label = spec.pies.map(p => `${p.label}: ${spec.cats.map((c, k) => `${c} ${p.v[k]}%`).join(', ')}`).join('; ');
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(spec.title || 'Pie chart')}. ${esc(label)}.">${g}</svg>`;
+  }
+  function table(spec) {
+    return `<div class="datatable-wrap"><table class="datatable"><caption>${esc(spec.title)}</caption><thead><tr>${spec.head.map(h => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${spec.rows.map(r => `<tr>${r.map((c, i) => i ? `<td>${esc(c)}</td>` : `<th scope="row">${esc(c)}</th>`).join('')}</tr>`).join('')}</tbody></table>${spec.note ? `<p class="datanote">${esc(spec.note)}</p>` : ''}</div>`;
+  }
+  // wraps text into lines of at most `max` characters, for SVG boxes
+  const lines = (t, max) => String(t).split(' ').reduce((a, w) => { const l = a[a.length - 1]; if (l && (l + ' ' + w).length <= max) a[a.length - 1] = l + ' ' + w; else a.push(w); return a; }, []);
+  function flow(spec) {
+    const n = spec.steps.length, BW = spec.cycle ? 132 : 150, BH = 74, CH = spec.cycle ? 19 : 22;
+    let pos, W = 600, H;
+    if (spec.cycle) {
+      const cx = 300, cy = 262, rx = 228, ry = 180;
+      pos = spec.steps.map((_, i) => { const a = -Math.PI / 2 + 2 * Math.PI * i / n; return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)]; });
+      H = 545;
+    } else {
+      const per = 3, rowH = 128;
+      pos = spec.steps.map((_, i) => { const r = Math.floor(i / per), c = i % per, col = r % 2 ? per - 1 - c : c; return [100 + col * 200, 92 + r * rowH]; });
+      H = 92 + Math.ceil(n / per) * rowH - 20;
+    }
+    let g = defs + `<text x="300" y="22" text-anchor="middle" font-size="14" font-weight="700">${esc(spec.title)}</text>`;
+    // arrow from the edge of box i to the edge of box j
+    const edge = ([x, y], [tx, ty]) => { const dx = tx - x, dy = ty - y, s = Math.min((BW / 2 + 6) / Math.abs(dx || 1e-9), (BH / 2 + 6) / Math.abs(dy || 1e-9)); return [x + dx * s, y + dy * s]; };
+    const links = spec.steps.map((_, i) => [i, i + 1]).filter(([, j]) => j < n);
+    if (spec.cycle) links.push([n - 1, 0]);
+    links.forEach(([i, j]) => { const [x1, y1] = edge(pos[i], pos[j]), [x2, y2] = edge(pos[j], pos[i]); g += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" style="stroke:var(--ink)" stroke-width="1.6" marker-end="url(#ielts-arrow)"/>`; });
+    spec.steps.forEach((t, i) => {
+      const [x, y] = pos[i], L = lines(t, CH);
+      g += `<rect x="${x - BW / 2}" y="${y - BH / 2}" width="${BW}" height="${BH}" rx="4" style="fill:var(--sheet);stroke:var(--ink)" stroke-width="1.4"/>`;
+      g += `<circle cx="${x - BW / 2}" cy="${y - BH / 2}" r="11" style="fill:var(--ink)"/><text x="${x - BW / 2}" y="${y - BH / 2 + 4}" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--sheet)">${i + 1}</text>`;
+      L.forEach((l, k) => g += `<text x="${x}" y="${y + 4 + (k - (L.length - 1) / 2) * 15}" text-anchor="middle" font-size="12">${esc(l)}</text>`);
+    });
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(spec.title)}. ${esc(spec.steps.map((t, i) => `Stage ${i + 1}: ${t}`).join('. '))}${spec.cycle ? '. The cycle then begins again.' : '.'}">${g}</svg>`;
+  }
+  return { line, bar, pie, table, flow };
 })();
 (() => {
   'use strict';
@@ -172,8 +232,10 @@ window.IELTSChart = (() => {
 
     let TA, taNote;
     if (idx === 0) {
-      TA = 4 + Math.min(1.5, ratio * 1.5) + keyHit * 1.2 + (overview ? 1 : 0) + Math.min(1, numbers / 8) - (ratio < 0.7 ? 1.5 : 0);
-      taNote = !overview ? 'No clear overview. Add a sentence starting “Overall,” that sums up the main trends.' : numbers < 6 ? 'Support the description with more figures from the graph (percentages and years).' : ratio < 1 ? `Under 150 words: examiners lower the score for short answers.` : 'Overview and supporting figures are present.';
+      // t.figures === false: a process diagram or map, where stages or changes are described instead of numbers
+      const detail = t.figures === false ? Math.min(1, keyHit * 1.4) : Math.min(1, numbers / 8);
+      TA = 4 + Math.min(1.5, ratio * 1.5) + keyHit * 1.2 + (overview ? 1 : 0) + detail - (ratio < 0.7 ? 1.5 : 0);
+      taNote = !overview ? `No clear overview. Add a sentence starting “Overall,” that sums up ${t.figures === false ? 'the main stages or changes' : 'the main trends'}.` : t.figures === false ? (keyHit < 0.6 ? 'Describe each stage or change in the diagram, using the words it gives you.' : ratio < 1 ? 'Under 150 words: examiners lower the score for short answers.' : 'Overview and the main stages or changes are covered.') : numbers < 6 ? 'Support the description with more figures from the chart (percentages and years).' : ratio < 1 ? `Under 150 words: examiners lower the score for short answers.` : 'Overview and supporting figures are present.';
     } else {
       const wantsOpinion = t.opinion !== false;
       TA = 4 + Math.min(1.5, ratio * 1.5) + keyHit * 1.2 + (position || !wantsOpinion ? 1 : 0) + (conclusion ? 0.5 : 0) - (ratio < 0.7 ? 1.5 : 0);
