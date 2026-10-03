@@ -1,0 +1,102 @@
+// IELTS Academic Reading · Practice Test 7 — content only. The exam engine is assets/reading-exam.js.
+(() => {
+  'use strict';
+  const passages = [
+    {
+      title: 'The Making of a Public Park',
+      sub: 'You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.',
+      paras: [
+        ['', 'Public parks are often presented as permanent features of a city, but many began as contested projects. Land may have been used for grazing, industry or private gardens before residents argued that it should serve a wider public. The final park is therefore shaped by negotiations about land, money and access.'],
+        ['', 'Early designers commonly borrowed ideas from private estates. Curving paths, ponds and carefully placed trees were intended to produce a natural appearance, even when the landscape was constructed from scratch. This style offered visitors an escape from crowded streets, but it also required gardeners and workers to maintain an appearance of effortless beauty.'],
+        ['', 'A park’s location affects who can use it. A large green space beside a railway may be easy to reach but noisy, while a small park in a wealthy district may receive excellent maintenance and little public criticism. Planners now examine walking distance, entrances and the safety of routes rather than measuring only the total area of greenery.'],
+        ['', 'Facilities change with social expectations. Nineteenth-century parks often included bandstands and formal promenades. Later parks added sports grounds, playgrounds and spaces for community events. Some recent projects include quiet gardens, outdoor classrooms and areas where rainwater can collect temporarily during storms.'],
+        ['', 'Trees and lawns are not cost-free. Grass may require irrigation, mowing and fertiliser, while mature trees need inspection after storms. In dry cities, designers have replaced some lawns with native planting that survives with less water. The result may look less formal, but it can support insects and reduce maintenance.'],
+        ['', 'Residents increasingly take part in management. Friends’ groups organise clean-ups, report broken equipment and argue for improvements. Their involvement can strengthen a park, although unpaid work should not become an excuse for reducing professional staff or shifting all responsibility to volunteers.'],
+        ['', 'A successful park is more than an attractive view. It provides contact with nature, opportunities for exercise and places where people can meet without paying to enter. Because these benefits are difficult to express in a single number, evaluations often combine visitor counts with surveys, ecological observations and evidence of how fairly the space is distributed.'],
+      ],
+    },
+    {
+      title: 'Urban Cycling',
+      sub: 'You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.',
+      paras: [
+        ['A', 'Cycling became a practical form of urban transport long before the arrival of cycle lanes. In many cities, bicycles were used by workers, students and delivery riders because they were inexpensive and could pass through narrow streets. The modern cycling revival builds on this older pattern but adds new equipment and infrastructure.'],
+        ['B', 'Protected lanes are one of the most visible changes. A physical barrier separates bicycles from moving traffic, which can make inexperienced riders feel safer. The design is not simple: lanes need connections at junctions, space for deliveries and clear treatment where buses or pedestrians cross them. A lane that ends suddenly may create a new hazard.'],
+        ['C', 'Electric bicycles have widened the possible journey. A motor assists the rider while they pedal, making hills and longer distances less intimidating. They may help older people or commuters arrive without needing a shower, but they are heavier and can travel faster than traditional bicycles. Cities must consider speed and parking as their use expands.'],
+        ['D', 'Businesses respond to reliable cycling routes. Cafés, shops and repair services may benefit from passing riders, while employers sometimes provide secure parking and changing facilities. The economic effect varies by street: removing car spaces can upset some traders in the short term, but slower traffic and easier access may bring more visitors over time.'],
+        ['E', 'Weather is a real barrier, but it is not the only one. People may avoid cycling because they fear theft, do not know a safe route or cannot carry children and goods. Secure storage, clear maps and cargo bicycles can address some problems. Public campaigns are less effective when the physical environment still feels dangerous.'],
+        ['F', 'The strongest programmes treat cycling as one part of a transport system. Bicycles can connect to trains and buses, especially when stations provide parking and allow folding bicycles. The aim is not to make every journey by bicycle, but to give people a practical choice for journeys where cycling works well.'],
+      ],
+    },
+    {
+      title: 'Sleep and Shift Work',
+      sub: 'You should spend about 20 minutes on Questions 27–40, which are based on Reading Passage 3 below.',
+      paras: [
+        ['', 'Human bodies follow a daily rhythm influenced by light, food and social activity. Shift work asks people to be awake at times when the body would normally prepare for sleep. Some workers adapt more easily than others, but rotating schedules can make adaptation difficult because the clock changes before a stable pattern is established.'],
+        ['', 'Night workers often sleep during the day, when noise, light and family responsibilities make rest less continuous. They may obtain a similar total number of hours across a week but still feel less recovered. Sleep quality depends on timing and continuity as well as duration.'],
+        ['', 'Light is one of the strongest signals to the body clock. Bright light at the start of a night shift can increase alertness, while darkness after work may help the body prepare for sleep. Advice must be individualised, however, because exposure at the wrong time can make a worker’s next shift harder rather than easier.'],
+        ['', 'Employers can reduce strain through scheduling. Forward-rotating shifts, in which a worker moves from day to evening to night, are often easier to manage than the reverse order. Sufficient time between shifts also matters. A schedule that looks efficient on paper may be unsafe if workers have too little opportunity to recover.'],
+        ['', 'Short naps can help during a long shift, but they are not a full substitute for regular sleep. A nap before work may improve alertness, while a brief break during a shift can reduce sleepiness. Workers must also consider the grogginess that can follow a nap if they are required to make immediate safety-critical decisions.'],
+        ['', 'The risks of fatigue are not limited to the workplace. A tired worker may drive home with reduced attention, and family life can be affected when schedules conflict. Some employers provide transport after a night shift or allow workers to rest before travelling. Such measures recognise that fatigue follows a person beyond the factory, hospital or control room.'],
+        ['', 'There is no single solution to shift-work fatigue. Better schedules, suitable light, protected sleep and honest reporting of tiredness all contribute. A culture that praises people for working while exhausted may undermine every technical measure, whereas a culture that treats rest as part of safe work can make adaptation more realistic.'],
+      ],
+    },
+  ];
+  const box = { A: 'duration', B: 'timing', C: 'light', D: 'transport', E: 'forward', F: 'naps', G: 'culture', H: 'noise' };
+  const Q = {
+    1: { kind: 'tfng', s: 'Every public park began as land owned by a city authority.', a: 'NOT GIVEN', ev: 'The passage says land may have had several previous uses, but does not state who owned every site.' },
+    2: { kind: 'tfng', s: 'Some early park designs tried to look natural even though they were constructed.', a: 'TRUE', ev: 'Curving paths, ponds and trees produced a natural appearance in constructed landscapes.' },
+    3: { kind: 'tfng', s: 'A park beside a railway is always the most accessible park in a city.', a: 'FALSE', ev: 'The passage says such a park may be easy to reach but noisy; it does not call it always most accessible.' },
+    4: { kind: 'tfng', s: 'Modern parks can include areas for temporary rainwater collection.', a: 'TRUE', ev: 'Some recent projects include areas where rainwater can collect during storms.' },
+    5: { kind: 'tfng', s: 'Native planting always looks more formal than a lawn.', a: 'FALSE', ev: 'Replacing lawns with native planting may look less formal.' },
+    6: { kind: 'tfng', s: 'Volunteers should replace all professional park staff.', a: 'FALSE', ev: 'Unpaid work should not become an excuse for reducing professional staff.' },
+    7: { kind: 'gap', a: ['grazing'], limit: 1, ev: 'Land may previously have been used for grazing.' },
+    8: { kind: 'gap', a: ['ponds'], limit: 1, ev: 'Early designers used ponds to create a natural appearance.' },
+    9: { kind: 'gap', a: ['entrances'], limit: 1, ev: 'Planners examine walking distance, entrances and safety.' },
+    10: { kind: 'gap', a: ['playgrounds'], limit: 1, ev: 'Later parks added sports grounds and playgrounds.' },
+    11: { kind: 'gap', a: ['irrigation'], limit: 1, ev: 'Grass may require irrigation, mowing and fertiliser.' },
+    12: { kind: 'gap', a: ['clean-ups'], limit: 1, ev: 'Friends’ groups organise clean-ups.' },
+    13: { kind: 'gap', a: ['surveys'], limit: 1, ev: 'Evaluations combine visitor counts with surveys and ecological observations.' },
+    14: { kind: 'para', s: 'a description of the historical users of bicycles', a: 'A', ev: 'Paragraph A mentions workers, students and delivery riders.' },
+    15: { kind: 'para', s: 'a warning about a cycle lane that stops without a safe connection', a: 'B', ev: 'Paragraph B says a lane that ends suddenly may create a hazard.' },
+    16: { kind: 'para', s: 'a possible benefit of electric bicycles for commuters', a: 'C', ev: 'Electric bicycles may let commuters arrive without needing a shower.' },
+    17: { kind: 'para', s: 'a possible short-term negative reaction from businesses', a: 'D', ev: 'Removing car spaces can upset some traders in the short term.' },
+    18: { kind: 'para', s: 'a problem that is not solved by better weather', a: 'E', ev: 'The passage lists theft, route knowledge and carrying goods as barriers beyond weather.' },
+    19: { kind: 'gap', a: ['bicycles'], limit: 1, ev: 'Bicycles were used by workers, students and delivery riders.' },
+    20: { kind: 'gap', a: ['junctions'], limit: 1, ev: 'Protected lanes need connections at junctions.' },
+    21: { kind: 'gap', a: ['parking'], limit: 1, ev: 'Cities must consider speed and parking for electric bicycles.' },
+    22: { kind: 'gap', a: ['repair'], limit: 1, ev: 'Businesses that benefit may include repair services.' },
+    23: { kind: 'gap', a: ['theft'], limit: 1, ev: 'People may avoid cycling because they fear theft.' },
+    24: { kind: 'gap', a: ['cargo bicycles'], limit: 2, ev: 'Cargo bicycles can help people carry children and goods.' },
+    25: { kind: 'gap', a: ['trains'], limit: 1, ev: 'Bicycles can connect to trains and buses.' },
+    26: { kind: 'gap', a: ['choice'], limit: 1, ev: 'The aim is to give people a practical choice.' },
+    27: { kind: 'mcq', s: 'Why can rotating shifts make adaptation difficult?', o: { A: 'The body clock never responds to light.', B: 'The schedule changes before a stable pattern is established.', C: 'Workers always sleep for too many hours.', D: 'Night work contains no social activity.' }, a: 'B', ev: 'Rotating schedules can change before a stable pattern is established.' },
+    28: { kind: 'mcq', s: 'What can make daytime sleep less continuous?', o: { A: 'Noise, light and family responsibilities.', B: 'Forward-rotating shifts only.', C: 'A lack of food during the night.', D: 'Secure transport home.' }, a: 'A', ev: 'Daytime sleep may be interrupted by noise, light and family responsibilities.' },
+    29: { kind: 'mcq', s: 'Why must advice about light be individualised?', o: { A: 'Light has no effect on the body clock.', B: 'The wrong timing can make a later shift harder.', C: 'All workers prefer darkness at work.', D: 'Bright light prevents alertness.' }, a: 'B', ev: 'Exposure at the wrong time can make the next shift harder.' },
+    30: { kind: 'mcq', s: 'Which shift pattern is often easier to manage?', o: { A: 'Night to evening to day.', B: 'Day to evening to night.', C: 'Night to day to evening.', D: 'A schedule that changes every hour.' }, a: 'B', ev: 'Forward rotation moves from day to evening to night.' },
+    31: { kind: 'mcq', s: 'What is one possible problem after a nap?', o: { A: 'The worker may feel groggy during an immediate safety decision.', B: 'The worker will never sleep again.', C: 'The nap always reduces alertness.', D: 'Naps eliminate the need for regular sleep.' }, a: 'A', ev: 'The passage warns about grogginess after a nap during safety-critical decisions.' },
+    32: { kind: 'ynng', s: 'Shift workers always sleep fewer total hours than day workers.', a: 'NOT GIVEN', ev: 'The passage says they may obtain a similar total number of hours, but not that they always do.' },
+    33: { kind: 'ynng', s: 'Light can be used as a signal to influence the body clock.', a: 'YES', ev: 'Light is one of the strongest signals to the body clock.' },
+    34: { kind: 'ynng', s: 'A nap is a complete substitute for regular sleep.', a: 'NO', ev: 'Short naps can help but are not a full substitute for regular sleep.' },
+    35: { kind: 'ynng', s: 'Fatigue can affect a worker’s journey home.', a: 'YES', ev: 'A tired worker may drive home with reduced attention.' },
+    36: { kind: 'ynng', s: 'The passage recommends one single solution for all shift workers.', a: 'NO', ev: 'It says there is no single solution and lists several contributing measures.' },
+    37: { kind: 'box', a: 'B', ev: 'Sleep quality depends on timing as well as duration.' },
+    38: { kind: 'box', a: 'C', ev: 'Light is a strong signal to the body clock.' },
+    39: { kind: 'box', a: 'D', ev: 'Some employers provide transport after a night shift.' },
+    40: { kind: 'box', a: 'G', ev: 'A culture that treats rest as part of safe work supports adaptation.' },
+  };
+  const TF_KEY = '<div class="key-box"><dl><dt>TRUE</dt><dd>if the statement agrees with the information</dd><dt>FALSE</dt><dd>if the statement contradicts the information</dd><dt>NOT GIVEN</dt><dd>if there is no information on this</dd></dl></div>';
+  const YN_KEY = '<div class="key-box"><dl><dt>YES</dt><dd>if the statement agrees with the claims of the writer</dd><dt>NO</dt><dd>if the statement contradicts the claims of the writer</dd><dt>NOT GIVEN</dt><dd>if it is impossible to say what the writer thinks about this</dd></dl></div>';
+  const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
+  const keyBox = (title, obj) => `<div class="key-box"><span class="label">${title}</span><dl>${Object.entries(obj).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div>`;
+  const selectQ = (h, n, opts, ph) => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>${h.esc(h.Q[n].s)}</span></div>${h.select(n, Object.keys(opts).map(k => [k, k]), ph)}</div>`;
+  const build = h => [
+    `<div class="qset"><h3>Questions 1–6</h3><p class="instr">Do the following statements agree with the information given in Reading Passage 1? Choose</p>${TF_KEY}${range(1, 6).map(h.tf).join('')}</div>
+    <div class="qset"><h3>Questions 7–13</h3><p class="instr">Complete the notes below. Choose <b>ONE WORD ONLY</b> from the passage for each answer.</p><div class="notes"><h4>Public parks</h4><ul><li>Land may once have been used for ${h.gapIn(7)}.</li><li>Early parks included artificial ${h.gapIn(8)}.</li><li>Planners examine park ${h.gapIn(9)}.</li><li>Later parks added ${h.gapIn(10)}.</li><li>Lawns may need ${h.gapIn(11)}.</li><li>Friends’ groups organise ${h.gapIn(12)}.</li><li>Evaluations may include visitor ${h.gapIn(13)}.</li></ul></div></div>`,
+    `<div class="qset"><h3>Questions 14–18</h3><p class="instr">Reading Passage 2 has six paragraphs, <b>A–F</b>. Which paragraph contains the following information? <b>NB</b> You may use any letter more than once.</p>${range(14, 18).map(n => selectQ(h, n, { A: 1, B: 1, C: 1, D: 1, E: 1, F: 1 }, 'Choose A–F')).join('')}</div>
+    <div class="qset"><h3>Questions 19–26</h3><p class="instr">Complete the notes below. Choose <b>NO MORE THAN TWO WORDS</b> from the passage for each answer.</p><div class="notes"><h4>Urban cycling</h4><ul><li>Early bicycle users included delivery ${h.gapIn(19)}.</li><li>Protected lanes need safe connections at ${h.gapIn(20)}.</li><li>Cities must plan for bicycle ${h.gapIn(21)}.</li><li>Businesses may include bicycle ${h.gapIn(22)} services.</li><li>Fear of ${h.gapIn(23)} can discourage cycling.</li><li>${h.gapIn(24)} can carry children and goods.</li><li>Bicycles can connect to ${h.gapIn(25)}.</li><li>The aim is to offer a practical ${h.gapIn(26)}.</li></ul></div></div>`,
+    `<div class="qset"><h3>Questions 27–31</h3><p class="instr">Choose the correct letter, <b>A, B, C or D</b>.</p>${range(27, 31).map(h.mcq).join('')}</div>
+    <div class="qset"><h3>Questions 32–36</h3><p class="instr">Do the following statements agree with the claims of the writer in Reading Passage 3? Choose</p>${YN_KEY}${range(32, 36).map(h.tf).join('')}</div>
+    <div class="qset"><h3>Questions 37–40</h3><p class="instr">Complete the summary using the list of words, <b>A–H</b>, below.</p><div class="notes"><h4>Managing shift work</h4><p>Sleep quality depends partly on ${h.boxSel(37)}. The body clock responds strongly to ${h.boxSel(38)}. After a night shift, some employers provide ${h.boxSel(39)}. A safe workplace needs a supportive ${h.boxSel(40)}.</p></div>${keyBox('List of words', box)}</div>`,
+  ];
+  window.READING_TEST = { num: 7, passages, Q, headings: {}, box, ranges: [[1, 13], [14, 26], [27, 40]], build };
+})();
