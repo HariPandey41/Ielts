@@ -134,7 +134,7 @@
     4:  { kind: 'gap', ans: ['145'], limit: 'wn' },
     5:  { kind: 'gap', ans: ['conservatory'], limit: 'wn' },
     6:  { kind: 'gap', ans: ['ashworth'], limit: 'wn', key: 'Ashworth' },
-    7:  { kind: 'gap', ans: ['9', 'nine', '9pm', '9.00', '21.00'], limit: 'wn', key: '9' },
+    7:  { kind: 'gap', ans: ['9', 'nine', '9pm', '9.00', '9.00pm', '21.00'], limit: 'wn', key: '9' },
     8:  { kind: 'gap', ans: ['cot'], limit: 'wn' },
     9:  { kind: 'gap', ans: ['garage'], limit: 'wn' },
     10: { kind: 'gap', ans: ['island'], limit: 'wn' },
