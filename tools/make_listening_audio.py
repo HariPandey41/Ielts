@@ -1,56 +1,67 @@
-# Generates the recording for a listening test page with Kokoro (Apache-2.0, offline).
+# Records the soundtrack for a listening test with Kokoro (Apache-2.0, offline neural voices).
 #
-# Setup:
-#   pip install kokoro-onnx soundfile
+# Setup (once):
+#   pip install kokoro-onnx soundfile        # ffmpeg and node must also be installed
 #   curl -LO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
 #   curl -LO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
-# Export the page's SCRIPT array to script.json, run this file, then master test1.wav to MP3:
-#   ffmpeg -i test1.wav -af "highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,loudnorm=I=-18:TP=-1.5" -ac 1 -b:a 64k docs/audio/listening-test1.mp3
-# timeline.json gives the part changes and pauses; paste its events into the page's TIMELINE.
-import json, re, random, numpy as np, soundfile as sf
+#
+# Usage, from the repository root:
+#   python3 tools/make_listening_audio.py 2 --model-dir /path/to/kokoro-files
+#
+# Reads docs/listening/test-N.js (each role needs voice, speed and lang), writes
+# docs/audio/listening-testN.mp3 and puts the timeline, length and size back into the content file.
+import argparse, json, os, random, re, subprocess, tempfile
+import numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
-random.seed(7)
-k = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
-VOICE = {  # role: (voice, speed, lang)
-  'narrator': ('bm_george', 0.92, 'en-gb'),
-  'tom':      ('am_michael', 1.0, 'en-us'),
-  'laura':    ('bf_emma', 0.98, 'en-gb'),
-  'claire':   ('af_heart', 0.97, 'en-us'),
-  'evans':    ('bm_fable', 0.95, 'en-gb'),
-  'mia':      ('bf_isabella', 1.0, 'en-gb'),
-  'jake':     ('am_puck', 1.0, 'en-us'),
-  'lecturer': ('af_bella', 0.95, 'en-us'),
-}
+
+ap = argparse.ArgumentParser()
+ap.add_argument('test', type=int)
+ap.add_argument('--model-dir', default='.')
+args = ap.parse_args()
+content = f'docs/listening/test-{args.test}.js'
+mp3 = f'docs/audio/listening-test{args.test}.mp3'
+
+data = json.loads(subprocess.check_output(['node', '-e', f"global.window={{}};require('./{content}');const T=window.LISTENING_TEST;process.stdout.write(JSON.stringify({{script:T.script,roles:T.roles}}))"]))
+k = Kokoro(os.path.join(args.model_dir, 'kokoro-v1.0.onnx'), os.path.join(args.model_dir, 'voices-v1.0.bin'))
 SR = 24000
-script = json.load(open('script.json'))
+random.seed(7)
 strip = lambda s: re.sub(r'\{\{(.+?)\|\d+\}\}', r'\1', s)
-chunks, timeline, t, part, prev = [], [], 0.0, 1, None
+
+chunks, events, t, part, prev, after_pause = [], [], 0.0, 1, None, False
 def add(a):
     global t
     chunks.append(a.astype(np.float32)); t += len(a) / SR
 def silence(sec): add(np.zeros(int(SR * sec)))
+
 silence(1.0)
-for i, line in enumerate(script):
+for line in data['script']:
     kind = line[0]
     if kind == 'focus':
-        part = line[1]; timeline.append({'t': round(t, 2), 'focus': part}); continue
+        part = line[1]; events.append({'t': round(t, 2), 'focus': part}); continue
     if kind == 'pause':
-        timeline.append({'t': round(t, 2), 'pause': line[1], 'label': line[2], 'part': part})
-        silence(line[1]); prev = None; continue
-    voice, speed, lang = VOICE[kind]
-    audio, sr = k.create(strip(line[1]), voice=voice, speed=speed, lang=lang)
-    assert sr == SR
-    # gap before this line
+        events.append({'t': round(t, 2), 'pause': line[1], 'label': line[2]})
+        silence(line[1]); prev = None; after_pause = True; continue
+    r = data['roles'][kind]
+    audio, sr = k.create(strip(line[1]), voice=r['voice'], speed=r.get('speed', 1.0), lang=r.get('lang', 'en-gb'))
     if prev is not None:
-        silence(1.1 if (prev == 'narrator' or kind == 'narrator') else random.uniform(0.35, 0.7))
-    timeline.append({'t': round(t, 2), 'role': kind, 'part': part, 'i': i})
+        silence(1.1 if 'narrator' in (prev, kind) else random.uniform(0.35, 0.7))
+    if after_pause:
+        events.append({'t': round(t, 2), 'speech': 1, 'part': part}); after_pause = False
     add(audio); prev = kind
-    print(f'{i:3d} {kind:9s} {t/60:5.1f} min', flush=True)
 silence(1.5)
-sf.write('test1.wav', np.concatenate(chunks), SR)
-json.dump({'duration': round(t, 2), 'events': timeline}, open('timeline.json', 'w'))
-print('TOTAL', round(t / 60, 2), 'min')
-# sound check clip
-a, _ = k.create('This is a sound check. You should be able to hear this voice clearly. Adjust your volume now.', voice='bm_george', speed=0.92, lang='en-gb')
-b, _ = k.create('And this is one of the speakers you will hear in the test.', voice='bf_emma', speed=0.98, lang='en-gb')
-sf.write('soundcheck.wav', np.concatenate([np.zeros(SR//2), a, np.zeros(int(SR*0.6)), b, np.zeros(SR//2)]).astype(np.float32), SR)
+
+with tempfile.TemporaryDirectory() as d:
+    wav = os.path.join(d, 'test.wav')
+    sf.write(wav, np.concatenate(chunks), SR)
+    subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', wav,
+                    '-f', 'lavfi', '-i', f'anoisesrc=color=pink:amplitude=0.0018:sample_rate=24000:duration={t:.2f}',
+                    '-filter_complex', '[0:a]highpass=f=70,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=200,loudnorm=I=-18:TP=-1.5:LRA=9[v];[1:a]lowpass=f=6000[n];[v][n]amix=inputs=2:duration=first:normalize=0',
+                    '-ac', '1', '-c:a', 'libmp3lame', '-b:a', '64k', mp3], check=True)
+
+minutes = round(t / 60)
+mb = max(1, round(os.path.getsize(mp3) / 1e6))
+src = open(content).read()
+src = re.sub(r'const TIMELINE = \[.*?\];', 'const TIMELINE = ' + json.dumps(events, ensure_ascii=False, separators=(',', ':')) + ';', src, count=1, flags=re.S)
+src = re.sub(r'minutes: \d+, mb: \d+', f'minutes: {minutes}, mb: {mb}', src, count=1)
+open(content, 'w').write(src)
+print(f'{mp3}: {t / 60:.1f} min, {mb} MB, {len(events)} timeline events')
