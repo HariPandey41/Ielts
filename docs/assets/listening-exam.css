@@ -97,6 +97,18 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px s
 .notes h4 { font-family: var(--f-display); font-size: 1.05rem; text-align: center; margin: 0 0 6px; }
 .notes .h { font-family: var(--f-display); font-weight: 700; margin-top: 8px; }
 .notes ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
+/* table completion */
+.ntable-wrap { overflow-x: auto; }
+table.ntable { width: 100%; border-collapse: collapse; border: 1.5px solid var(--ink); }
+table.ntable caption { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; padding-bottom: 8px; }
+table.ntable th, table.ntable td { border: 1px solid var(--ink); padding: 8px 10px; text-align: left; vertical-align: top; }
+table.ntable th { font-family: var(--f-display); font-size: 0.9rem; background: var(--paper); }
+@media (max-width: 640px) { table.ntable, table.ntable tbody, table.ntable tr, table.ntable td { display: block; width: auto; } table.ntable thead { display: none; } table.ntable tr { border-bottom: 1.5px solid var(--ink); } table.ntable td { border: 0; padding: 4px 10px; } table.ntable td[data-h]::before { content: attr(data-h) ": "; font-family: var(--f-display); font-weight: 700; font-size: 0.85rem; } table.ntable caption { display: block; padding: 10px; border-bottom: 1.5px solid var(--ink); } }
+/* flow chart completion */
+.flow { border: 1.5px solid var(--ink); border-radius: 2px; padding: 18px 20px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+.flow h4 { font-family: var(--f-display); font-size: 1.05rem; text-align: center; margin: 0 0 10px; }
+.flow .step { border: 1px solid var(--ink); border-radius: 2px; padding: 8px 14px; width: 100%; max-width: 32rem; text-align: center; }
+.flow .arrow { font-family: var(--f-display); font-size: 1.3rem; line-height: 1; padding: 4px 0; color: var(--ink); }
 
 .mcq { display: flex; flex-direction: column; gap: 6px; padding-block: 4px; }
 .mcq .q { display: flex; gap: 10px; align-items: baseline; }
