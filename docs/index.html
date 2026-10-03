@@ -232,6 +232,12 @@ footer a { color: inherit; }
       <span>Three passages and 40 questions in the real exam format: True/False/Not Given, matching headings, which paragraph, sentence and summary completion, multiple choice and Yes/No/Not Given. Split-screen layout with highlighting, a 60-minute timer and explanations for every answer.</span>
       <span class="test2-go">Start Reading Test 1 →</span>
     </a>
+    <a class="test2-card" href="reading-test-2.html">
+      <span class="label">Exam conditions · 60 minutes</span>
+      <strong>Academic Reading Practice Test 2</strong>
+      <span>New passages on the history of the pencil, rooftop farming and the science of forgetting. Adds matching people to opinions, matching sentence endings and choosing the best title.</span>
+      <span class="test2-go">Start Reading Test 2 →</span>
+    </a>
     <p class="label">Quick practice</p>
     <div class="passage-picker" id="r-picker" aria-label="Choose a passage"></div>
     <div class="split">
@@ -388,7 +394,8 @@ footer a { color: inherit; }
     const originalListening = originalFullResult
       ? { correct: originalFullResult.correct, attempted: 40, raw40: originalFullResult.correct, band: band(originalFullResult.correct), pte: PTE[band(originalFullResult.correct)] }
       : null;
-    const readingFull = state.readingTest1 ? { correct: state.readingTest1.correct, attempted: 40, raw40: state.readingTest1.correct, band: state.readingTest1.band, pte: PTE[state.readingTest1.band] } : null;
+    const rLast = state.readingLatest || state.readingTest1 || null;
+    const readingFull = rLast ? { correct: rLast.correct, attempted: 40, raw40: rLast.correct, band: rLast.band, pte: PTE[rLast.band], test: rLast.test || 1 } : null;
     const L = originalListening || projection(state.listening), R = readingFull || projection(state.reading);
     const wVals = Object.values(state.writing);
     const wFull = state.writingTest1 || null;
@@ -397,7 +404,7 @@ footer a { color: inherit; }
     const S = sFull ? sFull.band : state.speaking;
     const cells = [
       ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${originalListening ? 'full practice exam' : `≈${L.raw40}/40`}` : 'not started'],
-      ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ${readingFull ? 'full practice test' : `≈${R.raw40}/40`}` : 'not started'],
+      ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ${readingFull ? `Reading Test ${readingFull.test}` : `≈${R.raw40}/40`}` : 'not started'],
       ['Writing', W, wFull ? `full practice test · ${wFull.source === 'teacher' ? 'teacher marked' : 'estimate'}` : wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
       ['Speaking', S, sFull ? `full practice test · ${sFull.source === 'teacher' ? 'teacher marked' : 'self-assessed'}` : S != null ? 'self-assessed' : 'not rated'],
     ];
