@@ -1,43 +1,51 @@
 // IELTS Academic Writing · Practice Test 7 — content only. The exam engine is assets/writing-exam.js.
 (() => {
   'use strict';
-  const X_LABELS = ["2010", "2012.5", "2015", "2017.5", "2020"];
-  const SERIES = [{"name": "16–24", "v": [3, 4, 5, 6, 7]}, {"name": "25–44", "v": [2, 3, 4, 5, 5]}, {"name": "45–64", "v": [1, 2, 3, 3, 4]}, {"name": "65+", "v": [0.5, 1, 1.5, 2, 3]}];
-  function chartSVG() {
-    const W=600, X0=70, X1=540, Y0=315, Y1=55, MAX=70;
-    const y=v => Y0-(Y0-Y1)*v/MAX;
-    let g='';
-    for(let v=0;v<=MAX;v+=10) g += `<line class="grid" x1="${X0}" x2="${X1}" y1="${y(v)}" y2="${y(v)}"/><text x="${X0-10}" y="${y(v)+4}" text-anchor="end" font-size="12">${v}</text>`;
-    const colors=['var(--ink)','var(--omr)','#557a95','#8b6f47'];
-    if('line'==='line') {
-      const x=i=>X0+(X1-X0)*i/(X_LABELS.length-1);
-      X_LABELS.forEach((a,i)=>g+=`<text x="${x(i)}" y="${Y0+22}" text-anchor="middle" font-size="12">${a}</text>`);
-      SERIES.forEach((s,k)=>{ const pts=s.v.map((v,i)=>`${x(i)},${y(v)}`).join(' '); g+=`<polyline class="ln" stroke="${colors[k]}" points="${pts}"/>`; s.v.forEach((v,i)=>g+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="${colors[k]}"/>`); });
-    } else {
-      const gw=(X1-X0)/X_LABELS.length, bw=28;
-      X_LABELS.forEach((a,i)=>{ const cx=X0+gw*i+gw/2; g+=`<text x="${cx}" y="${Y0+22}" text-anchor="middle" font-size="12">${a}</text>`; SERIES.forEach((s,k)=>{const val=s.v[i], x=cx-(bw*SERIES.length)/2+k*bw; g+=`<rect x="${x}" y="${y(val)}" width="${bw-3}" height="${Y0-y(val)}" fill="${colors[k]}" opacity="${0.42+0.16*k}"/>`;}); });
-    }
-    g+=`<line class="axis" x1="${X0}" x2="${X0}" y1="${Y1-8}" y2="${Y0}"/><line class="axis" x1="${X0}" x2="${X1}" y1="${Y0}" y2="${Y0}"/>`;
-    SERIES.forEach((s,k)=>{const lx=X0+k*125; g+=`<rect x="${lx}" y="28" width="14" height="12" fill="${colors[k]}"/><text x="${lx+20}" y="39" font-size="12">${s.name}</text>`;});
-    g+=`<text x="${(X0+X1)/2}" y="18" text-anchor="middle" font-size="14" font-weight="700">Average daily internet use by age group</text>`;
-    return `<svg class="chart" viewBox="0 0 600 370" role="img" aria-label="Average daily internet use by age group">${g}</svg>`;
-  }
+  const CHART = {"title": "Average daily internet use by age group, 2010–2020", "yLabel": "Hours per day", "x": ["2010", "2012", "2014", "2016", "2018", "2020"], "series": [{"name": "16–24", "v": [3, 3.5, 4.5, 5.5, 6.5, 7]}, {"name": "25–44", "v": [2, 2.5, 3, 4, 4.5, 5]}, {"name": "45–64", "v": [1, 1.5, 2, 2.5, 3, 4]}, {"name": "65+", "v": [0.5, 0.5, 1, 1.5, 2, 3]}], "yMax": 8, "step": 1};
 
   const tasks = [
-    { key:'task1', min:150, minutes:20,
-      html: () => `<h2>Writing Task 1</h2><p class="time">You should spend about 20 minutes on this task.</p><div class="prompt"><p class="q">The line graph shows the average number of hours per day spent using the internet by four age groups from 2010 to 2020.</p><p class="q">Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</p>${chartSVG()}</div><p class="time" style="margin-top:12px">Write at least 150 words.</p>`,
-      keywords:["internet", "hour", "day", "age", "online", "2010", "2020", "average"],
-      model: `The line graph shows average daily internet use among four age groups between 2010 and 2020. Overall, usage increased for every group, and younger people spent more time online throughout. People aged 16 to 24 recorded the highest figures, rising steadily from 3 hours per day in 2010 to 7 hours in 2020. The 25–44 group followed a similar trend, increasing from 2 to 5 hours. Internet use among 45–64-year-olds also tripled, from 1 hour to 3 hours, before reaching 4 hours at the end. The oldest group had the lowest use in every year. Nevertheless, its figure grew sixfold, from only half an hour in 2010 to 3 hours in 2020. The gap between the youngest and oldest groups therefore narrowed slightly over the period, although a substantial difference remained in 2020.` },
-    { key:'task2', min:250, minutes:40,
-      html: () => `<h2>Writing Task 2</h2><p class="time">You should spend about 40 minutes on this task.</p><div class="prompt"><p>Write about the following topic:</p><p class="q">The growth of online shopping will soon lead to the closure of most high-street shops. To what extent do you agree or disagree?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p></div><p class="time" style="margin-top:12px">Write at least 250 words.</p>`,
-      keywords:["internet", "hour", "day", "age", "online", "2010", "2020", "average", "government", "people", "society", "education", "development"],
-      model: `There are convincing arguments on both sides of this issue. In my view, a balanced approach is usually the most practical because individual circumstances and long-term social effects should both be considered.
+    {
+      key: 'task1', min: 150, minutes: 20,
+      html: () => `<h2>Writing Task 1</h2><p class="time">You should spend about 20 minutes on this task.</p>
+        <div class="prompt">
+          <p class="q">The line graph shows the average number of hours per day spent using the internet by four age groups from 2010 to 2020.</p>
+          <p class="q">Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</p>
+          ${window.IELTSChart.line(CHART)}
+        </div>
+        <p class="time" style="margin-top:12px">Write at least 150 words.</p>`,
+      keywords: ["internet", "hour", "day", "age", "online", "2010", "2020", "group"],
+      model: `The line graph shows how many hours a day, on average, people in four age groups spent using the internet between 2010 and 2020.
 
-One important argument is that policy and personal choices can produce wider benefits than are immediately visible. When people have access to useful education, reliable public services and clear information, they are more likely to make decisions that benefit themselves and their communities. For example, investment in effective public programmes can reduce future costs and create opportunities for people who would otherwise be excluded. However, opponents are right to point out that such measures can be expensive and may restrict individual choice if they are applied too rigidly.
+Overall, internet use increased in every age group over the decade. Younger people spent the most time online throughout the period, but the oldest group recorded the fastest rate of growth.
 
-The best solution is therefore to combine sensible public action with personal responsibility. Governments should set fair standards, provide essential support and evaluate results, while individuals and organisations should be encouraged to make informed choices. This approach avoids treating a complicated issue as if there were only one answer.
+In 2010, people aged 16 to 24 were online for an average of 3 hours a day. This figure rose steadily, reaching 7 hours by 2020. The 25 to 44 age group followed a similar pattern at a lower level, with daily use increasing from 2 hours to 5 hours.
 
-In conclusion, the advantages of a thoughtful and flexible policy outweigh the drawbacks. The most successful societies are those that protect the public interest while still allowing people enough freedom to respond to their own needs.` }
+Older adults started from much lower levels. Among 45 to 64-year-olds, internet use was just 1 hour a day in 2010, but it quadrupled to 4 hours by the end of the period, with the largest single increase occurring between 2018 and 2020. The over-65s spent only half an hour a day online at the start, and this figure remained unchanged until 2012. After that, however, it grew rapidly to 3 hours in 2020, a sixfold increase.
+
+As a result, although the ranking of the four groups stayed the same throughout, the difference between the oldest and youngest users narrowed in relative terms.`,
+    },
+    {
+      key: 'task2', min: 250, minutes: 40,
+      html: () => `<h2>Writing Task 2</h2><p class="time">You should spend about 40 minutes on this task.</p>
+        <div class="prompt">
+          <p>Write about the following topic:</p>
+          <p class="q">The growth of online shopping will soon lead to the closure of most high-street shops.</p>
+          <p class="q">To what extent do you agree or disagree?</p>
+          <p>Give reasons for your answer and include any relevant examples from your own knowledge or experience.</p>
+        </div>
+        <p class="time" style="margin-top:12px">Write at least 250 words.</p>`,
+      keywords: ["online", "shop", "high street", "store", "customer", "internet", "retail", "close"],
+      model: `Online shopping has grown enormously in recent years, and some people predict that it will soon cause most high-street shops to close. Although I agree that many traditional shops will disappear, I do not believe that the high street as a whole will die.
+
+There is no doubt that online retailers have important advantages. They can offer a wider range of products at lower prices because they do not have to pay for expensive premises in town centres. Customers can compare prices instantly, read reviews and have goods delivered to their door, often the next day. As a result, shops that mainly sell standard products, such as books, electronics and clothing, are already struggling, and many well-known chains have closed branches in recent years.
+
+However, there are several reasons why high streets are likely to survive in a different form. Firstly, many people still enjoy shopping in person, especially for items such as shoes, furniture or fresh food, which they want to see, touch or try before they buy. Secondly, town centres are increasingly becoming places for services and leisure rather than simply shopping. Cafés, restaurants, gyms, hairdressers and medical clinics cannot be replaced by a website, and these businesses are taking over empty shop units. Finally, some retailers now use their shops as showrooms and collection points that support their online sales.
+
+In my opinion, therefore, the high street will change rather than disappear. Shops that compete only on price will probably close, but businesses that offer personal service, expertise or an enjoyable experience will continue to attract customers.
+
+In conclusion, while online shopping will certainly reduce the number of traditional shops, it is unlikely to lead to the closure of most of them.`,
+    },
   ];
-  window.WRITING_TEST = { num:7, task1Intro:'describe a line graph', tasks };
+
+  window.WRITING_TEST = { num: 7, task1Intro: 'describe a line graph', tasks };
 })();

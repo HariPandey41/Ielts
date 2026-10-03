@@ -1,5 +1,52 @@
 // Shared IELTS Academic Writing exam engine. A test page loads its content file
 // (which sets window.WRITING_TEST) and then this script.
+
+// Exam-style black-and-white charts for Task 1. Content files call these from their task html().
+// spec: { title, yLabel, xLabel?, x: [labels], series: [{ name, v: [values] }], yMax, step }
+window.IELTSChart = (() => {
+  const DASH = ['', '7 5', '2 4', '12 4 3 4'];
+  const FILL = ['fill:var(--ink)', 'fill:var(--sheet)', 'fill:url(#ielts-hatch)', 'fill:url(#ielts-dots)'];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const defs = '<defs><pattern id="ielts-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--ink)" stroke-width="2"/></pattern><pattern id="ielts-dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" style="fill:var(--ink)"/></pattern></defs>';
+  function frame(spec, X0, X1, Y0, Y1) {
+    const y = v => Y0 - (Y0 - Y1) * v / spec.yMax;
+    let g = defs;
+    for (let v = 0; v <= spec.yMax + 1e-9; v += spec.step) g += `<line class="grid" x1="${X0}" x2="${X1}" y1="${y(v)}" y2="${y(v)}"/><text x="${X0 - 10}" y="${y(v) + 4}" text-anchor="end" font-size="12">${+v.toFixed(2)}</text>`;
+    g += `<text x="16" y="${(Y0 + Y1) / 2}" font-size="12" text-anchor="middle" transform="rotate(-90 16 ${(Y0 + Y1) / 2})">${esc(spec.yLabel)}</text>`;
+    if (spec.xLabel) g += `<text x="${(X0 + X1) / 2}" y="${Y0 + 42}" text-anchor="middle" font-size="12">${esc(spec.xLabel)}</text>`;
+    g += `<text x="300" y="20" text-anchor="middle" font-size="14" font-weight="700">${esc(spec.title)}</text>`;
+    return { g, y };
+  }
+  const legend = (spec, sw) => spec.series.map((s, k) => { const lx = 70 + k * (500 / spec.series.length); return sw(k, lx) + `<text x="${lx + 22}" y="44" font-size="12">${esc(s.name)}</text>`; }).join('');
+  const wrap = (spec, g) => `<svg class="chart" viewBox="0 0 600 380" role="img" aria-label="${esc(spec.title)}. ${esc(spec.series.map(s => `${s.name}: ${s.v.join(', ')}`).join('; '))} for ${esc(spec.x.join(', '))}.">${g}</svg>`;
+  function line(spec) {
+    const X0 = 70, X1 = 540, Y0 = 320, Y1 = 62;
+    let { g, y } = frame(spec, X0, X1, Y0, Y1);
+    const x = i => X0 + (X1 - X0) * i / (spec.x.length - 1);
+    spec.x.forEach((l, i) => g += `<text x="${x(i)}" y="${Y0 + 20}" text-anchor="middle" font-size="12">${esc(l)}</text>`);
+    spec.series.forEach((s, k) => {
+      g += `<polyline class="ln" stroke-dasharray="${DASH[k]}" points="${s.v.map((v, i) => `${x(i)},${y(v)}`).join(' ')}"/>`;
+      s.v.forEach((v, i) => g += `<circle class="mk ${k % 2 ? '' : 'solid'}" cx="${x(i)}" cy="${y(v)}" r="3.8"/>`);
+    });
+    g += `<line class="axis" x1="${X0}" x2="${X0}" y1="${Y1 - 6}" y2="${Y0}"/><line class="axis" x1="${X0}" x2="${X1}" y1="${Y0}" y2="${Y0}"/>`;
+    g += legend(spec, (k, lx) => `<line x1="${lx}" x2="${lx + 18}" y1="40" y2="40" class="ln" stroke-dasharray="${DASH[k]}"/>`);
+    return wrap(spec, g);
+  }
+  function bar(spec) {
+    const X0 = 70, X1 = 560, Y0 = 310, Y1 = 62;
+    let { g, y } = frame(spec, X0, X1, Y0, Y1);
+    const gw = (X1 - X0) / spec.x.length, n = spec.series.length, bw = Math.min(30, (gw - 16) / n);
+    spec.x.forEach((l, i) => {
+      const cx = X0 + gw * i + gw / 2;
+      spec.series.forEach((s, k) => g += `<rect x="${cx - bw * n / 2 + k * bw + 2}" y="${y(s.v[i])}" width="${bw - 4}" height="${Y0 - y(s.v[i])}" style="${FILL[k]};stroke:var(--ink)" stroke-width="1.3"/>`);
+      g += `<text x="${cx}" y="${Y0 + 20}" text-anchor="middle" font-size="12">${esc(l)}</text>`;
+    });
+    g += `<line class="axis" x1="${X0}" x2="${X0}" y1="${Y1 - 6}" y2="${Y0}"/><line class="axis" x1="${X0}" x2="${X1}" y1="${Y0}" y2="${Y0}"/>`;
+    g += legend(spec, (k, lx) => `<rect x="${lx}" y="33" width="16" height="12" style="${FILL[k]};stroke:var(--ink)" stroke-width="1.2"/>`);
+    return wrap(spec, g);
+  }
+  return { line, bar };
+})();
 (() => {
   'use strict';
   const T = window.WRITING_TEST;
