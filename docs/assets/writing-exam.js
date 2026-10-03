@@ -1,0 +1,260 @@
+// Shared IELTS Academic Writing exam engine. A test page loads its content file
+// (which sets window.WRITING_TEST) and then this script.
+(() => {
+  'use strict';
+  const T = window.WRITING_TEST;
+  document.body.innerHTML = `
+<div class="bar">
+  <span class="who">IELTS Academic Writing · Practice Test ${T.num}</span>
+  <span class="tip" id="tip">Your answers are saved in this browser as you type</span>
+  <span class="row" style="gap:14px"><span class="clock" id="clock">60:00</span><a href="./#writing">Back to trainer</a></span>
+</div>
+
+<div class="intro-wrap" id="intro">
+  <section class="intro">
+    <span class="label">Academic Writing</span>
+    <h1>Writing Practice Test ${T.num}</h1>
+    <ul>
+      <li>You have <b>60 minutes</b> to complete two tasks.</li>
+      <li><b>Task 1:</b> ${T.task1Intro} in at least <b>150 words</b>. Spend about 20 minutes on it.</li>
+      <li><b>Task 2:</b> write an essay of at least <b>250 words</b>. Spend about 40 minutes on it. Task 2 counts for twice as much as Task 1.</li>
+      <li>You can switch between the tasks at any time. The word count updates as you type.</li>
+      <li>Your writing is saved in this browser, so a refresh will not lose it. The test submits automatically when the time runs out.</li>
+    </ul>
+    <p class="resume-note" id="resume-note" hidden>You have an unfinished attempt saved in this browser. Starting will continue it with the time that was left.</p>
+    <div class="row"><button class="btn" id="start" type="button">Start the test</button><button class="btn ghost" id="fresh" type="button" hidden>Start a new attempt</button></div>
+  </section>
+</div>
+
+<div class="screen" id="screen" hidden>
+  <article class="pane task" id="task-pane"></article>
+  <section class="pane answer">
+    <div class="answer-head"><span class="label" id="answer-label">Task 1 answer</span><span class="wc" id="wc">0 words</span></div>
+    <textarea id="editor" spellcheck="false" autocapitalize="sentences" aria-label="Your answer"></textarea>
+    <span class="saved" id="saved">&nbsp;</span>
+  </section>
+</div>
+
+<div class="result-wrap" id="result-wrap" hidden></div>
+
+<nav class="nav" id="nav" hidden>
+  <div class="nav-inner">
+    <div class="tabs" id="tabs">
+      <button type="button" data-t="0" aria-current="true">Task 1<span class="n" id="n0">0/150</span></button>
+      <button type="button" data-t="1" aria-current="false">Task 2<span class="n" id="n1">0/250</span></button>
+    </div>
+    <button class="btn" id="submit" type="button">Submit both tasks</button>
+  </div>
+</nav>
+`;
+
+  // ================= STATE =================
+  const $ = id => document.getElementById(id);
+  const KEY = `ielts-writing-test${T.num}-attempt`;
+  let st = { texts: ['', ''], endAt: 0, submitted: false };
+  try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s && Array.isArray(s.texts)) st = s; } catch (e) {}
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+  let cur = 0, timer = null;
+
+  const words = s => (String(s).match(/[A-Za-z0-9]+(?:['’\-.,][A-Za-z0-9]+)*/g) || []);
+  const wc = s => words(s).length;
+
+  let editorLoaded = false;
+  function showTask(i) {
+    if (editorLoaded) st.texts[cur] = $('editor').value;
+    editorLoaded = true;
+    cur = i;
+    $('task-pane').innerHTML = T.tasks[i].html();
+    $('editor').value = st.texts[i];
+    $('answer-label').textContent = `Task ${i + 1} answer`;
+    $('tabs').querySelectorAll('button').forEach(b => b.setAttribute('aria-current', String(+b.dataset.t === i)));
+    $('task-pane').scrollTop = 0;
+    updateCount();
+  }
+  function updateCount() {
+    const n = wc($('editor').value), min = T.tasks[cur].min;
+    $('wc').textContent = `${n} word${n === 1 ? '' : 's'} · minimum ${min}`;
+    $('wc').className = 'wc ' + (n >= min ? 'ok' : n ? 'short' : '');
+    [0, 1].forEach(i => { const t = i === cur ? $('editor').value : st.texts[i]; $('n' + i).textContent = `${wc(t)}/${T.tasks[i].min}`; });
+  }
+  let saveT = null;
+  $('editor').addEventListener('input', () => {
+    st.texts[cur] = $('editor').value; updateCount();
+    clearTimeout(saveT); saveT = setTimeout(() => { persist(); $('saved').textContent = 'Saved ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }, 400);
+  });
+  $('tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) showTask(+b.dataset.t); });
+
+  // ================= TIMER =================
+  const fmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  function tick() {
+    const left = Math.max(0, Math.ceil((st.endAt - Date.now()) / 1000));
+    $('clock').textContent = fmt(left);
+    $('clock').classList.toggle('low', left <= 600);
+    if (left <= 600 && !$('tip').dataset.w) { $('tip').dataset.w = 1; $('tip').textContent = '10 minutes remaining'; }
+    if (left === 0) submit(true);
+  }
+
+  // ================= ASSESSMENT =================
+  // Text-feature estimate only: an examiner (or teacher) gives the real band.
+  const LINKERS = ['however', 'moreover', 'furthermore', 'in addition', 'additionally', 'therefore', 'consequently', 'as a result', 'thus', 'hence', 'although', 'even though', 'whereas', 'while', 'on the other hand', 'in contrast', 'by contrast', 'nevertheless', 'for example', 'for instance', 'such as', 'firstly', 'secondly', 'finally', 'in conclusion', 'to conclude', 'overall', 'meanwhile', 'subsequently', 'after that', 'because', 'since', 'similarly', 'likewise', 'instead', 'despite', 'in spite of', 'to sum up', 'in my view', 'in my opinion'];
+  const SUBORD = /\b(because|although|though|while|whereas|which|who|whom|whose|that|if|unless|when|since|until|after|before|once|provided)\b/;
+  const roundHalf = x => Math.round(x * 2) / 2;
+  const clampB = b => Math.max(2.5, Math.min(8.5, roundHalf(b)));
+  const fmtBand = b => Number.isInteger(b) ? b.toFixed(1) : String(b);
+  function assess(text, t, idx) {
+    const w = words(text.toLowerCase()), n = w.length;
+    const paras = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
+    const sents = text.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(s => words(s).length);
+    const lens = sents.map(s => words(s).length);
+    const avg = lens.reduce((a, b) => a + b, 0) / (lens.length || 1);
+    const sd = Math.sqrt(lens.reduce((a, b) => a + (b - avg) ** 2, 0) / (lens.length || 1));
+    let mattr = 0;
+    if (n >= 50) { let sum = 0, k = 0; for (let i = 0; i + 50 <= n; i += 5) { sum += new Set(w.slice(i, i + 50)).size / 50; k++; } mattr = sum / k; } else mattr = n ? new Set(w).size / n : 0;
+    const lower = ' ' + text.toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').replace(/\s+/g, ' ') + ' ';
+    const linkUsed = LINKERS.filter(l => lower.includes(' ' + l + ' '));
+    const complex = sents.filter(s => SUBORD.test(s.toLowerCase())).length / (sents.length || 1);
+    const longW = w.filter(x => x.length >= 8).length / (n || 1);
+    const keyHit = t.keywords.filter(k => w.some(x => x.startsWith(k))).length / t.keywords.length;
+    const caps = sents.filter(s => /^[A-Z“"'(0-9]/.test(s)).length / (sents.length || 1);
+    const lowerI = (text.match(/\bi\b/g) || []).length;
+    const numbers = (text.match(/\d+(\.\d+)?\s?(%|per ?cent)?/g) || []).length;
+    const overview = /\b(overall|in general|generally|it is clear|it can be seen|in summary)\b/i.test(text);
+    const position = /\b(i believe|i think|in my (view|opinion)|i (strongly )?(agree|disagree)|i would argue|personally)\b/i.test(text);
+    const conclusion = /\b(in conclusion|to conclude|to sum up|in summary|overall,)\b/i.test(text);
+    const ratio = n / t.min;
+
+    let TA, taNote;
+    if (idx === 0) {
+      TA = 4 + Math.min(1.5, ratio * 1.5) + keyHit * 1.2 + (overview ? 1 : 0) + Math.min(1, numbers / 8) - (ratio < 0.7 ? 1.5 : 0);
+      taNote = !overview ? 'No clear overview. Add a sentence starting “Overall,” that sums up the main trends.' : numbers < 6 ? 'Support the description with more figures from the graph (percentages and years).' : ratio < 1 ? `Under 150 words: examiners lower the score for short answers.` : 'Overview and supporting figures are present.';
+    } else {
+      const wantsOpinion = t.opinion !== false;
+      TA = 4 + Math.min(1.5, ratio * 1.5) + keyHit * 1.2 + (position || !wantsOpinion ? 1 : 0) + (conclusion ? 0.5 : 0) - (ratio < 0.7 ? 1.5 : 0);
+      taNote = !position && wantsOpinion ? 'Your own opinion is not clear. The question asks for it: state it in the introduction and conclusion.' : ratio < 1 ? 'Under 250 words: examiners lower the score for short essays.' : !conclusion ? 'Add a clear conclusion that restates your view.' : (wantsOpinion ? 'All parts of the question are addressed and your opinion is clear.' : 'All parts of the question are addressed.');
+    }
+    const CC = 4 + Math.min(2, linkUsed.length / 3) + Math.min(1.5, (paras.length - 1) * 0.5) + (avg >= 10 && avg <= 26 ? 0.5 : 0);
+    const LR = 3 + (mattr - 0.55) * 12 + longW * 10;
+    const GRA = 4 + complex * 3 + Math.min(1.5, sd / 5) + (caps - 0.8) * 5 - Math.min(1.5, lowerI * 0.5);
+    const crit = [
+      [idx === 0 ? 'Task achievement' : 'Task response', clampB(TA), taNote],
+      ['Coherence and cohesion', clampB(CC), paras.length < (idx === 0 ? 3 : 4) ? `Use more paragraphs: ${idx === 0 ? 'introduction, overview and two body paragraphs' : 'introduction, two body paragraphs and a conclusion'}.` : linkUsed.length < 4 ? 'Use a wider range of linking words.' : `Clear paragraphing. Linkers used: ${linkUsed.slice(0, 6).join(', ')}.`],
+      ['Lexical resource', clampB(LR), mattr < 0.62 ? 'Some words are repeated often. Use synonyms and more precise vocabulary.' : 'A reasonable range of vocabulary.'],
+      ['Grammatical range and accuracy', clampB(GRA), complex < 0.3 ? 'Mostly simple sentences. Add complex ones with although, which, because or when.' : lowerI ? 'Capitalise the pronoun “I”.' : 'A good mix of sentence types. Proofread for errors this tool cannot see.'],
+    ];
+    // short answers: examiners cap the score, most heavily for Task response / achievement
+    const cap = ratio < 0.4 ? [2.5, 3.5] : ratio < 0.7 ? [4, 4.5] : ratio < 0.9 ? [5, 6] : ratio < 1 ? [6, 7] : [9, 9];
+    crit.forEach((c, k) => { c[1] = Math.min(c[1], k === 0 ? cap[0] : cap[1]); });
+    const band = roundHalf(crit.reduce((a, c) => a + c[1], 0) / 4);
+    return { n, crit, band: n < 20 ? 0 : band, metrics: [['Words', n], ['Paragraphs', paras.length], ['Sentences', sents.length], ['Avg sentence', avg.toFixed(1)], ['Linking words', linkUsed.length], ['Complex sentences', Math.round(complex * 100) + '%']] };
+  }
+  // Writing band: Task 2 counts double
+  const writingBand = (b1, b2) => roundHalf((b1 + 2 * b2) / 3);
+  const PTE = { 9: 88, 8.5: 81, 8: 75.5, 7.5: 68.5, 7: 61, 6.5: 53.5, 6: 45.5, 5.5: 38.5, 5: 32.5, 4.5: 26, 4: 19, 3.5: 12.5, 3: 8.5, 2.5: 6.5, 2: 4.5, 1.5: 2.5, 1: 1, 0: 0 };
+  function saveBand(band, source) {
+    try {
+      const K = 'ielts-band-trainer-v1';
+      const s = JSON.parse(localStorage.getItem(K) || '{}') || {};
+      const rec = { test: T.num, band, source, recordedAt: new Date().toISOString() };
+      s['writingTest' + T.num] = rec; s.writingLatest = rec;
+      localStorage.setItem(K, JSON.stringify(s));
+    } catch (e) {}
+  }
+
+  // ================= SUBMIT =================
+  let armed = false;
+  $('submit').addEventListener('click', () => {
+    if (st.submitted) return;
+    const short = [0, 1].filter(i => wc(i === cur ? $('editor').value : st.texts[i]) < T.tasks[i].min).map(i => `Task ${i + 1}`);
+    if (!armed) {
+      armed = true; $('submit').textContent = short.length ? `${short.join(' and ')} under the word limit · click again to submit` : 'Click again to submit';
+      setTimeout(() => { armed = false; if (!st.submitted) $('submit').textContent = 'Submit both tasks'; }, 4000);
+      return;
+    }
+    submit(false);
+  });
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function submit(auto) {
+    if (st.submitted) return;
+    st.texts[cur] = $('editor').value;
+    st.submitted = true; st.auto = auto; persist();
+    clearInterval(timer);
+    renderResult();
+  }
+
+  function renderResult() {
+    const r = [0, 1].map(i => assess(st.texts[i], T.tasks[i], i));
+    const est = writingBand(r[0].band, r[1].band);
+    saveBand(est, 'estimate');
+    $('intro').hidden = true; $('screen').hidden = true; $('nav').hidden = true; $('result-wrap').hidden = false;
+    $('clock').textContent = 'Finished'; $('tip').textContent = '';
+    const bandOpts = sel => [9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1, 0].map(b => `<option value="${b}" ${b === sel ? 'selected' : ''}>${fmtBand(b)}</option>`).join('');
+    $('result-wrap').innerHTML = `
+      <section class="card">
+        <span class="label">${st.auto ? 'Time is up · ' : ''}Writing result</span>
+        <div class="scorebox"><div class="band-box" id="final-band">${fmtBand(est)}</div>
+          <div><h2>Estimated Writing band ${fmtBand(est)}</h2><p class="muted">Task 1 ≈ ${fmtBand(r[0].band)} · Task 2 ≈ ${fmtBand(r[1].band)} (Task 2 counts double) · PTE equivalent ≈ ${PTE[est] ?? '–'}</p></div></div>
+        <p class="note">This estimate comes from measurable features of your writing: length, paragraphs, key ideas, linking words, vocabulary range and sentence variety. It cannot judge meaning, accuracy or spelling the way an examiner does, so ask your teacher to mark it with the panel at the bottom of this page.</p>
+        <div class="row"><button class="btn" type="button" id="copy">Copy both answers</button><button class="btn ghost" type="button" id="download">Download as a text file</button><a class="btn ghost" href="./#writing">Back to trainer</a><button class="btn ghost" type="button" id="again">Start a new attempt</button></div>
+        <span class="note" id="copy-msg"></span>
+      </section>
+      ${[0, 1].map(i => `
+      <section class="card">
+        <div class="row" style="justify-content:space-between"><h2>Task ${i + 1}</h2><span class="label">${r[i].n} words · minimum ${T.tasks[i].min}</span></div>
+        <div class="metrics">${r[i].metrics.map(([k, v]) => `<div class="metric"><span class="label">${k}</span><span class="v">${v}</span></div>`).join('')}</div>
+        <div class="tbl-wrap"><table class="crit"><thead><tr><th>Criterion</th><th>Estimate</th><th>Feedback</th></tr></thead><tbody>${r[i].crit.map(([c, b, f]) => `<tr><td>${c}</td><td class="b">${fmtBand(b)}</td><td>${esc(f)}</td></tr>`).join('')}</tbody></table></div>
+        <div class="two">
+          <div><span class="label">Your answer</span><div class="essay">${st.texts[i].trim() ? esc(st.texts[i]) : '<span class="muted">No answer written.</span>'}</div></div>
+          <div><span class="label">Model answer (about band 8)</span><div class="essay">${esc(T.tasks[i].model)}</div></div>
+        </div>
+      </section>`).join('')}
+      <section class="card">
+        <h2>Teacher marking</h2>
+        <p class="note">Teachers: read both answers and choose a band for each criterion. The Writing band is worked out the official way (the four criteria are averaged for each task, and Task 2 counts double). Saving replaces the estimate in this student’s score summary.</p>
+        <div class="teacher">
+          <div class="tbl-wrap"><table class="crit"><thead><tr><th>Criterion</th><th>Task 1</th><th>Task 2</th></tr></thead><tbody>
+            ${r[0].crit.map((c, k) => `<tr><td>${k === 0 ? 'Task achievement / response' : c[0]}</td><td><select data-t="0" data-k="${k}" aria-label="Task 1 ${c[0]}">${bandOpts(r[0].crit[k][1])}</select></td><td><select data-t="1" data-k="${k}" aria-label="Task 2 ${c[0]}">${bandOpts(r[1].crit[k][1])}</select></td></tr>`).join('')}
+            <tr><td><b>Task band</b></td><td class="b" id="tb0"></td><td class="b" id="tb1"></td></tr>
+          </tbody></table></div>
+          <div class="row"><span>Writing band: <b id="tw" class="mono"></b></span><button class="btn" type="button" id="save-teacher">Save teacher’s band</button><span class="note" id="teacher-msg"></span></div>
+        </div>
+      </section>`;
+    const teacherCalc = () => {
+      const tb = [0, 1].map(t => { const v = [...document.querySelectorAll(`select[data-t="${t}"]`)].map(s => +s.value); return Math.floor(v.reduce((a, b) => a + b, 0) / 4 * 2) / 2; });
+      $('tb0').textContent = fmtBand(tb[0]); $('tb1').textContent = fmtBand(tb[1]);
+      const w = writingBand(tb[0], tb[1]); $('tw').textContent = fmtBand(w); return w;
+    };
+    teacherCalc();
+    $('result-wrap').addEventListener('change', e => { if (e.target.matches('select[data-t]')) teacherCalc(); });
+    $('save-teacher').addEventListener('click', () => { const w = teacherCalc(); saveBand(w, 'teacher'); $('final-band').textContent = fmtBand(w); $('teacher-msg').textContent = `Saved: Writing band ${fmtBand(w)}.`; });
+    const plain = () => `IELTS Academic Writing · Practice Test ${T.num}\n\nTASK 1 (${wc(st.texts[0])} words)\n\n${st.texts[0]}\n\n\nTASK 2 (${wc(st.texts[1])} words)\n\n${st.texts[1]}\n`;
+    $('copy').addEventListener('click', () => {
+      navigator.clipboard.writeText(plain()).then(() => $('copy-msg').textContent = 'Copied. Paste into an email or message to your teacher.')
+        .catch(() => $('copy-msg').textContent = 'Copying is blocked here. Use Download instead.');
+    });
+    $('download').addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([plain()], { type: 'text/plain' }));
+      a.download = `ielts-writing-test-${T.num}.txt`; document.body.appendChild(a); a.click(); a.remove();
+    });
+    $('again').addEventListener('click', () => { try { localStorage.removeItem(KEY); } catch (e) {} location.reload(); });
+    window.scrollTo({ top: 0 });
+  }
+
+  // ================= START =================
+  function begin() {
+    if (!st.endAt) st.endAt = Date.now() + 60 * 60 * 1000;
+    persist();
+    $('intro').hidden = true; $('screen').hidden = false; $('nav').hidden = false;
+    cur = 0; showTask(0);
+    timer = setInterval(tick, 500); tick();
+    $('editor').focus();
+  }
+  $('start').addEventListener('click', begin);
+  $('fresh').addEventListener('click', () => { st = { texts: ['', ''], endAt: 0, submitted: false }; persist(); begin(); });
+  if (st.submitted) renderResult();
+  else if (st.endAt) {
+    if (Date.now() >= st.endAt) { st.submitted = true; st.auto = true; persist(); renderResult(); }
+    else { $('resume-note').hidden = false; $('start').textContent = 'Continue the test'; $('fresh').hidden = false; }
+  }
+})();

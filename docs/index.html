@@ -207,7 +207,13 @@ footer a { color: inherit; }
       <span class="label">Exam conditions</span>
       <strong>Listening Practice Test 1</strong>
       <span>Real exam format: membership form, map labelling, choose-two and matching questions, lecture notes. Narrator, reading time and checking time between parts, recording played once only. Opens full screen.</span>
-      <span class="test2-go">Start Test 1 →</span>
+      <span class="test2-go">Start Listening Test 1 →</span>
+    </a>
+    <a class="test2-card" href="listening-test-2.html">
+      <span class="label">Exam conditions</span>
+      <strong>Listening Practice Test 2</strong>
+      <span>A holiday cottage booking, a radio notice about a town festival, students discussing a library study, and a lecture on the history of glass. Recorded soundtrack, about 18 minutes.</span>
+      <span class="test2-go">Start Listening Test 2 →</span>
     </a>
   </section>
 
@@ -261,6 +267,12 @@ footer a { color: inherit; }
       <span>Task 1 line graph (150 words) and Task 2 discussion essay (250 words) with a live word count and a 60-minute timer. Your work is saved as you type. Afterwards you get an estimated band, band-8 model answers, a file to send your teacher, and a teacher marking panel.</span>
       <span class="test2-go">Start Writing Test 1 →</span>
     </a>
+    <a class="test2-card" href="writing-test-2.html">
+      <span class="label">Exam conditions · 60 minutes</span>
+      <strong>Academic Writing Practice Test 2</strong>
+      <span>Task 1 bar chart of leisure time by age group (150 words) and a Task 2 causes-and-solutions essay on long working hours (250 words). Same timer, saving, model answers and teacher marking as Test 1.</span>
+      <span class="test2-go">Start Writing Test 2 →</span>
+    </a>
     <p class="label">Quick practice</p>
     <div class="split">
       <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
@@ -294,6 +306,12 @@ footer a { color: inherit; }
       <strong>Speaking Practice Test 1</strong>
       <span>A full interview with a spoken examiner: Part 1 questions, a Part 2 cue card with one minute to prepare and two minutes to talk, and a Part 3 discussion. Your interview is recorded so you can listen back or send it to your teacher, with a transcript in Chrome and Edge.</span>
       <span class="test2-go">Start Speaking Test 1 →</span>
+    </a>
+    <a class="test2-card" href="speaking-test-2.html">
+      <span class="label">Exam conditions · 11–14 minutes</span>
+      <strong>Speaking Practice Test 2</strong>
+      <span>Part 1 on work or studies, music and the weather; a Part 2 cue card about a place you would like to visit again; a Part 3 discussion on tourism. Recorded, with a transcript in Chrome and Edge.</span>
+      <span class="test2-go">Start Speaking Test 2 →</span>
     </a>
     <p class="label">Quick practice</p>
     <div class="split">
@@ -390,7 +408,7 @@ footer a { color: inherit; }
 
   // ---------- Test Report Form ----------
   function renderTRF() {
-    const originalFullResult = state.listeningTest1 || null;
+    const originalFullResult = state.listeningLatest || state.listeningTest1 || null;
     const originalListening = originalFullResult
       ? { correct: originalFullResult.correct, attempted: 40, raw40: originalFullResult.correct, band: band(originalFullResult.correct), pte: PTE[band(originalFullResult.correct)] }
       : null;
@@ -398,15 +416,15 @@ footer a { color: inherit; }
     const readingFull = rLast ? { correct: rLast.correct, attempted: 40, raw40: rLast.correct, band: rLast.band, pte: PTE[rLast.band], test: rLast.test || 1 } : null;
     const L = originalListening || projection(state.listening), R = readingFull || projection(state.reading);
     const wVals = Object.values(state.writing);
-    const wFull = state.writingTest1 || null;
+    const wFull = state.writingLatest || state.writingTest1 || null;
     const W = wFull ? wFull.band : wVals.length ? roundHalf(wVals.reduce((a, b) => a + b, 0) / wVals.length) : null;
-    const sFull = state.speakingTest1 || null;
+    const sFull = state.speakingLatest || state.speakingTest1 || null;
     const S = sFull ? sFull.band : state.speaking;
     const cells = [
-      ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${originalListening ? 'full practice exam' : `≈${L.raw40}/40`}` : 'not started'],
+      ['Listening', L && L.band, L ? `${L.correct}/${L.attempted} correct · ${originalListening ? `Listening Test ${originalFullResult.test || 1}` : `≈${L.raw40}/40`}` : 'not started'],
       ['Reading', R && R.band, R ? `${R.correct}/${R.attempted} correct · ${readingFull ? `Reading Test ${readingFull.test}` : `≈${R.raw40}/40`}` : 'not started'],
-      ['Writing', W, wFull ? `full practice test · ${wFull.source === 'teacher' ? 'teacher marked' : 'estimate'}` : wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
-      ['Speaking', S, sFull ? `full practice test · ${sFull.source === 'teacher' ? 'teacher marked' : 'self-assessed'}` : S != null ? 'self-assessed' : 'not rated'],
+      ['Writing', W, wFull ? `Writing Test ${wFull.test || 1} · ${wFull.source === 'teacher' ? 'teacher marked' : 'estimate'}` : wVals.length ? `${wVals.length} task${wVals.length > 1 ? 's' : ''} assessed · estimate` : 'not started'],
+      ['Speaking', S, sFull ? `Speaking Test ${sFull.test || 1} · ${sFull.source === 'teacher' ? 'teacher marked' : 'self-assessed'}` : S != null ? 'self-assessed' : 'not rated'],
     ];
     const parts = [L && L.band, R && R.band, W, S];
     const ov = parts.every(v => v != null) ? overallBand(parts) : null;
