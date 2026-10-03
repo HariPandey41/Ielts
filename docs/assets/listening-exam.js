@@ -137,7 +137,8 @@
   });
   paper.addEventListener('change', e => { const t = e.target; if (!submitted && t.dataset.q && t.type !== 'checkbox') { answers[t.dataset.q] = t.value; renderNav(); } });
 
-  const normAns = s => String(s || '').toLowerCase().replace(/[£$€]/g, '').replace(/[’']/g, "'").replace(/[^a-z0-9.\-' ]+/g, ' ').replace(/\.$/, '').replace(/\s+/g, ' ').trim();
+  // Times: '7:15' is read as '7.15'
+  const normAns = s => String(s || '').toLowerCase().replace(/(\d):(\d)/g, '$1.$2').replace(/[£$€]/g, '').replace(/[’']/g, "'").replace(/[^a-z0-9.\-' ]+/g, ' ').replace(/\.$/, '').replace(/\s+/g, ' ').trim();
   function withinLimit(raw, limit) {
     const toks = normAns(raw).split(' ').filter(Boolean);
     if (!limit) return true;
@@ -151,7 +152,7 @@
       if (!normAns(given)) return false;
       if (!withinLimit(given, q.limit)) return false;
       const g = q.nospace ? normAns(given).replace(/\s/g, '') : normAns(given);
-      return q.ans.some(a => (q.nospace ? a.replace(/\s/g, '') : a) === g);
+      return q.ans.some(a => (q.nospace ? normAns(a).replace(/\s/g, '') : normAns(a)) === g);
     }
     if (q.kind === 'two') {
       const picked = [answers[q.pair[0]], answers[q.pair[1]]].filter(Boolean);
