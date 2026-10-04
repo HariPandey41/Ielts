@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Full Mock Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* The full mock test page: rules, the four sections in exam order, then the result. Same look as the trainer. */
+:root {
+  --paper: #f2f5f3; --sheet: #ffffff; --ink: #1b2430; --pencil: #5b6672; --rule: #ccd5d2;
+  --omr: #c2334d; --omr-soft: #f7e1e5; --ok: #2b7a4b; --ok-soft: #dff0e5; --warn: #9a6512;
+  --f-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+    --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --warn: #e3b25c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161b; --sheet: #192028; --ink: #e5e9ec; --pencil: #9aa5b0; --rule: #2e3944;
+  --omr: #f0718a; --omr-soft: #3a1f27; --ok: #6fcf97; --ok-soft: #173225; --warn: #e3b25c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 28px 16px 64px; display: flex; flex-direction: column; gap: 24px; }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; line-height: 1.15; text-wrap: balance; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 1.3rem; }
+p, ul { margin: 0; }
+ul { padding-left: 1.2em; }
+a { color: inherit; }
+.label { font-family: var(--f-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil); }
+.muted { color: var(--pencil); }
+.top { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 12px; }
+.top a { font-family: var(--f-display); font-weight: 700; font-size: 0.9rem; }
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.btn { font-family: var(--f-display); font-weight: 700; font-size: 0.95rem; border: 1.5px solid var(--ink); background: var(--ink); color: var(--sheet); padding: 9px 16px; border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.warnbox { border: 1.5px solid var(--warn); border-radius: 4px; padding: 12px 14px; color: var(--ink); }
+.warnbox b { color: var(--warn); }
+.steps { list-style: none; padding: 0; display: flex; flex-direction: column; border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
+.steps li { display: grid; grid-template-columns: 2.2rem 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--rule); background: var(--sheet); }
+.steps li:last-child { border-bottom: 0; }
+.steps li.now { background: var(--omr-soft); }
+.steps .n { font-family: var(--f-mono); font-weight: 600; font-size: 1.1rem; color: var(--pencil); }
+.steps h3 { font-size: 1.05rem; }
+.steps .meta { font-family: var(--f-mono); font-size: 0.78rem; color: var(--pencil); }
+.steps .state { font-family: var(--f-display); font-weight: 700; font-size: 0.9rem; text-align: right; }
+.steps .state.done { color: var(--ok); }
+.steps .gap { grid-column: 2 / -1; font-family: var(--f-display); font-size: 0.8rem; color: var(--pencil); }
+.trf { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
+.trf > div { padding: 12px 14px 14px; border-right: 1px solid var(--rule); display: flex; flex-direction: column; gap: 6px; min-width: 0; background: var(--sheet); }
+.trf > div:last-child { border-right: 0; background: var(--omr-soft); }
+.band-box { font-family: var(--f-mono); font-weight: 600; font-size: 1.9rem; line-height: 1; border: 1.5px solid var(--omr); color: var(--omr); width: 3.6rem; height: 3rem; display: grid; place-items: center; border-radius: 3px; background: var(--sheet); }
+.trf .meta { font-family: var(--f-mono); font-size: 0.74rem; color: var(--pencil); }
+@media (max-width: 640px) {
+  .trf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trf > div { border-bottom: 1px solid var(--rule); }
+  .trf > div:nth-child(2n) { border-right: 0; }
+  .trf > div:last-child { grid-column: 1 / -1; border-bottom: 0; }
+  .steps li { grid-template-columns: 1.6rem 1fr; }
+  .steps .state { grid-column: 2; text-align: left; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div><span class="label">Exam conditions · Academic</span><h1 id="title">Full Mock Test</h1></div>
+    <a href="./#mock">Back to trainer</a>
+  </header>
+  <main id="main"></main>
+</div>
+
+<script>
+(() => {
+  'use strict';
+  const COUNT = 10;
+  const n = +new URLSearchParams(location.search).get('n');
+  const main = document.getElementById('main');
+  if (!(n >= 1 && n <= COUNT && Number.isInteger(n))) {
+    main.innerHTML = '<section class="card"><p>This mock test does not exist. Choose one from the <a href="./#mock">Full mock test</a> tab.</p></section>';
+    return;
+  }
+  document.title = `IELTS Full Mock Test ${n}`;
+  document.getElementById('title').textContent = `Full Mock Test ${n}`;
+
+  const MKEY = 'ielts-mock-test' + n, RKEY = 'ielts-band-trainer-v1';
+  const read = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
+  const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const fmtBand = b => (b == null ? '–' : Number.isInteger(b) ? b.toFixed(1) : String(b));
+  // overall band: mean of the four, rounded to the nearest half (x.25 → x.5, x.75 → next whole)
+  const overall = a => Math.round(a.reduce((s, b) => s + b, 0) / a.length * 2) / 2;
+
+  const SECTIONS = [
+    { id: 'listening', name: 'Listening', time: 'about 30 minutes', what: '4 parts · 40 questions · each recording is played once' },
+    { id: 'reading', name: 'Reading', time: '60 minutes', what: '3 passages · 40 questions' },
+    { id: 'writing', name: 'Writing', time: '60 minutes', what: 'Task 1 (at least 150 words) · Task 2 (at least 250 words)' },
+    { id: 'speaking', name: 'Speaking', time: '11–14 minutes', what: 'a recorded interview with the examiner, in three parts' },
+  ];
+  const url = s => `${s.id}-test-${n}.html?mock=${n}`;
+
+  function render() {
+    const st = read(MKEY);
+    const rec = read(RKEY) || {};
+    // pick up a result the test page saved but did not get to record here (e.g. the tab was closed)
+    if (st) {
+      let changed = false;
+      SECTIONS.forEach(s => {
+        const sec = st.sections[s.id], r = rec[s.id + 'Test' + n];
+        if (sec && sec.startedAt && !sec.doneAt && r && Date.parse(r.recordedAt) >= sec.startedAt) { sec.doneAt = Date.now(); sec.band = r.band; changed = true; }
+      });
+      if (changed) write(MKEY, st);
+    }
+    if (!st || !st.startedAt) return renderIntro(rec);
+    if (SECTIONS.every(s => st.sections[s.id] && st.sections[s.id].doneAt)) return renderResult(st, rec);
+    renderProgress(st);
+  }
+
+  function renderIntro(rec) {
+    const seen = SECTIONS.filter(s => rec[s.id + 'Test' + n]).map(s => `${s.name} Test ${n}`);
+    main.innerHTML = `
+      <section class="card">
+        <h2>Take the whole IELTS test, as on exam day</h2>
+        <p>This mock test puts Listening Test ${n}, Reading Test ${n}, Writing Test ${n} and Speaking Test ${n} together and runs them under real exam rules:</p>
+        <ul>
+          <li>The sections come in the real order: <b>Listening, Reading, Writing</b>, then <b>Speaking</b>.</li>
+          <li>Listening, Reading and Writing follow one another <b>with no break</b>, about 2 hours 30 minutes in all.</li>
+          <li>As in the real exam, the Speaking test can be taken straight afterwards or on another day.</li>
+          <li>Each section can be taken <b>once only</b>. You cannot go back to a section you have finished.</li>
+          <li>At the end you get a band for each section and your overall band.</li>
+        </ul>
+        <p class="muted">You need headphones, a microphone for Speaking, and a quiet room. Each section opens full screen with its own timer.</p>
+        ${seen.length ? `<p class="warnbox"><b>You have practised parts of this test before:</b> ${seen.join(', ')}. Your mock score may be higher than in a fresh test. For a true result, choose a mock test you have not seen.</p>` : ''}
+        <ol class="steps">${SECTIONS.map((s, i) => `<li><span class="n">${i + 1}</span><div><h3>${s.name}</h3><span class="meta">${s.time} · ${s.what}</span></div><span></span></li>`).join('')}</ol>
+        <div class="row"><button class="btn" id="begin" type="button">Start the mock test with Listening</button></div>
+      </section>`;
+    document.getElementById('begin').addEventListener('click', () => {
+      write(MKEY, { startedAt: Date.now(), sections: {} });
+      location.href = url(SECTIONS[0]);
+    });
+  }
+
+  function renderProgress(st) {
+    const nextIdx = SECTIONS.findIndex(s => !(st.sections[s.id] && st.sections[s.id].doneAt));
+    const next = SECTIONS[nextIdx];
+    const begun = st.sections[next.id] && st.sections[next.id].startedAt;
+    const rows = SECTIONS.map((s, i) => {
+      const sec = st.sections[s.id] || {};
+      const state = sec.doneAt ? `<span class="state done">Finished · band ${fmtBand(sec.band)}</span>`
+        : i === nextIdx ? `<a class="btn" href="${url(s)}">${begun ? 'Continue' : 'Start'} ${s.name} →</a>`
+        : '<span class="state muted">Not yet</span>';
+      const gap = i === 2 ? '<span class="gap">Speaking can be taken straight away or on another day.</span>' : '';
+      return `<li class="${i === nextIdx ? 'now' : ''}"><span class="n">${i + 1}</span><div><h3>${s.name}</h3><span class="meta">${s.time} · ${s.what}</span></div>${state}${gap}</li>`;
+    }).join('');
+    const note = next.id === 'speaking' ? 'Listening, Reading and Writing are finished. Take the Speaking test when you are ready.'
+      : nextIdx === 0 ? 'The mock test has started. Begin with Listening.'
+      : `Next: ${next.name}. In the real exam it starts straight away, with no break.`;
+    main.innerHTML = `
+      <section class="card">
+        <h2>Your progress</h2>
+        <p>${note}</p>
+        <ol class="steps">${rows}</ol>
+        <div class="row"><button class="btn ghost" id="reset" type="button">Give up and reset this mock test</button></div>
+      </section>`;
+    bindReset();
+  }
+
+  function renderResult(st, rec) {
+    const b = SECTIONS.map(s => st.sections[s.id].band);
+    const ov = overall(b);
+    const meta = s => {
+      const r = rec[s.id + 'Test' + n] || {};
+      if (s.id === 'listening' || s.id === 'reading') return r.correct != null ? `${r.correct}/40 correct` : '';
+      if (s.id === 'writing') return r.source === 'teacher' ? 'teacher marked' : 'computer estimate';
+      return r.source === 'teacher' ? 'teacher marked' : 'self-assessed';
+    };
+    const took = Math.round((Math.max(...SECTIONS.map(s => st.sections[s.id].doneAt)) - st.startedAt) / 60000);
+    main.innerHTML = `
+      <section class="card">
+        <span class="label">Test Report Form · Full Mock Test ${n}</span>
+        <h2>Overall band ${fmtBand(ov)}</h2>
+        <div class="trf">
+          ${SECTIONS.map((s, i) => `<div><span class="label">${s.name}</span><div class="band-box">${fmtBand(b[i])}</div><span class="meta">${meta(s)}</span></div>`).join('')}
+          <div><span class="label">Overall band</span><div class="band-box">${fmtBand(ov)}</div><span class="meta">mean of four, to the nearest half band</span></div>
+        </div>
+        <p class="muted">Finished ${took >= 60 * 24 ? `over ${Math.round(took / 60 / 24)} day(s)` : `in ${Math.floor(took / 60)} h ${took % 60} min`}. Writing is a computer estimate and Speaking is your own marking, so ask a teacher to check them for an exact band. These results also appear on the trainer's Test Report Form.</p>
+        <div class="row"><a class="btn" href="./#mock">Choose another mock test</a><button class="btn ghost" id="reset" type="button">Reset this mock test</button></div>
+      </section>`;
+    bindReset();
+  }
+
+  function bindReset() {
+    document.getElementById('reset').addEventListener('click', () => {
+      if (!confirm(`Reset Full Mock Test ${n}? Your progress in this mock test will be lost. Your saved section results stay on the trainer.`)) return;
+      try { localStorage.removeItem(MKEY); } catch (e) {}
+      render();
+    });
+  }
+
+  render();
+  // coming back with the browser's Back button can show a cached page; draw it again from storage
+  window.addEventListener('pageshow', e => { if (e.persisted) render(); });
+})();
+</script>
+</body>
+</html>
