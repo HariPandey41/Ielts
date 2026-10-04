@@ -20,13 +20,13 @@
     { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'Has the way you shop changed in recent years?' },
     { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a time when you were very busy.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a time when you were very busy.' },
     { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a time when you were very busy. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?' },
-    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Are you usually good at managing your time?', say: 'Thank you. Are you usually good at managing your time?' },
-    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Why do people today seem to be busier than people in the past?', say: 'We\'ve been talking about a time when you were very busy, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all busy lives. Why do people today seem to be busier than people in the past?' },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'What do you usually do to relax after a busy day?', say: 'Thank you. What do you usually do to relax after a busy day?' },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'What are the main reasons why people in your country have such busy lives?', say: 'We\'ve been talking about a time when you were very busy, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all busy lives. What are the main reasons why people in your country have such busy lives?' },
     { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Do you think being busy is always a bad thing?' },
     { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Who do you think are busier in your country, young people or older people? Why?' },
     { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'How important is it for people to have a good balance between work and free time?', say: 'Now let\'s move on to talk about work and free time. How important is it for people to have a good balance between work and free time?' },
     { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Should employers do more to stop their staff from working too many hours?' },
-    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Do you think people will have more or less free time in the future? Why?' },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Would a four-day working week be a good idea in your country? Why?' },
     { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
   ];
 
