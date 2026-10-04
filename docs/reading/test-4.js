@@ -3,95 +3,113 @@
   'use strict';
   const passages = [
     {
-      title: 'The Science of Maps',
+      title: 'The Domestication of the Cat',
       sub: 'You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.',
       paras: [
-        ['', 'A map appears to be a simple picture of a place, but every map is also an argument about what matters. A city map may emphasise roads and ignore footpaths; a geological map may show rock layers while making rivers almost invisible. The cartographer must select, simplify and label information before a reader can use it.'],
-        ['', 'The earliest surviving maps were not always intended for travellers. Some clay tablets from Mesopotamia represented fields and irrigation channels, helping authorities record land and organise water. Other early maps were drawn for religious or political reasons. They showed an idealised world rather than a route that a person could follow on the ground.'],
-        ['', 'Maps of the wider world were often shaped by the knowledge and beliefs of the people who made them. The Greek scholar Ptolemy, writing in the second century, described how to represent a curved Earth on a flat surface and listed the coordinates of thousands of places. His work was copied and recopied for centuries, and when it was rediscovered in Europe in the fifteenth century, it encouraged a new interest in mathematical mapmaking.'],
-        ['', 'Modern surveying changed when accurate instruments became available. Triangulation allowed surveyors to calculate the position of a distant point by measuring angles from known locations. A network of triangles could cover an entire region, and later measurements of distance and height could be added to it. The method was slow, but it produced a reliable framework for national maps.'],
-        ['', 'The most ambitious of these surveys took decades to complete. In India, the Great Trigonometrical Survey, begun in 1802, measured a chain of triangles across the subcontinent using instruments so heavy that teams of workers were needed to carry them. The survey eventually produced the first accurate measurements of the Himalayan peaks, and its results were used to correct earlier maps that had placed some towns many kilometres from their true positions.'],
-        ['', 'The arrival of aerial photography created a different kind of opportunity. Cameras mounted on aircraft could record large areas quickly, while overlapping photographs allowed specialists to estimate height and shape. Yet photographs were not maps by themselves. Buildings, trees and shadows had to be interpreted, and the images had to be corrected for the angle from which they were taken.'],
-        ['', 'Digital mapping has made the production of maps faster and more collaborative. Satellite positioning, laser scanning and volunteered geographic information can be combined in a single database. A hiker may upload the location of a new footbridge, while a local authority adds road closures. The same flexibility can create errors when information is copied without checking its source.'],
-        ['', 'The same technology has changed how people use maps in daily life. Instead of unfolding a paper sheet, most travellers now follow a moving dot on a phone screen, and the map rotates to match the direction in which they are facing. Some researchers worry that this convenience weakens people’s ability to build a mental picture of their surroundings. In one study, drivers who relied on step-by-step directions remembered far less about the route afterwards than those who had planned it in advance using a printed map.'],
-        ['', 'Maps also influence behaviour. A route shown as a thick line may appear more important than an unmarked path, and a boundary printed on a map can strengthen the impression that a political division is permanent. Designers therefore make choices about colour, scale and symbols with care, especially when maps are used in public consultations or emergencies.'],
-        ['', 'Scale presents a similar challenge. A map of a whole country cannot show every street, so the cartographer must decide which features to keep and which to remove as the scale becomes smaller. Rivers may be smoothed, small villages left out and roads drawn wider than they really are so that they remain visible. These changes are not mistakes; they are necessary compromises that make a map readable.'],
-        ['', 'The most useful map is not necessarily the one with the greatest amount of detail. A rescue team needs a map that makes safe routes and hazards immediately clear; a tourist may prefer one that shows cafés and museums. Good cartography begins by asking what decision the reader must make, then presents only the information that supports that decision.'],
+        ['', 'Of all the animals that share our homes, the cat is perhaps the most puzzling. Dogs were transformed by thousands of years of breeding into herders, guards and hunting companions, yet the domestic cat still looks and behaves much like its wild relatives. Many pet cats continue to hunt, many can survive perfectly well without human help, and some scientists describe them as only semi-domesticated. How, then, did this independent animal come to live alongside people in almost every part of the world?'],
+        ['', 'For a long time, the answer was assumed to lie in ancient Egypt, where cats appear in paintings, statues and religious texts. However, this view was challenged in 2004, when archaeologists working on the Mediterranean island of Cyprus uncovered a grave about 9,500 years old. In it, a person had been buried together with a young cat. Because wild cats have never been native to Cyprus, the animal, or its ancestors, must have been carried there by boat. This suggests that people were already deliberately keeping cats several thousand years before the rise of Egyptian civilisation.'],
+        ['', 'Genetic studies have since identified the cat’s wild ancestor. In 2017, a team led by researchers in Paris analysed DNA from the remains of more than two hundred cats found at sites ranging from Bulgaria to Angola, some of them up to 9,000 years old. They concluded that all domestic cats descend from a single subspecies, the Near Eastern wildcat, which still lives in North Africa and South-West Asia today. Other wildcats, including the European wildcat, appear to have contributed little or nothing to the domestic population, even in regions where the two have lived side by side for centuries.'],
+        ['', 'The timing of domestication points to the role of farming. When people in the Fertile Crescent began cultivating cereals some 10,000 years ago, they also began storing grain, and these stores attracted large numbers of mice and rats. Wildcats that were bold enough to hunt near villages found a reliable supply of prey, while farmers had good reason to tolerate animals that protected their harvest. Most researchers therefore believe that cats largely domesticated themselves. Rather than being captured and tamed, the least fearful wildcats gradually moved into human settlements, and over many generations their descendants became increasingly comfortable in human company.'],
+        ['', 'Egypt did, however, play an important part in the cat’s later history. By around 1950 BC, cats appear in Egyptian paintings sitting beneath chairs, a sign that they had become household pets rather than simply useful visitors. They were later associated with Bastet, a goddess of the home and of fertility, and at some temples cats were bred in enormous numbers to be mummified and offered to her. According to the Greek historian Herodotus, killing a cat in Egypt, even by accident, could be punished by death, although it is unclear how often such punishments were actually carried out.'],
+        ['', 'The 2017 study found that cats spread out of Egypt in a second major wave, from about the eighth century BC onwards. Their DNA appears at ports along the Mediterranean and later around the Baltic Sea, which suggests that they travelled on trading ships. Sailors valued them for the same reason that early farmers had: they kept rats away from cargo and food supplies. In this way, the cat accompanied merchants, and later explorers, to almost every continent.'],
+        ['', 'Surprisingly, the cat’s appearance changed very little during most of this long history. The researchers found that the gene responsible for the blotched tabby coat, the pattern of dark swirls seen on many modern pets, did not appear until the Middle Ages, in the region that is now Turkey, and only became common in the eighteenth century. Deliberate breeding for particular colours and body shapes is more recent still. The first cat show was held at the Crystal Palace in London in 1871, and most of today’s recognised breeds were developed over the following century and a half. Even now, the majority of pet cats do not belong to any recognised breed.'],
+        ['', 'Domestication has nevertheless left its mark on cat behaviour. Domestic cats are far more tolerant of one another than their wild ancestors, which live alone and defend their territories fiercely. They also communicate differently. Adult wildcats rarely meow, and adult domestic cats seldom meow at each other; instead, they reserve the sound mainly for people. Studies have shown that some cats even produce a particular kind of purr, mixed with a high-pitched cry, when they want to be fed, and that humans find this sound especially difficult to ignore.'],
+        ['', 'Today there are thought to be several hundred million domestic cats worldwide, and their success has brought problems of its own. In places such as Australia and New Zealand, where native birds and small mammals evolved without cats, free-roaming pets and feral cats kill vast numbers of wild animals each year. Some local authorities now require owners to keep their cats indoors at night, and others have proposed limiting the number of cats a household may keep. The animal that once earned its place by protecting human food stores is now, in some parts of the world, regarded as a serious threat to wildlife.'],
       ],
     },
     {
-      title: 'Living with Volcanoes',
+      title: 'Fresh Water from the Sea',
       sub: 'You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.',
       paras: [
-        ['A', 'Volcanoes are often described as destructive forces, but millions of people choose to live near them. The slopes of Mount Etna in Sicily support vineyards and orchards, while communities around Mount Merapi in Indonesia depend on fertile soils and tourism. Living near a volcano involves risk, but it can also provide livelihoods that are difficult to replace elsewhere. In Iceland, heat from volcanic activity is used to generate electricity and warm homes, and the country’s geothermal pools attract large numbers of visitors each year. For many households, moving away would mean giving up not only a home but a whole way of earning a living.'],
-        ['B', 'The greatest danger is not always the spectacular lava flow shown in films. Ash clouds can disrupt aviation, contaminate water and damage machinery far from the crater. Lahars, mixtures of mud and volcanic debris, may travel rapidly down river valleys after an eruption or heavy rain. These less dramatic hazards are therefore central to emergency planning. Volcanic gases present another threat. Carbon dioxide is heavier than air and can collect in low-lying areas, where it may suffocate animals and people without any warning smell. In 1986, a sudden release of gas from Lake Nyos in Cameroon killed more than 1,700 people in nearby villages. Even a small eruption can affect places hundreds of kilometres away: in 2010, ash from Eyjafjallajökull in Iceland grounded flights across much of Europe for several days.'],
-        ['C', 'Monitoring agencies use several signals to assess whether a volcano is becoming more active. Small earthquakes may increase as magma moves underground, and the ground can swell by a few centimetres. Changes in the temperature or chemistry of gases are also important. No single signal gives a certain prediction, so scientists compare several measurements over time. Satellites now add a further layer of information, detecting small changes in ground height or surface temperature across areas that would be difficult or dangerous to visit. At some volcanoes, scientists also fly drones through gas plumes to collect samples.'],
-        ['D', 'Warnings are useful only if residents understand and trust them. In some regions, officials have installed sirens but have not explained what different sounds mean. Elsewhere, people have ignored evacuation orders because earlier warnings were followed by no eruption. Successful systems practise evacuation before a crisis and work with local leaders who are familiar with the community. Researchers call this the ‘cry wolf’ effect. To reduce it, some agencies now use a series of alert levels rather than a single warning, so that residents can see that a situation is changing gradually even when no eruption follows.'],
-        ['E', 'Tourism brings a further complication. Visitors may be attracted by the dramatic landscape and may not recognise the signs of an unstable slope or poisonous gas. Guides can reduce the danger by limiting access and explaining changing conditions, but commercial pressure sometimes encourages operators to keep a trail open longer than scientists recommend. Some national parks have responded by issuing licences only to operators who complete safety training and agree to close trails when scientists raise the alert level.'],
-        ['F', 'Volcanic landscapes change after an eruption. New ash can destroy crops in the short term, yet weathered ash may eventually enrich the soil. Roads and houses may be rebuilt in safer locations, and some residents return because family land and local networks matter to them. Relocation is not simply a technical decision; it also involves identity, income and trust. After the 2010 eruption of Merapi, for example, the Indonesian government offered villagers new houses further from the summit, but some families chose to keep farming their old land during the day and returned to the new settlements only at night.'],
+        ['A', 'Almost all of the water on Earth is salt water. Less than one per cent is fresh water that is easily accessible in rivers, lakes and underground reserves, and that small share must supply a growing population, expanding cities and increasingly thirsty farms. As droughts become more frequent in many regions, governments are turning to the one source that seems unlimited: the sea. Desalination plants, which remove salt from seawater, now operate in more than 150 countries, and together they produce tens of billions of litres of drinking water every day. In some desert states, almost all the water that comes out of household taps has been taken from the sea.'],
+        ['B', 'The basic idea is far from new. Sailors on long voyages boiled seawater and collected the steam, which condenses as fresh water, and by the nineteenth century some steamships carried equipment to do this on a larger scale. The first major land-based plants, built in the 1950s and 1960s, worked on the same principle. These thermal plants heated seawater in a series of chambers and were most common in the Gulf states, where oil was cheap and fresh water extremely scarce. However, because heating water requires enormous amounts of energy, thermal desalination was too expensive for most other countries. For several decades, therefore, desalination remained a solution for a small number of wealthy, oil-producing nations rather than for the world as a whole.'],
+        ['C', 'Most plants built since the 1990s use a different method, known as reverse osmosis. Seawater is first drawn in through a long pipe that extends some distance from the shore. It then passes through filters, which remove sand, seaweed and small organisms that could damage the equipment. Next, powerful pumps push the water at very high pressure against thin plastic membranes. The membranes contain pores so small that water molecules can pass through them, while the salt is left behind. Water produced in this way is so pure that it can corrode pipes, so minerals are added before it enters the public supply. The membranes must be cleaned regularly and eventually replaced, because a thin layer of bacteria and other material gradually builds up on their surface and reduces the flow of water.'],
+        ['D', 'Reverse osmosis uses far less energy than boiling, and its efficiency has improved steadily. Modern membranes allow more water through at lower pressure, and devices known as energy recovery units capture the pressure that remains in the salty waste water and use it to help pump the next batch of seawater. As a result, the energy needed to produce a cubic metre of fresh water has fallen by more than half since the 1980s. Even so, desalinated water typically costs considerably more than water taken from rivers or underground sources, and the plants themselves are expensive to build.'],
+        ['E', 'Environmental concerns arise at both ends of the process. At the start, intake pipes can trap fish, and the smallest organisms, such as plankton and fish larvae, may be drawn into the plant and killed. At the end, every litre of fresh water leaves behind a highly concentrated salt solution, known as brine. Because brine is denser than seawater, it tends to sink and spread across the seabed, where it can harm creatures that cannot move away. Many plants now release brine through diffusers, which mix it rapidly with the surrounding water, and some draw seawater through wells dug beneath the beach so that marine life is filtered out naturally.'],
+        ['F', 'Israel offers an example of how much desalination can change a country’s situation. After a series of severe droughts in the early 2000s, the government built several large reverse osmosis plants along the Mediterranean coast. Today, more than half of the water used in Israeli homes comes from the sea. The country, which once suffered serious shortages, now has enough water to refill a lake that had been shrinking for decades and to supply additional water to neighbouring Jordan under an agreement between the two governments. Farmers, who were once the first to suffer cuts in times of drought, have also benefited, although most agricultural water in Israel still comes from recycled waste water rather than from the sea.'],
+        ['G', 'Supporters believe desalination will become cheaper and cleaner still. Several new plants are powered by solar or wind energy, which reduces their carbon emissions, and researchers are investigating whether valuable substances such as magnesium and lithium could be extracted from brine and sold. Critics, however, warn that desalination can encourage people to waste water by making it seem plentiful. They argue that repairing leaking pipes, recycling waste water and charging realistic prices are cheaper ways of protecting supplies, and that desalination should be the last option rather than the first.'],
       ],
     },
     {
-      title: 'The Attention Economy',
+      title: 'The Placebo Puzzle',
       sub: 'You should spend about 20 minutes on Questions 27–40, which are based on Reading Passage 3 below.',
       paras: [
-        ['', 'Many online services are described as free, but they compete for a scarce resource: human attention. A news site, video platform or social network can sell advertising space only if people remain on the service long enough to see it. This business model has encouraged engineers and editors to study the moments when users stop scrolling, click a headline or return to an app.'],
-        ['', 'The competition is not necessarily harmful. A well-designed interface can help a person find a useful lecture, stay in touch with distant relatives or discover music that would otherwise remain unknown. The difficulty is that the same techniques can also reward material that is surprising, angry or emotionally extreme, because such material often produces a quick response. A navigation app that reroutes a driver around a traffic jam, for example, is valuable precisely because it holds the user’s attention at the right moment.'],
-        ['', 'Notifications are one example. A message arriving at an unpredictable time can create a habit of checking a device, even when the message is not important. Researchers call this variable reinforcement: because the reward is occasional rather than guaranteed, the behaviour can become persistent. Turning off notifications removes one trigger, although it does not change every feature of an attention-based service. Some phones now offer a summary mode that delivers non-urgent messages in batches at chosen times of day, which keeps people informed while reducing the number of interruptions.'],
-        ['', 'Recommendation systems create another tension. They are designed to predict what a user will watch or read next, and they become more accurate as they collect data. Personalisation can reduce the effort of choosing, but it may also narrow the range of material encountered. A person who watches one kind of political commentary may be shown increasingly similar material, while opposing evidence becomes less visible.'],
-        ['', 'Some designers now argue that success should be measured by the quality of a user’s visit rather than its length. A learning platform might value whether a student understood a concept, not whether the student stayed online for three hours. This approach is harder to measure than clicks, but it aligns the service with an outcome that users may actually want.'],
-        ['', 'Advertisers themselves are not always satisfied with the current model. A banner that appears beside an angry argument may be seen by many people, but it is unlikely to create a positive impression of the product. For this reason, some companies now pay more to place their advertisements next to content that users have chosen deliberately, such as long articles or educational videos.'],
-        ['', 'Regulators have also begun to take an interest. Some governments now require large platforms to explain in plain language how their recommendation systems work, and to offer users at least one option that is not based on their personal data. Supporters say such rules give people more control; critics reply that few users read the explanations or change the default settings.'],
-        ['', 'Individuals can protect attention through simple changes: grouping messages, placing distracting apps away from the home screen and deciding in advance when to check news. These actions are helpful, but responsibility cannot rest entirely with users. Platforms choose which features are easy to change, what data to collect and which goals their algorithms optimise.'],
-        ['', 'Schools and parents face their own version of the problem. Children often receive their first phone before they have developed the habits needed to manage it, and some schools have introduced rules that require devices to be switched off during lessons. Early studies suggest that such policies can improve concentration, particularly for pupils who previously found it hardest to ignore their phones, although the evidence is still limited.'],
-        ['', 'The central question is therefore not whether technology should capture attention. Every book, lesson and conversation does that to some degree. The question is who benefits from the capture, whether the user understands the exchange and whether the design leaves room for deliberate choice. Attention is personal, but the systems that shape it are increasingly public concerns.'],
+        ['', 'Every new medicine must prove that it works better than nothing. To do this, researchers compare it with a placebo, a substance such as a sugar pill or a salt-water injection that looks like the real treatment but contains no active ingredient. Patients do not know which one they are receiving. If the people taking the medicine improve more than those taking the placebo, the medicine is judged effective. Yet this method raises an awkward question. Patients given placebos often improve as well, sometimes considerably. Why should a pill with nothing in it make anyone feel better?'],
+        ['', 'The modern interest in this effect is often traced to an article published in 1955 by the American anaesthetist Henry Beecher. Having reviewed fifteen studies, Beecher claimed that around a third of patients obtained relief from placebos alone, and he argued that this effect had to be taken into account whenever a new drug was tested. His paper, titled ‘The Powerful Placebo’, was cited for decades as evidence that the mind can heal the body.'],
+        ['', 'Later researchers were less impressed. In 2001, two Danish scientists, Asbjørn Hróbjartsson and Peter Gøtzsche, compared groups given placebos with groups who received no treatment at all. In most conditions they found little difference between the two, and they concluded that much of what had been called the placebo effect was simply the natural course of illness. Many conditions improve by themselves, and patients often seek help when their symptoms are at their worst, so some improvement would be expected whatever was done. However, the Danish researchers did find a small but consistent benefit in one area: the relief of pain.'],
+        ['', 'Pain is where the most convincing evidence for a genuine placebo effect has been found. As early as 1978, a team led by Jon Levine in San Francisco studied patients who had had teeth removed. Some of those given a placebo reported less pain, but when they were then given naloxone, a drug that blocks the body’s natural painkillers, the benefit disappeared. This suggested that the expectation of relief had caused the brain to release its own pain-relieving chemicals. Since then, brain-imaging studies have shown that placebos can reduce activity in regions of the brain associated with pain.'],
+        ['', 'Expectation appears to be shaped by surprisingly small details. In one study, volunteers who were told that a painkiller cost two and a half dollars per dose reported more relief from a mild electric shock than those told it had been reduced to ten cents, although both groups had in fact received the same inactive pill. Other research suggests that injections tend to produce larger placebo responses than pills, and that two pills can work better than one. Even the colour of a tablet may influence what patients expect it to do.'],
+        ['', 'For doctors, these findings create a dilemma. If expectations can relieve suffering, it might seem kind to prescribe placebos. But doing so usually means deceiving patients, which conflicts with the principle that they should understand their treatment. One possible solution has come from Ted Kaptchuk of Harvard Medical School. In 2010, his team gave patients with a painful bowel condition pills that they were openly told were placebos, containing nothing but inactive ingredients. Remarkably, these patients reported greater improvement than a comparison group who received no pills. Kaptchuk suggests that the ritual of treatment itself, including a caring consultation, may matter as much as the patient’s belief.'],
+        ['', 'Not everyone is convinced. Critics point out that patients in such studies know what they are receiving and want to please the researchers, so they may simply report feeling better. It is also important to distinguish between how people feel and what is happening in their bodies. In a well-known study of asthma patients, placebo inhalers made people feel as much better as real medicine did, yet measurements showed that their breathing had not improved at all. A treatment that makes patients feel well while their illness continues could be dangerous.'],
+        ['', 'The placebo effect also has a darker twin, known as the nocebo effect. When patients are warned about possible side effects, a number of them develop those symptoms even when they are taking an inactive pill. In some trials, people who stop taking a medicine because of unpleasant side effects turn out to have been in the placebo group. This creates a further dilemma for doctors, who are required to inform patients about risks but may, by doing so, make those risks more likely.'],
+        ['', 'What emerges from decades of research is a more modest picture than the one Beecher painted. Placebos do not cure disease, and much of their reputation rests on misunderstanding. Yet expectation, attention and the setting in which treatment takes place do appear to influence how people experience their symptoms, especially pain. Rather than prescribing sugar pills, doctors might learn from this by paying closer attention to the way they speak to patients and explain their care.'],
       ],
     },
   ];
 
-  const PEOPLE = { A: 'Elena Rossi', B: 'David Mensah', C: 'Hana Suzuki' };
-  const box = { A: 'habit', B: 'quality', C: 'advertising', D: 'books', E: 'notifications', F: 'length', G: 'personalisation', H: 'engineers' };
+  const headings = {
+    i: 'The hidden damage at both ends of the process',
+    ii: 'Why some governments refuse to build plants',
+    iii: 'An old idea, first used on a large scale where fuel was cheap',
+    iv: 'A country transformed',
+    v: 'Health risks of drinking desalinated water',
+    vi: 'How pressure separates salt from water',
+    vii: 'Cheaper energy, but still costly water',
+    viii: 'Promise and doubts about the future',
+    ix: 'Moving plants away from the coast',
+    x: 'A world short of fresh water',
+  };
+  const PEOPLE = { A: 'Henry Beecher', B: 'Asbjørn Hróbjartsson and Peter Gøtzsche', C: 'Jon Levine', D: 'Ted Kaptchuk' };
+  const ENDINGS = {
+    A: 'may not show any real change in the patient’s condition.',
+    B: 'can make patients more likely to experience them.',
+    C: 'has been ignored by most modern researchers.',
+    D: 'can affect how much relief a placebo provides.',
+    E: 'can be explained by the body’s own chemicals.',
+    F: 'may be mistaken for the effect of a placebo.',
+  };
+
   const Q = {
-    1: { kind: 'tfng', s: 'Every early map was made to help travellers find their way.', a: 'FALSE', ev: 'Some early maps were made for religious or political reasons and showed an idealised world.' },
-    2: { kind: 'tfng', s: 'Triangulation uses angles measured from known locations.', a: 'TRUE', ev: 'Triangulation allowed surveyors to calculate a distant point by measuring angles from known locations.' },
-    3: { kind: 'tfng', s: 'Aerial photographs can be used as maps without any interpretation.', a: 'FALSE', ev: 'Photographs had to be interpreted and corrected before they could support mapping.' },
-    4: { kind: 'tfng', s: 'Volunteers may add information to a digital mapping database.', a: 'TRUE', ev: 'A hiker may upload the location of a new footbridge.' },
-    5: { kind: 'tfng', s: 'Digital maps are now more accurate than every printed map.', a: 'NOT GIVEN', ev: 'The passage describes how digital mapping works and the errors it can contain, but never compares its accuracy with printed maps.' },
-    6: { kind: 'tfng', s: 'A rescue team and a tourist need exactly the same kind of map.', a: 'FALSE', ev: 'A rescue team needs hazards and safe routes, while a tourist may prefer cafés and museums.' },
-    7: { kind: 'gap', a: ['fields'], limit: 1, ev: 'Clay tablets represented fields and irrigation channels.' },
-    8: { kind: 'gap', a: ['triangles'], limit: 1, ev: 'A network of triangles could cover an entire region.' },
-    9: { kind: 'gap', a: ['height'], limit: 1, ev: 'Overlapping photographs allowed specialists to estimate height and shape.' },
-    10: { kind: 'gap', a: ['footbridge'], limit: 1, ev: 'A hiker may upload the location of a new footbridge.' },
-    11: { kind: 'gap', a: ['boundary'], limit: 1, ev: 'A boundary printed on a map can strengthen the impression of a political division.' },
-    12: { kind: 'gap', a: ['symbols'], limit: 1, ev: 'Designers make choices about colour, scale and symbols with care.' },
-    13: { kind: 'gap', a: ['decision'], limit: 1, ev: 'Good cartography begins by asking what decision the reader must make.' },
-    14: { kind: 'para', s: 'a reason why an official warning may be ignored', a: 'D', ev: 'Paragraph D explains that earlier warnings without an eruption can reduce trust.' },
-    15: { kind: 'para', s: 'an example of people earning a living in a volcanic area', a: 'A', ev: 'Paragraph A mentions vineyards, orchards and tourism around volcanoes.' },
-    16: { kind: 'para', s: 'a conflict between commercial interests and safety advice', a: 'E', ev: 'Paragraph E says commercial pressure may keep a trail open longer than scientists recommend.' },
-    17: { kind: 'para', s: 'a description of hazards that can occur away from the crater', a: 'B', ev: 'Paragraph B discusses ash clouds and lahars travelling far from the crater.' },
-    18: { kind: 'para', s: 'a list of measurements used to assess volcanic activity', a: 'C', ev: 'Paragraph C describes earthquakes, ground swelling and gas changes.' },
-    19: { kind: 'gap', a: ['earthquakes'], limit: 2, ev: 'Small earthquakes may increase as magma moves underground.' },
-    20: { kind: 'gap', a: ['sirens'], limit: 2, ev: 'Some regions have installed sirens without explaining their meanings.' },
-    21: { kind: 'gap', a: ['guides'], limit: 2, ev: 'Guides can reduce tourism danger by limiting access and explaining conditions.' },
-    22: { kind: 'gap', a: ['identity'], limit: 2, ev: 'Relocation involves identity, income and trust.' },
-    23: { kind: 'gap', a: ['fertile soils'], limit: 2, ev: 'Communities depend on fertile soils and tourism.' },
-    24: { kind: 'gap', a: ['lava flow'], limit: 2, ev: 'The spectacular lava flow is not always the greatest danger.' },
-    25: { kind: 'gap', a: ['local leaders'], limit: 2, ev: 'Successful warning systems work with local leaders familiar with the community.' },
-    26: { kind: 'gap', a: ['safer locations'], limit: 2, ev: 'Roads and houses may be rebuilt in safer locations.' },
-    27: { kind: 'mcq', s: 'What is the main point of the first paragraph?', o: { A: 'Online services are always free to users.', B: 'Advertising is disappearing from digital services.', C: 'People spend too little time on the internet.', D: 'Human attention has commercial value online.' }, a: 'D', ev: 'The paragraph explains that online services compete for attention because it supports advertising.' },
-    28: { kind: 'mcq', s: 'Why can emotionally extreme material be rewarded online?', o: { A: 'It is always more accurate than calm material.', B: 'It tends to produce a quick response.', C: 'It costs less to publish.', D: 'It prevents users from seeing advertisements.' }, a: 'B', ev: 'The passage says surprising, angry or extreme material often produces a quick response.' },
-    29: { kind: 'mcq', s: 'What does variable reinforcement help explain?', o: { A: 'Why occasional rewards can create persistent checking.', B: 'Why users dislike all notifications.', C: 'Why recommendation systems stop collecting data.', D: 'Why books cannot capture attention.' }, a: 'A', ev: 'An unpredictable reward can make the behaviour of checking persistent.' },
-    30: { kind: 'mcq', s: 'What possible disadvantage of personalisation is mentioned?', o: { A: 'It makes every choice take longer.', B: 'It prevents users from finding music.', C: 'It can narrow the range of material encountered.', D: 'It requires users to turn off their devices.' }, a: 'C', ev: 'Personalisation may narrow the range of material a person encounters.' },
-    31: { kind: 'mcq', s: 'What does the fifth paragraph suggest platforms could measure?', o: { A: 'Only the number of clicks.', B: 'The quality or outcome of a user visit.', C: 'The age of every user.', D: 'The exact length of every lesson.' }, a: 'B', ev: 'A learning platform might value whether a student understood a concept rather than time online.' },
-    32: { kind: 'ynng', s: 'Most people check their phones more than a hundred times a day.', a: 'NOT GIVEN', ev: 'The writer says people check their phones within seconds of having nothing to do, but gives no daily figure.' },
-    33: { kind: 'ynng', s: 'Turning off notifications removes every influence on a person’s attention.', a: 'NO', ev: 'It removes one trigger but does not change every feature of an attention-based service.' },
-    34: { kind: 'ynng', s: 'Recommendation systems can make opposing political material less visible.', a: 'YES', ev: 'A user may be shown increasingly similar commentary while opposing evidence becomes less visible.' },
-    35: { kind: 'ynng', s: 'Measuring learning outcomes is easier than measuring clicks.', a: 'NO', ev: '“This approach is harder to measure than clicks”' },
-    36: { kind: 'ynng', s: 'The author thinks platforms should share responsibility for protecting attention.', a: 'YES', ev: 'The passage says responsibility cannot rest entirely with users because platforms choose features and goals.' },
-    37: { kind: 'box', a: 'C', ev: '“they compete for a scarce resource: human attention… can sell advertising space only if people remain on the service”' },
-    38: { kind: 'box', a: 'E', ev: '“Notifications are one example. A message arriving at an unpredictable time can create a habit of checking a device”' },
-    39: { kind: 'box', a: 'G', ev: '“Personalisation can reduce the effort of choosing, but it may also narrow the range of material encountered.”' },
-    40: { kind: 'box', a: 'B', ev: '“success should be measured by the quality of a user’s visit rather than its length”' },
+    1: { kind: 'tfng', s: 'The domestic cat has been changed more by breeding than the dog has.', a: 'FALSE', ev: '“Dogs were transformed by thousands of years of breeding… yet the domestic cat still looks and behaves much like its wild relatives.”' },
+    2: { kind: 'tfng', s: 'The cat found in the grave on Cyprus had been killed so that it could be buried with its owner.', a: 'NOT GIVEN', ev: 'The passage says only that “a person had been buried together with a young cat”; it does not say how the cat died.' },
+    3: { kind: 'tfng', s: 'Cats were originally brought to Cyprus by people.', a: 'TRUE', ev: '“Because wild cats have never been native to Cyprus, the animal, or its ancestors, must have been carried there by boat.”' },
+    4: { kind: 'tfng', s: 'The European wildcat is one of the main ancestors of today’s domestic cats.', a: 'FALSE', ev: '“Other wildcats, including the European wildcat, appear to have contributed little or nothing to the domestic population”' },
+    5: { kind: 'tfng', s: 'Wildcats that lived near early villages were larger than those that lived elsewhere.', a: 'NOT GIVEN', ev: 'The passage describes the wildcats near villages as “bold enough to hunt near villages” but says nothing about their size.' },
+    6: { kind: 'tfng', s: 'In ancient Egypt, cats were linked to a goddess connected with family life.', a: 'TRUE', ev: '“They were later associated with Bastet, a goddess of the home and of fertility”' },
+    7: { kind: 'tfng', s: 'Cats reached the Baltic region before they reached the Mediterranean.', a: 'FALSE', ev: '“Their DNA appears at ports along the Mediterranean and later around the Baltic Sea”' },
+    8: { kind: 'gap', a: ['grain'], limit: 2, ev: '“they also began storing grain, and these stores attracted large numbers of mice and rats”' },
+    9: { kind: 'gap', a: ['beneath chairs', 'chairs'], limit: 2, ev: '“cats appear in Egyptian paintings sitting beneath chairs”' },
+    10: { kind: 'gap', a: ['cargo'], limit: 2, ev: '“they kept rats away from cargo and food supplies”' },
+    11: { kind: 'gap', a: ['blotched tabby'], limit: 2, ev: '“the gene responsible for the blotched tabby coat… did not appear until the Middle Ages”' },
+    12: { kind: 'gap', a: ['crystal palace'], limit: 2, ev: '“The first cat show was held at the Crystal Palace in London in 1871”' },
+    13: { kind: 'gap', a: ['people', 'humans'], limit: 2, ev: '“adult domestic cats seldom meow at each other; instead, they reserve the sound mainly for people”' },
+    14: { kind: 'heading', p: 'B', a: 'iii', ev: '“The basic idea is far from new… most common in the Gulf states, where oil was cheap”' },
+    15: { kind: 'heading', p: 'C', a: 'vi', ev: '“powerful pumps push the water at very high pressure against thin plastic membranes… the salt is left behind”' },
+    16: { kind: 'heading', p: 'D', a: 'vii', ev: '“the energy needed to produce a cubic metre of fresh water has fallen by more than half… desalinated water typically costs considerably more”' },
+    17: { kind: 'heading', p: 'E', a: 'i', ev: '“Environmental concerns arise at both ends of the process.”' },
+    18: { kind: 'heading', p: 'F', a: 'iv', ev: '“Israel offers an example of how much desalination can change a country’s situation.”' },
+    19: { kind: 'heading', p: 'G', a: 'viii', ev: '“Supporters believe desalination will become cheaper and cleaner still… Critics, however, warn”' },
+    20: { kind: 'gap', a: ['filters'], limit: 2, ev: '“It then passes through filters, which remove sand, seaweed and small organisms”' },
+    21: { kind: 'gap', a: ['pressure'], limit: 2, ev: '“powerful pumps push the water at very high pressure against thin plastic membranes”' },
+    22: { kind: 'gap', a: ['minerals'], limit: 2, ev: '“so minerals are added before it enters the public supply”' },
+    23: { kind: 'gap', a: ['diffusers'], limit: 2, ev: '“Many plants now release brine through diffusers”' },
+    24: { kind: 'two', pair: [24, 25], s: 'Which TWO developments have reduced the energy used by reverse osmosis plants?', o: { A: 'the use of cheaper oil', B: 'improved membranes', C: 'pumps placed under the beach', D: 'reusing pressure from the waste water', E: 'heating the seawater before filtering it' }, a: ['B', 'D'], ev: '“Modern membranes allow more water through at lower pressure, and devices known as energy recovery units capture the pressure that remains in the salty waste water”' },
+    25: { kind: 'two', pair: [24, 25], s: 'Which TWO developments have reduced the energy used by reverse osmosis plants?', o: { A: 'the use of cheaper oil', B: 'improved membranes', C: 'pumps placed under the beach', D: 'reusing pressure from the waste water', E: 'heating the seawater before filtering it' }, a: ['B', 'D'], ev: '“Modern membranes allow more water through at lower pressure, and devices known as energy recovery units capture the pressure that remains in the salty waste water”' },
+    26: { kind: 'mcq', s: 'What do critics of desalination believe?', o: { A: 'It will never become cheap enough to be useful.', B: 'Other ways of saving water should be tried first.', C: 'It causes more pollution than it prevents.', D: 'The water it produces is unsafe to drink.' }, a: 'B', ev: '“repairing leaking pipes, recycling waste water and charging realistic prices are cheaper ways of protecting supplies, and that desalination should be the last option rather than the first”' },
+    27: { kind: 'person', s: 'showed that the pain relief produced by a placebo could be stopped by a particular drug', a: 'C', ev: '“when they were then given naloxone, a drug that blocks the body’s natural painkillers, the benefit disappeared”' },
+    28: { kind: 'person', s: 'argued that the placebo effect must be considered when new medicines are tested', a: 'A', ev: '“he argued that this effect had to be taken into account whenever a new drug was tested”' },
+    29: { kind: 'person', s: 'found that patients could benefit from a placebo even when they knew what it was', a: 'D', ev: '“pills that they were openly told were placebos… these patients reported greater improvement than a comparison group”' },
+    30: { kind: 'person', s: 'suggested that many improvements credited to placebos would have happened anyway', a: 'B', ev: '“much of what had been called the placebo effect was simply the natural course of illness”' },
+    31: { kind: 'person', s: 'proposed that the experience of being treated may be as important as belief in the treatment', a: 'D', ev: '“the ritual of treatment itself, including a caring consultation, may matter as much as the patient’s belief”' },
+    32: { kind: 'ynng', s: 'Patients often visit a doctor when their symptoms are most severe.', a: 'YES', ev: '“patients often seek help when their symptoms are at their worst”' },
+    33: { kind: 'ynng', s: 'Brain-imaging studies of placebos are more reliable than studies based on what patients report.', a: 'NOT GIVEN', ev: 'The writer reports that “brain-imaging studies have shown that placebos can reduce activity in regions of the brain associated with pain” but does not compare their reliability with patient reports.' },
+    34: { kind: 'ynng', s: 'The asthma study found that placebo inhalers improved patients’ breathing.', a: 'NO', ev: '“yet measurements showed that their breathing had not improved at all”' },
+    35: { kind: 'ynng', s: 'Beecher’s 1955 article overstated the power of placebos.', a: 'YES', ev: '“What emerges from decades of research is a more modest picture than the one Beecher painted.”' },
+    36: { kind: 'ynng', s: 'Doctors should begin prescribing placebos to their patients.', a: 'NO', ev: '“Rather than prescribing sugar pills, doctors might learn from this by paying closer attention to the way they speak to patients”' },
+    37: { kind: 'ending', s: 'The natural recovery that many illnesses show', a: 'F', ev: '“much of what had been called the placebo effect was simply the natural course of illness. Many conditions improve by themselves”' },
+    38: { kind: 'ending', s: 'The price that patients believe a treatment costs', a: 'D', ev: '“volunteers who were told that a painkiller cost two and a half dollars per dose reported more relief… than those told it had been reduced to ten cents”' },
+    39: { kind: 'ending', s: 'A patient who feels better after using a placebo inhaler', a: 'A', ev: '“placebo inhalers made people feel as much better as real medicine did, yet measurements showed that their breathing had not improved at all”' },
+    40: { kind: 'ending', s: 'Telling patients about the possible side effects of a medicine', a: 'B', ev: '“When patients are warned about possible side effects, a number of them develop those symptoms even when they are taking an inactive pill.”' },
   };
 
   const TF_KEY = '<div class="key-box"><dl><dt>TRUE</dt><dd>if the statement agrees with the information</dd><dt>FALSE</dt><dd>if the statement contradicts the information</dd><dt>NOT GIVEN</dt><dd>if there is no information on this</dd></dl></div>';
@@ -99,56 +117,55 @@
   const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
   const keyBox = (title, obj) => `<div class="key-box"><span class="label">${title}</span><dl>${Object.entries(obj).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div>`;
   const selectQ = (h, n, opts, ph) => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>${h.esc(h.Q[n].s)}</span></div>${h.select(n, Object.keys(opts).map(k => [k, k]), ph)}</div>`;
+  const shortQ = (h, n, text) => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>${text}</span></div><div style="margin-left:2.4rem">${h.gapIn(n).replace(/<span class="qn">\d+<\/span>/, '')}</div></div>`;
 
   const build = h => [
-    `<div class="qset"><h3>Questions 1–6</h3>
+    `<div class="qset"><h3>Questions 1–7</h3>
       <p class="instr">Do the following statements agree with the information given in Reading Passage 1? Choose</p>
       ${TF_KEY}
-      ${range(1, 6).map(h.tf).join('')}</div>
-    <div class="qset"><h3>Questions 7–13</h3>
-      <p class="instr">Complete the notes below. Choose <b>ONE WORD ONLY</b> from the passage for each answer.</p>
-      <div class="notes"><h4>How maps are made</h4>
-        <span class="h">Early and modern methods</span>
-        <ul>
-          <li>Some early tablets represented ${h.gapIn(7)} and irrigation channels.</li>
-          <li>Surveyors created a network of ${h.gapIn(8)}.</li>
-          <li>Aerial photographs helped specialists estimate ${h.gapIn(9)}.</li>
-          <li>A hiker may upload a new ${h.gapIn(10)}.</li>
-        </ul>
-        <span class="h">Design choices</span>
-        <ul>
-          <li>A printed ${h.gapIn(11)} can affect how a political division is understood.</li>
-          <li>Cartographers choose colours, scale and ${h.gapIn(12)}.</li>
-          <li>Good maps support a reader’s ${h.gapIn(13)}.</li>
-        </ul>
-      </div></div>`,
-    `<div class="qset"><h3>Questions 14–18</h3>
-      <p class="instr">Reading Passage 2 has six paragraphs, <b>A–F</b>. Which paragraph contains the following information? <b>NB</b> You may use any letter more than once.</p>
-      ${range(14, 18).map(n => selectQ(h, n, { A: 1, B: 1, C: 1, D: 1, E: 1, F: 1 }, 'Choose A–F')).join('')}</div>
-    <div class="qset"><h3>Questions 19–22</h3>
-      <p class="instr">Complete the sentences below. Choose <b>NO MORE THAN TWO WORDS</b> from the passage for each answer.</p>
-      <div class="notes"><h4>Volcanic communities</h4>
-        <p>Scientists monitor small ${h.gapIn(19)} and other changes beneath a volcano. Some areas use ${h.gapIn(20)} to warn residents. Tourist ${h.gapIn(21)} can reduce danger by controlling access. If relocation is required, questions of ${h.gapIn(22)} may be as important as technical safety.</p>
+      ${range(1, 7).map(h.tf).join('')}</div>
+    <div class="qset"><h3>Questions 8–13</h3>
+      <p class="instr">Answer the questions below. Choose <b>NO MORE THAN TWO WORDS</b> from the passage for each answer.</p>
+      ${shortQ(h, 8, 'What did early farmers store that attracted mice and rats?')}
+      ${shortQ(h, 9, 'Where are cats shown in Egyptian paintings from around 1950 BC?')}
+      ${shortQ(h, 10, 'Apart from food supplies, what did cats protect on trading ships?')}
+      ${shortQ(h, 11, 'Which coat pattern first appeared in the Middle Ages?')}
+      ${shortQ(h, 12, 'In which building was the first cat show held?')}
+      ${shortQ(h, 13, 'Who do adult domestic cats mainly meow to?')}</div>`,
+    `<div class="qset"><h3>Questions 14–19</h3>
+      <p class="instr">Reading Passage 2 has seven paragraphs, <b>A–G</b>. Choose the correct heading for paragraphs <b>B–G</b> from the list of headings below.</p>
+      ${keyBox('List of headings', headings)}
+      <p class="muted"><i>Example: Paragraph A — x</i></p>
+      ${range(14, 19).map(n => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>Paragraph ${h.Q[n].p}</span></div>${h.select(n, Object.keys(headings).filter(k => k !== 'x').map(k => [k, k]), 'Choose a heading')}</div>`).join('')}</div>
+    <div class="qset"><h3>Questions 20–23</h3>
+      <p class="instr">Complete the flow chart below. Choose <b>NO MORE THAN TWO WORDS</b> from the passage for each answer.</p>
+      <div class="rflow"><h4>Reverse osmosis</h4>
+        <div class="step">Seawater is drawn in through a long pipe.</div><span class="arrow" aria-hidden="true">↓</span>
+        <div class="step">Sand, seaweed and small organisms are removed by ${h.gapIn(20)}.</div><span class="arrow" aria-hidden="true">↓</span>
+        <div class="step">Pumps push the water against membranes at very high ${h.gapIn(21)}.</div><span class="arrow" aria-hidden="true">↓</span>
+        <div class="step">Water passes through the membranes; the salt stays behind.</div><span class="arrow" aria-hidden="true">↓</span>
+        <div class="step">${h.gapIn(22)} are added so that the water does not corrode pipes.</div><span class="arrow" aria-hidden="true">↓</span>
+        <div class="step">The brine is released into the sea through ${h.gapIn(23)}.</div>
       </div></div>
-    <div class="qset"><h3>Questions 23–26</h3>
-      <p class="instr">Complete the summary below. Choose <b>NO MORE THAN TWO WORDS</b> from the passage for each answer.</p>
-      <div class="notes"><h4>Living with a volcano</h4>
-        <p>Volcanic areas may offer ${h.gapIn(23)}. The most dramatic hazard is not always a ${h.gapIn(24)}. Warning systems work best with ${h.gapIn(25)}, and rebuilding may involve moving to ${h.gapIn(26)}.</p>
-      </div></div>`,
-    `<div class="qset"><h3>Questions 27–31</h3>
+    <div class="qset"><h3>Questions 24 and 25</h3>
+      <p class="instr">Choose <b>TWO</b> letters, <b>A–E</b>.</p>
+      ${h.two(24)}</div>
+    <div class="qset"><h3>Question 26</h3>
       <p class="instr">Choose the correct letter, <b>A, B, C or D</b>.</p>
-      ${range(27, 31).map(h.mcq).join('')}</div>
+      ${h.mcq(26)}</div>`,
+    `<div class="qset"><h3>Questions 27–31</h3>
+      <p class="instr">Look at the following statements and the list of researchers below. Match each statement with the correct researcher or researchers, <b>A–D</b>. <b>NB</b> You may use any letter more than once.</p>
+      ${keyBox('List of researchers', PEOPLE)}
+      ${range(27, 31).map(n => selectQ(h, n, PEOPLE, 'Choose A–D')).join('')}</div>
     <div class="qset"><h3>Questions 32–36</h3>
       <p class="instr">Do the following statements agree with the claims of the writer in Reading Passage 3? Choose</p>
       ${YN_KEY}
       ${range(32, 36).map(h.tf).join('')}</div>
     <div class="qset"><h3>Questions 37–40</h3>
-      <p class="instr">Complete the summary using the list of words, <b>A–H</b>, below.</p>
-      <div class="notes"><h4>Competing for attention</h4>
-        <p>Many services that are free to use depend on ${h.boxSel(37)}, so they need people to stay on them. Unpredictable ${h.boxSel(38)} can lead users to check their devices again and again, and recommendation systems use ${h.boxSel(39)}, which may narrow the range of material people see. Some designers argue that a service should be judged by the ${h.boxSel(40)} of a visit rather than by how long it lasts.</p>
-      </div>
-      ${keyBox('List of words', box)}</div>`,
+      <p class="instr">Complete each sentence with the correct ending, <b>A–F</b>, below.</p>
+      ${keyBox('List of endings', ENDINGS)}
+      ${range(37, 40).map(n => selectQ(h, n, ENDINGS, 'Choose A–F')).join('')}</div>`,
   ];
 
-  window.READING_TEST = { num: 4, passages, Q, headings: {}, box, ranges: [[1, 13], [14, 26], [27, 40]], build };
+  window.READING_TEST = { num: 4, passages, Q, headings, box: {}, ranges: [[1, 13], [14, 26], [27, 40]], build };
 })();
