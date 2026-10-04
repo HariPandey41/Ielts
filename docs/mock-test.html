@@ -86,7 +86,7 @@ a { color: inherit; }
 (() => {
   'use strict';
   // Mock N uses the tests numbered N: 1–10 are the practice tests, 11 upwards are kept for mock tests only
-  const COUNT = 11, FIRST_MOCK_ONLY = 11;
+  const COUNT = 13, FIRST_MOCK_ONLY = 11;
   const n = +new URLSearchParams(location.search).get('n');
   const fresh = n >= FIRST_MOCK_ONLY;
   const NAME = fresh ? `Full Mock Test ${n - FIRST_MOCK_ONLY + 1}` : `Practice Mock Test ${n}`;
