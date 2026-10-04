@@ -11,7 +11,7 @@ require(require('path').resolve(`docs/reading/test-${n}.js`));
 const T = window.READING_TEST;
 const problems = [];
 const wc = s => (s.match(/[A-Za-z0-9’'\-]+/g) || []).length;
-const norm = s => s.toLowerCase().replace(/[’‘']/g, "'").replace(/[“”"]/g, '').replace(/(\d)\.(?=\d)/g, '$1\u0001').replace(/[^a-z0-9\u0001' -]+/g, ' ').replace(/\u0001/g, '.').replace(/\s+/g, ' ').trim();
+const norm = s => s.toLowerCase().replace(/[‘’']([a-z])/g, (m, c, i, str) => (i && /[a-z]/.test(str[i - 1]) ? "'" : ' ') + c).replace(/[’‘']/g, ' ').replace(/[“”"]/g, '').replace(/(\d)\.(?=\d)/g, '$1\u0001').replace(/[^a-z0-9\u0001' -]+/g, ' ').replace(/\u0001/g, '.').replace(/\s+/g, ' ').trim();
 const texts = T.passages.map(p => ' ' + norm(p.paras.map(x => x[1]).join(' ')) + ' ');
 const lens = T.passages.map(p => p.paras.reduce((a, [, t]) => a + wc(t), 0));
 lens.forEach((l, i) => { if (l < 780 || l > 960) problems.push(`passage ${i + 1} has ${l} words (aim 780–950)`); });
