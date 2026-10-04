@@ -61,7 +61,7 @@
   const relink = root => {
     if (!root.querySelectorAll) return;
     const links = [...root.querySelectorAll('a[href^="./#"]')];
-    if (root.matches('a[href^="./#"]')) links.push(root);
+    if (root.matches && root.matches('a[href^="./#"]')) links.push(root);
     links.forEach(a => { a.href = HUB; a.textContent = 'Back to mock test'; });
   };
   new MutationObserver(ms => ms.forEach(x => x.addedNodes.forEach(relink))).observe(document.documentElement, { childList: true, subtree: true });
