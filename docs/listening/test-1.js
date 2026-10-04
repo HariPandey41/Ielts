@@ -134,20 +134,20 @@
 
     ['focus', 4],
     ['narrator', 'Now turn to Part 4.'],
-    ['narrator', 'Part 4. You will hear a lecture about urban beekeeping. First, you have some time to look at questions 31 to 40.'],
+    ['narrator', 'Part 4. You will hear a lecture about the history of timekeeping. First, you have some time to look at questions 31 to 40.'],
     ['pause', 45, 'Reading time · Questions 31–40'],
     ['narrator', 'Now listen carefully and answer questions 31 to 40.'],
-    ['lecturer', "Good afternoon. Today I'm going to talk about a trend that has grown rapidly in many cities around the world, and that is urban beekeeping."],
-    ['lecturer', "Let's start with some background. In London, for example, the number of registered beehives has more than doubled in the last {{decade|31}}. Some people keep hives in their back gardens, but a surprising number are placed on the {{roofs|32}} of office buildings, where companies see them as a way of showing their commitment to the environment."],
-    ['lecturer', 'So why do bees do so well in cities? There are several reasons. First, cities are warmer than the surrounding countryside. Because temperatures are higher, plants start flowering earlier in the year and stop later, so the flowering {{season|33}} is longer, and bees have food for more of the year.'],
-    ['lecturer', 'Second, city parks generally use far fewer {{pesticides|34}} than farms do. Modern agriculture relies heavily on chemicals that can harm bees, while many city councils have reduced their use considerably.'],
-    ['lecturer', 'And third, although you might expect cities to offer bees very little, in fact private gardens provide an enormous {{variety|35}} of plants. A farm might grow a single crop over hundreds of hectares, whereas a single city street might contain dozens of different flowering species.'],
-    ['lecturer', 'However, urban beekeeping is not without its problems. The most serious is that in some areas there are now simply too many hives. When this happens, there is intense {{competition|36}} for food, not only between honeybees, but also with wild bees.'],
-    ['lecturer', 'And wild bees are particularly vulnerable. Unlike honeybees, which can fly several kilometres to find flowers, most wild species cannot travel long {{distances|37}}. So if the flowers near their nest are stripped by honeybees, they have nowhere else to go.'],
-    ['lecturer', 'There are also some interesting differences in the honey itself. City honey tends to be {{darker|38}} in colour than honey from the countryside, mainly because city bees feed on the flowers of trees such as lime and sycamore, rather than on field crops.'],
-    ['lecturer', "So, what is being done about the problems I've described? Several city councils have begun planting {{wildflowers|39}} along roadsides and on roundabouts, which provides food for both honeybees and wild bees."],
-    ['lecturer', 'And in some cities, new beekeepers are now required to register their hives and to complete a {{course|40}} before they are allowed to keep bees. This makes sure they understand not only how to look after their own colonies, but also the effect those colonies have on other insects.'],
-    ['lecturer', "To sum up, then, cities can be good places for bees, but only if the number of hives is managed carefully. In the next lecture, we'll look at how researchers measure the health of a bee colony."],
+    ['lecturer', "Good afternoon. Today I'm going to talk about something we all depend on but rarely think about, and that is the measurement of time. I'll trace how clocks developed, from the simplest devices to the extraordinary precision we have today."],
+    ['lecturer', "The earliest timekeepers we know of were sundials, which were used in Egypt more than three thousand years ago. A sundial is simple and reliable, but it has an obvious weakness: it is useless at {{night|31}}, and of course on cloudy days."],
+    ['lecturer', "Water clocks solved part of this problem. Water dripped at a steady rate from a container, and the level of the water showed how many hours had passed. These clocks worked day and night, but they were not very accurate, because the rate of flow changed with the {{temperature|32}}. In winter, the water could even freeze."],
+    ['lecturer', "Mechanical clocks first appeared in Europe in the late thirteenth century. People often assume they were built for merchants, who needed to organise their business, but in fact many of the earliest ones were made for monasteries, where monks needed to know the correct times for {{prayer|33}}. Interestingly, these early clocks had no faces at all. Instead, they simply rang a {{bell|34}} to mark the hours. Even when dials were added, they had only an hour hand, because the clocks could easily gain or lose a quarter of an hour in a single day."],
+    ['lecturer', "The next great improvement came in sixteen fifty-six, when the Dutch scientist Christiaan Huygens built the first clock controlled by a {{pendulum|35}}. Because a pendulum swings at a very regular rate, the best clocks of this kind lost only about fifteen seconds a day, which was a dramatic improvement."],
+    ['lecturer', "Pendulum clocks, however, were useless on ships, where the motion of the waves upset them. This mattered enormously, because sailors could only work out their longitude, their position east or west, if they knew the exact time at their home port. An English carpenter, John Harrison, spent most of his life trying to solve this problem. His first designs were large and heavy, but his fourth, completed in seventeen fifty-nine, looked like a large pocket {{watch|36}}. On a voyage to Jamaica, it lost only about five seconds in more than two months at sea."],
+    ['lecturer', "On land, it was the railways that changed how people thought about time. Before then, each town kept its own local time, based on the position of the sun, so noon in Bristol was about ten minutes later than noon in London. This made railway timetables very confusing. Some people believe that standard time was introduced by governments, but it was actually the railway companies that first adopted London time across their networks in the eighteen-forties. Later, in eighteen eighty-four, an international conference in Washington chose Greenwich as the starting point for the world’s time {{zones|37}}."],
+    ['lecturer', "In the twentieth century, mechanical clocks were gradually replaced by quartz. When an electric current passes through a tiny piece of quartz crystal, it vibrates at a very regular rate, and these vibrations can be counted to measure time. The first quartz clock was built in nineteen twenty-seven, and quartz watches appeared in the late nineteen-sixties. Today almost all watches use quartz, because they are cheap to make and extremely {{accurate|38}}."],
+    ['lecturer', "The most precise clocks of all, however, are atomic clocks. The first reliable one was built in London in nineteen fifty-five. These clocks measure the natural vibrations of atoms, and since nineteen sixty-seven, the second itself has been officially defined using the {{caesium|39}} atom. The best atomic clocks today would lose less than a second in millions of years."],
+    ['lecturer', "You might wonder why anyone needs such precision. The answer is that modern life depends on it. Satellite {{navigation|40}} systems, for example, work by measuring how long signals take to travel from satellites to a receiver, and an error of just a millionth of a second would place you about three hundred metres from where you really are."],
+    ['lecturer', "In the next lecture, we'll look at how our bodies keep time, through what are known as biological clocks."],
     ['narrator', 'That is the end of Part 4. That is the end of the listening test.'],
   ];
 
@@ -184,16 +184,16 @@
     28: { kind: 'match', label: 'the student union', ans: 'E' },
     29: { kind: 'match', label: 'the kitchen staff', ans: 'F' },
     30: { kind: 'match', label: 'the finance office', ans: 'A' },
-    31: { kind: 'gap', ans: ['decade'], limit: 'w' },
-    32: { kind: 'gap', ans: ['roofs', 'rooftops', 'roof'], limit: 'w' },
-    33: { kind: 'gap', ans: ['season'], limit: 'w' },
-    34: { kind: 'gap', ans: ['pesticides', 'pesticide'], limit: 'w' },
-    35: { kind: 'gap', ans: ['variety'], limit: 'w' },
-    36: { kind: 'gap', ans: ['competition'], limit: 'w' },
-    37: { kind: 'gap', ans: ['distances'], limit: 'w' },
-    38: { kind: 'gap', ans: ['darker'], limit: 'w' },
-    39: { kind: 'gap', ans: ['wildflowers', 'wild-flowers'], limit: 'w' },
-    40: { kind: 'gap', ans: ['course'], limit: 'w' },
+    31: { kind: 'gap', ans: ['night'], limit: 'w' },
+    32: { kind: 'gap', ans: ['temperature'], limit: 'w' },
+    33: { kind: 'gap', ans: ['prayer', 'prayers'], limit: 'w' },
+    34: { kind: 'gap', ans: ['bell'], limit: 'w' },
+    35: { kind: 'gap', ans: ['pendulum'], limit: 'w' },
+    36: { kind: 'gap', ans: ['watch'], limit: 'w' },
+    37: { kind: 'gap', ans: ['zones'], limit: 'w' },
+    38: { kind: 'gap', ans: ['accurate'], limit: 'w' },
+    39: { kind: 'gap', ans: ['caesium', 'cesium'], limit: 'w', key: 'caesium' },
+    40: { kind: 'gap', ans: ['navigation'], limit: 'w' },
   };
   const TWO_OPTS = { A: 'Too few members of staff responded.', B: 'Some questions were difficult to understand.', C: 'It took people too long to complete.', D: 'The online link did not work.', E: 'Many people did not answer every question.' };
   const MATCH_OPTS = { A: 'It would save money.', B: 'It would be difficult to organise.', C: 'It would reduce queues.', D: 'It should be tested first.', E: 'It would be popular with students.', F: 'It would require extra staff.' };
@@ -297,35 +297,35 @@
       <h3>Questions 31–40</h3>
       <p class="instr">Complete the notes below. Write <b>ONE WORD ONLY</b> for each answer.</p>
       <div class="notes">
-        <h4>Urban beekeeping</h4>
-        <span class="h">Background</span>
+        <h4>The history of timekeeping</h4>
+        <span class="h">Early devices</span>
         <ul>
-          <li>In London, the number of registered hives has more than doubled in the last ${gap(31)}.</li>
-          <li>Many hives are kept on the ${gap(32)} of office buildings.</li>
+          <li>Sundials cannot be used at ${gap(31)} or on cloudy days.</li>
+          <li>Water clocks were inaccurate because the flow changed with ${gap(32)}.</li>
         </ul>
-        <span class="h">Why bees do well in cities</span>
+        <span class="h">Mechanical clocks</span>
         <ul>
-          <li>Higher temperatures mean the flowering ${gap(33)} lasts longer.</li>
-          <li>City parks use fewer ${gap(34)} than farms.</li>
-          <li>Private gardens offer a great ${gap(35)} of plants.</li>
+          <li>Many early clocks were made for monasteries, to show the times for ${gap(33)}.</li>
+          <li>The first clocks had no face and simply rang a ${gap(34)}.</li>
+          <li>1656: Huygens built a clock controlled by a ${gap(35)}.</li>
+          <li>Harrison’s fourth design looked like a large pocket ${gap(36)}.</li>
         </ul>
-        <span class="h">Problems</span>
+        <span class="h">Standard time</span>
         <ul>
-          <li>Too many hives cause ${gap(36)} for food.</li>
-          <li>Most wild bees cannot fly long ${gap(37)}.</li>
-          <li>City honey is usually ${gap(38)} than countryside honey.</li>
+          <li>1884: Greenwich chosen as the basis for world time ${gap(37)}.</li>
         </ul>
-        <span class="h">Solutions</span>
+        <span class="h">Modern clocks</span>
         <ul>
-          <li>Councils are planting ${gap(39)} on roadsides and roundabouts.</li>
-          <li>New beekeepers may have to register hives and complete a ${gap(40)}.</li>
+          <li>Quartz watches are cheap and very ${gap(38)}.</li>
+          <li>The second is now defined using the ${gap(39)} atom.</li>
+          <li>Precise time is essential for satellite ${gap(40)}.</li>
         </ul>
       </div>
     </div>
   </section>`;
 
   // Part changes and reading/checking pauses in the recording (seconds)
-  const TIMELINE = [{"t":1.0,"focus":1},{"t":35.89,"pause":30,"label":"Reading time · Questions 1–5"},{"t":65.89,"speech":1,"part":1},{"t":218.77,"pause":30,"label":"Reading time · Questions 6–10"},{"t":248.77,"speech":1,"part":1},{"t":347.13,"pause":30,"label":"Checking time · Part 1"},{"t":377.13,"focus":2},{"t":377.13,"speech":1,"part":2},{"t":390.99,"pause":30,"label":"Reading time · Questions 11–14"},{"t":420.99,"speech":1,"part":2},{"t":521.52,"pause":30,"label":"Reading time · Questions 15–20"},{"t":551.52,"speech":1,"part":2},{"t":648.3,"pause":30,"label":"Checking time · Part 2"},{"t":678.3,"focus":3},{"t":678.3,"speech":1,"part":3},{"t":696.32,"pause":30,"label":"Reading time · Questions 21–26"},{"t":726.32,"speech":1,"part":3},{"t":887.66,"pause":30,"label":"Reading time · Questions 27–30"},{"t":917.66,"speech":1,"part":3},{"t":994.31,"pause":30,"label":"Checking time · Part 3"},{"t":1024.31,"focus":4},{"t":1024.31,"speech":1,"part":4},{"t":1035.56,"pause":45,"label":"Reading time · Questions 31–40"},{"t":1080.56,"speech":1,"part":4}];
-  const partNames = { 1: 'Part 1 · Joining a sports club', 2: 'Part 2 · Haddon Park tour', 3: 'Part 3 · Food waste project', 4: 'Part 4 · Urban beekeeping' };
-  window.LISTENING_TEST = { num: 1, audio: 'audio/listening-test1.mp3', minutes: 21, mb: 10, roles: ROLES, script: SCRIPT, Q, paper: PAPER, timeline: TIMELINE, partNames };
+  const TIMELINE = [{"t":1.0,"focus":1},{"t":35.89,"pause":30,"label":"Reading time · Questions 1–5"},{"t":65.89,"speech":1,"part":1},{"t":218.77,"pause":30,"label":"Reading time · Questions 6–10"},{"t":248.77,"speech":1,"part":1},{"t":347.13,"pause":30,"label":"Checking time · Part 1"},{"t":377.13,"focus":2},{"t":377.13,"speech":1,"part":2},{"t":390.99,"pause":30,"label":"Reading time · Questions 11–14"},{"t":420.99,"speech":1,"part":2},{"t":521.52,"pause":30,"label":"Reading time · Questions 15–20"},{"t":551.52,"speech":1,"part":2},{"t":648.3,"pause":30,"label":"Checking time · Part 2"},{"t":678.3,"focus":3},{"t":678.3,"speech":1,"part":3},{"t":696.32,"pause":30,"label":"Reading time · Questions 21–26"},{"t":726.32,"speech":1,"part":3},{"t":887.66,"pause":30,"label":"Reading time · Questions 27–30"},{"t":917.66,"speech":1,"part":3},{"t":994.31,"pause":30,"label":"Checking time · Part 3"},{"t":1024.31,"focus":4},{"t":1024.31,"speech":1,"part":4},{"t":1035.97,"pause":45,"label":"Reading time · Questions 31–40"},{"t":1080.97,"speech":1,"part":4}];
+  const partNames = { 1: 'Part 1 · Joining a sports club', 2: 'Part 2 · Haddon Park tour', 3: 'Part 3 · Food waste project', 4: 'Part 4 · The history of timekeeping' };
+  window.LISTENING_TEST = { num: 1, audio: 'audio/listening-test1.mp3', minutes: 22, mb: 11, roles: ROLES, script: SCRIPT, Q, paper: PAPER, timeline: TIMELINE, partNames };
 })();
