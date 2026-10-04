@@ -1,16 +1,16 @@
 // IELTS Listening · Practice Test 1 — content only. The exam engine is assets/listening-exam.js.
 (() => {
   'use strict';
-  // Speakers: role → voice preference (used by tools/make_listening_audio.py)
+  // Speakers: label for the transcript, voice for tools/make_listening_audio.py
   const ROLES = {
-    narrator: { lang: 'en-GB', gender: 'm', label: 'Narrator' },
-    tom:      { lang: 'en-GB', gender: 'm', label: 'Tom' },
-    laura:    { lang: 'en-AU', gender: 'f', label: 'Laura' },
-    claire:   { lang: 'en-AU', gender: 'f', label: 'Claire' },
-    evans:    { lang: 'en-GB', gender: 'm', label: 'Dr Evans' },
-    mia:      { lang: 'en-GB', gender: 'f', label: 'Mia' },
-    jake:     { lang: 'en-AU', gender: 'm', label: 'Jake' },
-    lecturer: { lang: 'en-GB', gender: 'f', label: 'Lecturer' },
+    narrator: { label: 'Narrator', voice: 'bm_george', speed: 0.92, lang: 'en-gb' },
+    tom:      { label: 'Tom', voice: 'bm_lewis', speed: 0.98, lang: 'en-gb' },
+    laura:    { label: 'Laura', voice: 'bf_isabella', speed: 0.98, lang: 'en-gb' },
+    claire:   { label: 'Claire', voice: 'bf_alice', speed: 0.96, lang: 'en-gb' },
+    evans:    { label: 'Dr Evans', voice: 'bm_daniel', speed: 0.95, lang: 'en-gb' },
+    mia:      { label: 'Mia', voice: 'bf_lily', speed: 0.98, lang: 'en-gb' },
+    jake:     { label: 'Jake', voice: 'am_adam', speed: 1.0, lang: 'en-us' },
+    lecturer: { label: 'Lecturer', voice: 'af_heart', speed: 0.95, lang: 'en-us' },
   };
 
   // Script: [role, text] lines, or ['pause', seconds, label], or ['focus', part]
@@ -155,12 +155,12 @@
   const LIMIT_WN = 'ONE WORD AND/OR A NUMBER';
   const Q = {
     1:  { kind: 'gap', ans: ['pemberton'], limit: 'wn' },
-    2:  { kind: 'gap', ans: ['46', 'forty-six', 'forty six'], limit: 'wn' },
+    2:  { kind: 'gap', ans: ['46', 'forty-six'], limit: 'wn' },
     3:  { kind: 'gap', ans: ['wb72rq'], limit: null, nospace: true, key: 'WB7 2RQ' },
     4:  { kind: 'gap', ans: ['nurse'], limit: 'wn' },
     5:  { kind: 'gap', ans: ['evenings', 'evening'], limit: 'wn' },
     6:  { kind: 'gap', ans: ['newspaper', 'paper'], limit: 'wn' },
-    7:  { kind: 'gap', ans: ['25', 'twenty-five', 'twenty five'], limit: 'wn' },
+    7:  { kind: 'gap', ans: ['25', 'twenty-five'], limit: 'wn' },
     8:  { kind: 'gap', ans: ['32.50', '32.5'], limit: 'wn', key: '32.50' },
     9:  { kind: 'gap', ans: ['yoga'], limit: 'wn' },
     10: { kind: 'gap', ans: ['brother'], limit: 'wn' },
@@ -325,7 +325,7 @@
   </section>`;
 
   // Part changes and reading/checking pauses in the recording (seconds)
-  const TIMELINE = [{"t":1.0,"focus":1},{"t":35.89,"pause":30,"label":"Reading time \u00b7 Questions 1\u20135"},{"t":65.89,"speech":1,"part":1},{"t":217.83,"pause":30,"label":"Reading time \u00b7 Questions 6\u201310"},{"t":247.83,"speech":1,"part":1},{"t":345.79,"pause":30,"label":"Checking time \u00b7 Part 1"},{"t":375.79,"focus":2},{"t":389.65,"pause":30,"label":"Reading time \u00b7 Questions 11\u201314"},{"t":419.65,"speech":1,"part":2},{"t":528.13,"pause":30,"label":"Reading time \u00b7 Questions 15\u201320"},{"t":558.13,"speech":1,"part":2},{"t":657.51,"pause":30,"label":"Checking time \u00b7 Part 2"},{"t":687.51,"focus":3},{"t":705.53,"pause":30,"label":"Reading time \u00b7 Questions 21\u201326"},{"t":735.53,"speech":1,"part":3},{"t":900.99,"pause":30,"label":"Reading time \u00b7 Questions 27\u201330"},{"t":930.99,"speech":1,"part":3},{"t":1009.67,"pause":30,"label":"Checking time \u00b7 Part 3"},{"t":1039.67,"focus":4},{"t":1050.92,"pause":45,"label":"Reading time \u00b7 Questions 31\u201340"},{"t":1095.92,"speech":1,"part":4}];
+  const TIMELINE = [{"t":1.0,"focus":1},{"t":35.89,"pause":30,"label":"Reading time · Questions 1–5"},{"t":65.89,"speech":1,"part":1},{"t":218.77,"pause":30,"label":"Reading time · Questions 6–10"},{"t":248.77,"speech":1,"part":1},{"t":347.13,"pause":30,"label":"Checking time · Part 1"},{"t":377.13,"focus":2},{"t":377.13,"speech":1,"part":2},{"t":390.99,"pause":30,"label":"Reading time · Questions 11–14"},{"t":420.99,"speech":1,"part":2},{"t":521.52,"pause":30,"label":"Reading time · Questions 15–20"},{"t":551.52,"speech":1,"part":2},{"t":648.3,"pause":30,"label":"Checking time · Part 2"},{"t":678.3,"focus":3},{"t":678.3,"speech":1,"part":3},{"t":696.32,"pause":30,"label":"Reading time · Questions 21–26"},{"t":726.32,"speech":1,"part":3},{"t":887.66,"pause":30,"label":"Reading time · Questions 27–30"},{"t":917.66,"speech":1,"part":3},{"t":994.31,"pause":30,"label":"Checking time · Part 3"},{"t":1024.31,"focus":4},{"t":1024.31,"speech":1,"part":4},{"t":1035.56,"pause":45,"label":"Reading time · Questions 31–40"},{"t":1080.56,"speech":1,"part":4}];
   const partNames = { 1: 'Part 1 · Joining a sports club', 2: 'Part 2 · Haddon Park tour', 3: 'Part 3 · Food waste project', 4: 'Part 4 · Urban beekeeping' };
   window.LISTENING_TEST = { num: 1, audio: 'audio/listening-test1.mp3', minutes: 21, mb: 10, roles: ROLES, script: SCRIPT, Q, paper: PAPER, timeline: TIMELINE, partNames };
 })();
