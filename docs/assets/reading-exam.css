@@ -137,3 +137,22 @@ table.rev td.n { font-family: var(--f-mono); }
 table.rev .ok { color: var(--ok); font-weight: 600; }
 table.rev .no { color: var(--bad); font-weight: 600; }
 table.rev .ev { color: var(--pencil); font-style: italic; min-width: 16rem; }
+
+/* table completion */
+.rtable-wrap { overflow-x: auto; }
+table.rtable { width: 100%; border-collapse: collapse; background: var(--sheet); border: 1.5px solid var(--ink); font-size: 0.95rem; }
+table.rtable caption { font-family: var(--f-display); font-weight: 700; padding-bottom: 8px; }
+table.rtable th, table.rtable td { border: 1px solid var(--ink); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.rtable th { font-family: var(--f-display); font-size: 0.88rem; background: var(--paper); }
+@media (max-width: 640px) { table.rtable, table.rtable tbody, table.rtable tr, table.rtable td { display: block; width: auto; } table.rtable thead { display: none; } table.rtable caption { display: block; padding: 10px; border-bottom: 1.5px solid var(--ink); } table.rtable tr { border-bottom: 1.5px solid var(--ink); } table.rtable td { border: 0; padding: 4px 10px; } table.rtable td[data-h]::before { content: attr(data-h) ": "; font-family: var(--f-display); font-weight: 700; font-size: 0.85rem; } }
+/* flow-chart completion */
+.rflow { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; padding: 14px 18px; display: flex; flex-direction: column; align-items: center; }
+.rflow h4 { text-align: center; font-size: 1rem; margin-bottom: 8px; }
+.rflow .step { border: 1px solid var(--ink); border-radius: 2px; padding: 8px 12px; width: 100%; max-width: 30rem; text-align: center; }
+.rflow .arrow { font-family: var(--f-display); font-size: 1.3rem; line-height: 1; padding: 3px 0; }
+/* labelled diagrams */
+.rdiagram { background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.rdiagram svg { width: 100%; height: auto; }
+.rdiagram svg text { font-family: var(--f-display); fill: var(--ink); }
+.rdiagram ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+table.rtable td:first-child { font-family: var(--f-display); font-weight: 600; }

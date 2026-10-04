@@ -53,7 +53,9 @@
   const mcq = n => `<div class="q" data-q="${n}"><div class="stem"><span class="qn">${n}</span><span>${esc(T.Q[n].s)}</span></div>${radios(n, Object.entries(T.Q[n].o).map(([k, v]) => [k, `<b>${k}</b><span>${esc(v)}</span>`]), true)}</div>`;
 
   const boxSel = n => `<span class="inline-q" data-q="${n}"><span class="qn">${n}</span><select id="q${n}" data-q="${n}" aria-label="Question ${n}" style="margin-left:0"><option value="">A–${Object.keys(T.box).slice(-1)[0]}</option>${Object.keys(T.box).map(k => `<option>${k}</option>`).join('')}</select></span>`;
-  const QUESTIONS = T.build({ esc, tf, gapIn, select, mcq, boxSel, Q: T.Q });
+  // "Choose TWO letters": Q[first] and Q[first + 1] share { kind: 'two', pair, s, o, a: [two letters] }, one mark per correct letter
+  const two = n => `<div class="q" data-q="${n}" data-two="${n}"><div class="stem"><span class="qn">${n}–${n + 1}</span><span>${esc(T.Q[n].s)}</span></div><div class="opts col">${Object.entries(T.Q[n].o).map(([k, v]) => `<label data-opt="${esc(k)}"><input type="checkbox" value="${esc(k)}" data-two="${n}"><b>${k}</b><span>${esc(v)}</span></label>`).join('')}</div></div>`;
+  const QUESTIONS = T.build({ esc, tf, gapIn, select, mcq, boxSel, two, Q: T.Q });
 
 
   // ================= STATE =================
@@ -78,11 +80,23 @@
     renderNav();
   }
 
-  $('question-pane').addEventListener('input', e => { const t = e.target; if (!submitted && t.dataset.q) { answers[t.dataset.q] = t.value; renderNav(); } });
-  $('question-pane').addEventListener('change', e => { const t = e.target; if (!submitted && t.dataset.q) { answers[t.dataset.q] = t.value; renderNav(); } });
+  $('question-pane').addEventListener('input', e => {
+    const t = e.target;
+    if (submitted) return;
+    if (t.dataset.two) {
+      const boxes = [...$('question-pane').querySelectorAll(`input[data-two="${t.dataset.two}"]`)];
+      if (boxes.filter(b => b.checked).length > 2) t.checked = false;
+      const picked = boxes.filter(b => b.checked).map(b => b.value), [a, b] = T.Q[t.dataset.two].pair;
+      answers[a] = picked[0] || ''; answers[b] = picked[1] || '';
+      return renderNav();
+    }
+    if (t.dataset.q) { answers[t.dataset.q] = t.value; renderNav(); }
+  });
+  $('question-pane').addEventListener('change', e => { const t = e.target; if (!submitted && t.dataset.q && !t.dataset.two) { answers[t.dataset.q] = t.value; renderNav(); } });
 
   // ================= MARKING =================
-  const norm = s => String(s || '').toLowerCase().replace(/[’‘']/g, "'").replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ').trim();
+  // keeps a dot only inside a number, so that 12.5 is not read as 12 5
+  const norm = s => String(s || '').toLowerCase().replace(/[’‘']/g, "'").replace(/(\d)\.(?=\d)/g, '$1\u0001').replace(/[^a-z0-9\u0001' -]+/g, ' ').replace(/\u0001/g, '.').replace(/\s+/g, ' ').trim();
   function mark(n) {
     const q = T.Q[n], g = answers[n] || '';
     if (q.kind === 'gap') {
@@ -90,9 +104,13 @@
       if (!v || v.split(' ').length > q.limit) return false;
       return q.a.includes(v);
     }
+    if (q.kind === 'two') {
+      const right = [answers[q.pair[0]], answers[q.pair[1]]].filter(x => x && q.a.includes(x)).length;
+      return n === q.pair[0] ? right >= 1 : right >= 2;
+    }
     return g === q.a;
   }
-  const keyText = n => { const q = T.Q[n]; if (q.kind === 'gap') return q.a[0]; if (q.kind === 'box') return `${q.a} (${T.box[q.a]})`; if (q.kind === 'heading') return `${q.a} (${T.headings[q.a]})`; return q.a; };
+  const keyText = n => { const q = T.Q[n]; if (q.kind === 'gap') return q.a[0]; if (q.kind === 'two') return `${q.a.join(', ')} (either order)`; if (q.kind === 'box') return `${q.a} (${T.box[q.a]})`; if (q.kind === 'heading') return `${q.a} (${T.headings[q.a]})`; return q.a; };
   const BAND = s => s >= 39 ? 9 : s >= 37 ? 8.5 : s >= 35 ? 8 : s >= 33 ? 7.5 : s >= 30 ? 7 : s >= 27 ? 6.5 : s >= 23 ? 6 : s >= 19 ? 5.5 : s >= 15 ? 5 : s >= 13 ? 4.5 : s >= 10 ? 4 : s >= 8 ? 3.5 : s >= 6 ? 3 : s >= 4 ? 2.5 : s >= 2 ? 2 : s >= 1 ? 1 : 0;
   const PTE = { 9: 88, 8.5: 81, 8: 75.5, 7.5: 68.5, 7: 61, 6.5: 53.5, 6: 45.5, 5.5: 38.5, 5: 32.5, 4.5: 26, 4: 19, 3.5: 12.5, 3: 8.5, 2.5: 6.5, 2: 4.5, 1.5: 2.5, 1: 1, 0: 0 };
   const fmtBand = b => Number.isInteger(b) ? b.toFixed(1) : String(b);
@@ -112,7 +130,7 @@
     const b = e.target.closest('[data-go]'); if (!b) return;
     const n = +b.dataset.go;
     if (partOf(n) !== cur) show(partOf(n));
-    const el = $('question-pane').querySelector(`.q[data-q="${n}"], .inline-q[data-q="${n}"]`);
+    const el = $('question-pane').querySelector(`.q[data-q="${n}"], .inline-q[data-q="${n}"]`) || (T.Q[n].kind === 'two' ? $('question-pane').querySelector(`.q[data-q="${T.Q[n].pair[0]}"]`) : null);
     if (el) { el.scrollIntoView({ block: 'center' }); const f = el.querySelector('input,select'); if (f) f.focus({ preventScroll: true }); }
   });
 
@@ -185,6 +203,11 @@
       const ok = mark(n), q = T.Q[n];
       const host = $('question-pane').querySelector(`.inline-q[data-q="${n}"]`) || $('question-pane').querySelector(`.q[data-q="${n}"]`);
       if (!host) continue;
+      if (q.kind === 'two') {
+        host.classList.add(mark(q.pair[0]) && mark(q.pair[1]) ? 'correct' : 'wrong');
+        q.a.forEach(k => host.querySelector(`label[data-opt="${k}"]`).classList.add('key'));
+        continue;
+      }
       host.classList.add(ok ? 'correct' : 'wrong');
       const opt = host.querySelector(`label[data-opt="${q.a}"]`);
       if (opt) opt.classList.add('key');
