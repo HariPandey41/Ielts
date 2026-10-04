@@ -5,7 +5,7 @@
   const T = window.LISTENING_TEST;
   document.body.innerHTML = `
 <div class="bar">
-  <span class="who">IELTS Listening · Practice Test ${T.num}</span>
+  <span class="who">IELTS Listening · ${T.name || 'Practice Test ' + T.num}</span>
   <span class="status"><span class="dot" id="dot"></span><span id="status">Not started</span></span>
   <span class="row" style="gap:14px"><button class="btn" id="resume" type="button" hidden style="background:var(--omr);border-color:var(--omr);padding:4px 10px">Resume recording</button><span class="clock" id="clock">30:00</span><a href="./#full-exam">Back to trainer</a></span>
 </div>
@@ -14,7 +14,7 @@
 
   <section class="intro" id="intro">
     <span class="label">Academic &amp; General Training · Listening</span>
-    <h1>Listening Practice Test ${T.num}</h1>
+    <h1>Listening ${T.name || 'Practice Test ' + T.num}</h1>
     <ul>
       <li>There are four parts and 40 questions. Each question carries one mark.</li>
       <li>You will hear each recording <b>once only</b>. The audio cannot be paused or replayed.</li>

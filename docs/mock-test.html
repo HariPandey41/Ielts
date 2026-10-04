@@ -85,15 +85,18 @@ a { color: inherit; }
 <script>
 (() => {
   'use strict';
-  const COUNT = 10;
+  // Mock N uses the tests numbered N: 1–10 are the practice tests, 11 upwards are kept for mock tests only
+  const COUNT = 11, FIRST_MOCK_ONLY = 11;
   const n = +new URLSearchParams(location.search).get('n');
+  const fresh = n >= FIRST_MOCK_ONLY;
+  const NAME = fresh ? `Full Mock Test ${n - FIRST_MOCK_ONLY + 1}` : `Practice Mock Test ${n}`;
   const main = document.getElementById('main');
   if (!(n >= 1 && n <= COUNT && Number.isInteger(n))) {
     main.innerHTML = '<section class="card"><p>This mock test does not exist. Choose one from the <a href="./#mock">Full mock test</a> tab.</p></section>';
     return;
   }
-  document.title = `IELTS Full Mock Test ${n}`;
-  document.getElementById('title').textContent = `Full Mock Test ${n}`;
+  document.title = `IELTS ${NAME}`;
+  document.getElementById('title').textContent = NAME;
 
   const MKEY = 'ielts-mock-test' + n, RKEY = 'ielts-band-trainer-v1';
   const read = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
@@ -128,11 +131,12 @@ a { color: inherit; }
   }
 
   function renderIntro(rec) {
-    const seen = SECTIONS.filter(s => rec[s.id + 'Test' + n]).map(s => `${s.name} Test ${n}`);
+    const seen = SECTIONS.filter(s => rec[s.id + 'Test' + n]).map(s => fresh ? s.name : `${s.name} Test ${n}`);
     main.innerHTML = `
       <section class="card">
         <h2>Take the whole IELTS test, as on exam day</h2>
-        <p>This mock test puts Listening Test ${n}, Reading Test ${n}, Writing Test ${n} and Speaking Test ${n} together and runs them under real exam rules:</p>
+        <p>${fresh ? 'This mock test has its own Listening, Reading, Writing and Speaking tests, with questions that do not appear anywhere else on the site. It runs them under real exam rules:'
+          : `This mock test puts Listening Test ${n}, Reading Test ${n}, Writing Test ${n} and Speaking Test ${n} from the practice tabs together and runs them under real exam rules:`}</p>
         <ul>
           <li>The sections come in the real order: <b>Listening, Reading, Writing</b>, then <b>Speaking</b>.</li>
           <li>Listening, Reading and Writing follow one another <b>with no break</b>, about 2 hours 30 minutes in all.</li>
@@ -188,7 +192,7 @@ a { color: inherit; }
     const took = Math.round((Math.max(...SECTIONS.map(s => st.sections[s.id].doneAt)) - st.startedAt) / 60000);
     main.innerHTML = `
       <section class="card">
-        <span class="label">Test Report Form · Full Mock Test ${n}</span>
+        <span class="label">Test Report Form · ${NAME}</span>
         <h2>Overall band ${fmtBand(ov)}</h2>
         <div class="trf">
           ${SECTIONS.map((s, i) => `<div><span class="label">${s.name}</span><div class="band-box">${fmtBand(b[i])}</div><span class="meta">${meta(s)}</span></div>`).join('')}
@@ -202,7 +206,7 @@ a { color: inherit; }
 
   function bindReset() {
     document.getElementById('reset').addEventListener('click', () => {
-      if (!confirm(`Reset Full Mock Test ${n}? Your progress in this mock test will be lost. Your saved section results stay on the trainer.`)) return;
+      if (!confirm(`Reset ${NAME}? Your progress in this mock test will be lost. Your saved section results stay on the trainer.`)) return;
       try { localStorage.removeItem(MKEY); } catch (e) {}
       render();
     });

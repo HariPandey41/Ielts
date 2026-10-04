@@ -6,7 +6,7 @@
   const CLIP_URL = k => `${T.clipBase}${k}.mp3`;
   document.body.innerHTML = `
 <div class="bar">
-  <span class="who">IELTS Speaking · Practice Test ${T.num}</span>
+  <span class="who">IELTS Speaking · ${T.name || 'Practice Test ' + T.num}</span>
   <span class="rec" id="rec-ind" hidden><span class="dot"></span><span id="rec-time">REC 0:00</span></span>
   <a href="./#speaking">Back to trainer</a>
 </div>
@@ -16,7 +16,7 @@
   <!-- INTRO -->
   <section class="card" id="intro">
     <span class="label">Speaking · face-to-face format</span>
-    <h1>Speaking Practice Test ${T.num}</h1>
+    <h1>Speaking ${T.name || 'Practice Test ' + T.num}</h1>
     <ul>
       <li>The test is an interview with an examiner and lasts 11–14 minutes.</li>
       <li><b>Part 1</b> (4–5 minutes): questions about you and familiar topics.</li>
