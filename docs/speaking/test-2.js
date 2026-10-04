@@ -30,6 +30,6 @@
     { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
   ];
 
-  const cue = { topic: 'Describe a building you find interesting.', points: ['where it is', 'what it looks like', 'what it is used for'], explain: 'and explain why you find it interesting.' };
+  const cue = { topic: 'Describe a building you find interesting.', points: ['which building it is', 'when you first saw it', 'what is special about its design'], explain: 'and explain why you find it interesting.' };
   window.SPEAKING_TEST = { num: 2, clipBase: 'audio/speaking/test2/', steps, cue };
 })();
