@@ -1,39 +1,16 @@
 // IELTS Academic Writing · Practice Test 2 — content only. The exam engine is assets/writing-exam.js.
 (() => {
   'use strict';
-  // Task 1 data: average hours per week spent on three leisure activities, by age group
-  const GROUPS = ['16–24', '25–44', '45–64', '65+'];
-  const SERIES = [
-    { name: 'Watching TV', v: [8, 10, 14, 22], fill: 'solid' },
-    { name: 'Exercise', v: [5, 4, 3, 2], fill: 'open' },
-    { name: 'Socialising', v: [12, 7, 6, 9], fill: 'hatch' },
-  ];
-  function chartSVG() {
-    const X0 = 60, X1 = 560, Y0 = 310, Y1 = 50, MAX = 25;
-    const y = v => Y0 - (Y0 - Y1) * v / MAX;
-    const gw = (X1 - X0) / GROUPS.length, bw = 30;
-    let g = '<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--ink)" stroke-width="2"/></pattern></defs>';
-    for (let v = 0; v <= MAX; v += 5) g += `<line class="grid" x1="${X0}" x2="${X1}" y1="${y(v)}" y2="${y(v)}"/><text x="${X0 - 10}" y="${y(v) + 4}" text-anchor="end" font-size="12">${v}</text>`;
-    GROUPS.forEach((grp, i) => {
-      const cx = X0 + gw * i + gw / 2;
-      SERIES.forEach((s, k) => {
-        const x = cx - (bw * 3) / 2 + k * bw, h = Y0 - y(s.v[i]);
-        const fill = s.fill === 'solid' ? 'style="fill:var(--ink);stroke:var(--ink)"' : s.fill === 'open' ? 'style="fill:var(--sheet);stroke:var(--ink)"' : 'fill="url(#hatch)" style="stroke:var(--ink)"';
-        g += `<rect x="${x + 2}" y="${y(s.v[i])}" width="${bw - 4}" height="${h}" ${fill} stroke-width="1.4"/>`;
-      });
-      g += `<text x="${cx}" y="${Y0 + 20}" text-anchor="middle" font-size="12">${grp}</text>`;
-    });
-    g += `<line class="axis" x1="${X0}" x2="${X0}" y1="${Y1 - 8}" y2="${Y0}"/><line class="axis" x1="${X0}" x2="${X1}" y1="${Y0}" y2="${Y0}"/>`;
-    g += `<text x="${(X0 + X1) / 2}" y="${Y0 + 42}" text-anchor="middle" font-size="12">Age group (years)</text>`;
-    g += `<text x="16" y="${(Y0 + Y1) / 2}" font-size="12" text-anchor="middle" transform="rotate(-90 16 ${(Y0 + Y1) / 2})">Hours per week</text>`;
-    g += `<text x="${(X0 + X1) / 2}" y="20" text-anchor="middle" font-size="14" font-weight="700">Average weekly hours spent on leisure activities, by age</text>`;
-    SERIES.forEach((s, k) => {
-      const lx = X0 + 20 + k * 150;
-      const fill = s.fill === 'solid' ? 'style="fill:var(--ink);stroke:var(--ink)"' : s.fill === 'open' ? 'style="fill:var(--sheet);stroke:var(--ink)"' : 'fill="url(#hatch)" style="stroke:var(--ink)"';
-      g += `<rect x="${lx}" y="32" width="14" height="12" ${fill} stroke-width="1.2"/><text x="${lx + 20}" y="42" font-size="12">${s.name}</text>`;
-    });
-    return `<svg class="chart" viewBox="0 0 600 370" role="img" aria-label="Bar chart of average weekly hours spent watching TV, exercising and socialising by four age groups. Watching TV: 8, 10, 14 and 22 hours. Exercise: 5, 4, 3 and 2 hours. Socialising: 12, 7, 6 and 9 hours, for ages 16–24, 25–44, 45–64 and 65 and over.">${g}</svg>`;
-  }
+  const CHART = {
+    title: 'Average weekly hours spent on leisure activities, by age', yLabel: 'Hours per week', xLabel: 'Age group (years)',
+    x: ['16–24', '25–44', '45–64', '65+'],
+    series: [
+      { name: 'Watching TV', v: [8, 10, 14, 22] },
+      { name: 'Exercise', v: [5, 4, 3, 2] },
+      { name: 'Socialising', v: [12, 7, 6, 9] },
+    ],
+    yMax: 25, step: 5,
+  };
 
   const tasks = [
     {
@@ -42,7 +19,7 @@
         <div class="prompt">
           <p class="q">The bar chart below shows the average number of hours per week that people in four age groups spent on three leisure activities in one country.</p>
           <p class="q">Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</p>
-          ${chartSVG()}
+          ${window.IELTSChart.bar(CHART)}
         </div>
         <p class="time" style="margin-top:12px">Write at least 150 words.</p>`,
       keywords: ['hour', 'week', 'age', 'tv', 'television', 'exercis', 'socialis', 'leisure', '65', '16'],
