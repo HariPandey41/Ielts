@@ -132,7 +132,7 @@
     2:  { kind: 'gap', ans: ['mill'], limit: 'wn' },
     3:  { kind: 'gap', ans: ['14', '14th', 'fourteenth'], limit: 'wn' },
     4:  { kind: 'gap', ans: ['5', 'five'], limit: 'wn' },
-    5:  { kind: 'gap', ans: ['85', 'eighty-five', 'eighty five'], limit: 'wn' },
+    5:  { kind: 'gap', ans: ['85', 'eighty-five'], limit: 'wn' },
     6:  { kind: 'gap', ans: ['barbecue', 'barbeque', 'bbq'], limit: 'wn' },
     7:  { kind: 'gap', ans: ['2', 'two'], limit: 'wn' },
     8:  { kind: 'gap', ans: ['village'], limit: 'wn' },
