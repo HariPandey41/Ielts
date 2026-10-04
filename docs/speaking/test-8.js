@@ -18,18 +18,18 @@
     { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'Do you write much by hand these days?', say: 'Let\'s move on to talk about handwriting. Do you write much by hand these days?' },
     { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'Is your handwriting easy to read?' },
     { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'Do you think children should still learn to write by hand?' },
-    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a film that made a strong impression on you.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a film that made a strong impression on you.' },
-    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a film that made a strong impression on you. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?' },
-    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you often watch films more than once?', say: 'Thank you. Do you often watch films more than once?' },
-    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Why do people enjoy watching films?', say: 'We\'ve been talking about a film that made an impression on you, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all films and cinema. Why do people enjoy watching films?' },
-    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Do you think cinemas will disappear now that people can stream films at home?' },
-    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'What makes some films popular all around the world?' },
-    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Can films change the way people think about important issues?', say: 'Now let\'s move on to talk about films and society. Can films change the way people think about important issues?' },
-    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Should governments give money to support their country’s film industry?' },
-    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Do you think films should be used more in education?' },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe an interesting conversation you had with someone.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe an interesting conversation you had with someone.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe an interesting conversation you had with someone. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?' },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you usually enjoy talking to people you don’t know well?', say: 'Thank you. Do you usually enjoy talking to people you don’t know well?' },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'What do people in your country usually like to talk about with friends?', say: 'We\'ve been talking about an interesting conversation you had, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all conversation. What do people in your country usually like to talk about with friends?' },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Why do some people find it hard to start a conversation with a stranger?' },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Is being a good listener as important as being a good speaker? Why?' },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Why are many people nervous about speaking in front of an audience?', say: 'Now let\'s move on to talk about speaking in public. Why are many people nervous about speaking in front of an audience?' },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Should schools teach children how to give presentations? Why?' },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Which jobs need especially good speaking skills, and why?' },
     { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
   ];
 
-  const cue = { topic: 'Describe a film that made a strong impression on you.', points: ['what the film was', 'when and where you watched it', 'what it was about'], explain: 'and explain why it made a strong impression on you.' };
+  const cue = { topic: 'Describe an interesting conversation you had with someone.', points: ['who you talked to', 'when and where it happened', 'what you talked about'], explain: 'and explain why the conversation was interesting.' };
   window.SPEAKING_TEST = { num: 8, clipBase: 'audio/speaking/test8/', steps, cue };
 })();
