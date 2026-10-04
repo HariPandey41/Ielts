@@ -112,7 +112,7 @@ window.IELTSChart = (() => {
   const T = window.WRITING_TEST;
   document.body.innerHTML = `
 <div class="bar">
-  <span class="who">IELTS Academic Writing · Practice Test ${T.num}</span>
+  <span class="who">IELTS Academic Writing · ${T.name || 'Practice Test ' + T.num}</span>
   <span class="tip" id="tip">Your answers are saved in this browser as you type</span>
   <span class="row" style="gap:14px"><span class="clock" id="clock">60:00</span><a href="./#writing">Back to trainer</a></span>
 </div>
@@ -120,7 +120,7 @@ window.IELTSChart = (() => {
 <div class="intro-wrap" id="intro">
   <section class="intro">
     <span class="label">Academic Writing</span>
-    <h1>Writing Practice Test ${T.num}</h1>
+    <h1>Writing ${T.name || 'Practice Test ' + T.num}</h1>
     <ul>
       <li>You have <b>60 minutes</b> to complete two tasks.</li>
       <li><b>Task 1:</b> ${T.task1Intro} in at least <b>150 words</b>. Spend about 20 minutes on it.</li>
@@ -336,7 +336,7 @@ window.IELTSChart = (() => {
     teacherCalc();
     $('result-wrap').addEventListener('change', e => { if (e.target.matches('select[data-t]')) teacherCalc(); });
     $('save-teacher').addEventListener('click', () => { const w = teacherCalc(); saveBand(w, 'teacher'); $('final-band').textContent = fmtBand(w); $('teacher-msg').textContent = `Saved: Writing band ${fmtBand(w)}.`; });
-    const plain = () => `IELTS Academic Writing · Practice Test ${T.num}\n\nTASK 1 (${wc(st.texts[0])} words)\n\n${st.texts[0]}\n\n\nTASK 2 (${wc(st.texts[1])} words)\n\n${st.texts[1]}\n`;
+    const plain = () => `IELTS Academic Writing · ${T.name || 'Practice Test ' + T.num}\n\nTASK 1 (${wc(st.texts[0])} words)\n\n${st.texts[0]}\n\n\nTASK 2 (${wc(st.texts[1])} words)\n\n${st.texts[1]}\n`;
     $('copy').addEventListener('click', () => {
       navigator.clipboard.writeText(plain()).then(() => $('copy-msg').textContent = 'Copied. Paste into an email or message to your teacher.')
         .catch(() => $('copy-msg').textContent = 'Copying is blocked here. Use Download instead.');

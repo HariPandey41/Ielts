@@ -4,12 +4,17 @@
 //  - points "Back to trainer" at the mock test page and hides "Take the test again",
 //  - notices when the section's result is saved and shows a bar to go straight on to the next section.
 // Progress is kept in localStorage under ielts-mock-test<N>; results come from the engines' own records.
+// Mock N uses the tests numbered N: 1–10 are the practice tests (Practice Mock Tests), and 11 upwards
+// are kept for the mock tests only (Full Mock Test 1 = Test 11), so those pages refuse to open outside a mock.
 (() => {
   'use strict';
+  const FIRST_MOCK_ONLY = 11;
+  const mockName = n => (+n >= FIRST_MOCK_ONLY ? `Full Mock Test ${n - FIRST_MOCK_ONLY + 1}` : `Practice Mock Test ${n}`);
   const mock = new URLSearchParams(location.search).get('mock');
   const m = location.pathname.match(/(listening|reading|writing|speaking)-test-(\d+)\.html$/);
-  if (!mock || !m) return;
+  if (!m) return;
   const mod = m[1], num = +m[2];
+  if (!mock && num < FIRST_MOCK_ONLY) return;
   const ORDER = ['listening', 'reading', 'writing', 'speaking'];
   const NAME = { listening: 'Listening', reading: 'Reading', writing: 'Writing', speaking: 'Speaking' };
   const MKEY = 'ielts-mock-test' + mock, RKEY = 'ielts-band-trainer-v1';
@@ -33,19 +38,20 @@
     #again { display: none !important; }`;
   document.head.appendChild(css);
 
-  function cover(title, text) {
+  function cover(title, text, href = HUB) {
     const d = document.createElement('div');
     d.className = 'mock-cover';
-    d.innerHTML = `<div><span class="mock-tag">Full Mock Test ${mock}</span><h2>${title}</h2><p>${text}</p><p><a class="mock-a" href="${HUB}">Go to the mock test page</a></p></div>`;
+    d.innerHTML = `<div><span class="mock-tag">${mockName(mock || num)}</span><h2>${title}</h2><p>${text}</p><p><a class="mock-a" href="${href}">Go to the mock test page</a></p></div>`;
     // added once the exam engine has drawn the page, so the engine's own page build cannot remove it
     document.addEventListener('DOMContentLoaded', () => document.body.appendChild(d));
   }
 
+  if (!mock) return cover('This test is part of a mock test', `To keep its questions fresh, this test can only be taken as part of ${mockName(num)}.`, `mock-test.html?n=${num}`);
   const st = read(MKEY);
   if (!st || !st.startedAt) return cover('This mock test has not started', 'Start the full mock test from its own page so the sections run in the real exam order.');
   const idx = ORDER.indexOf(mod);
   const prev = ORDER[idx - 1];
-  if (num !== +mock) return cover('Wrong test for this mock', `Full Mock Test ${mock} uses the ${NAME[mod]} test number ${mock}.`);
+  if (num !== +mock) return cover('Wrong test for this mock', `Open ${mockName(mock)} from its own page.`);
   if (prev && !(st.sections[prev] && st.sections[prev].doneAt)) return cover(`Finish ${NAME[prev]} first`, `In the real exam the sections come in a fixed order: Listening, Reading, Writing, then Speaking.`);
   const sec = st.sections[mod] = st.sections[mod] || {};
   if (sec.doneAt) return cover(`${NAME[mod]} is already finished`, 'In the real exam each section is taken once only, so this section cannot be repeated in the mock test.');
@@ -80,7 +86,7 @@
       const s = read(MKEY) || st;
       s.sections[mod] = Object.assign(s.sections[mod] || {}, { doneAt: Date.now(), band: rec.band });
       write(MKEY, s);
-      const done = `<span class="mock-tag">Full Mock Test ${mock}</span><br><b>${NAME[mod]} finished · band ${fmtBand(rec.band)}.</b> `;
+      const done = `<span class="mock-tag">${mockName(mock)}</span><br><b>${NAME[mod]} finished · band ${fmtBand(rec.band)}.</b> `;
       if (mod === 'listening' || mod === 'reading') {
         showBar(done + `In the real exam ${NAME[next]} starts straight away, with no break.`,
           `<a class="mock-a" href="${next}-test-${num}.html?mock=${mock}">Start ${NAME[next]} →</a>`);

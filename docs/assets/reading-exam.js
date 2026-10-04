@@ -6,7 +6,7 @@
   const TFNG = ['TRUE', 'FALSE', 'NOT GIVEN'], YNNG = ['YES', 'NO', 'NOT GIVEN'];
   document.body.innerHTML = `
 <div class="bar">
-  <span class="who">IELTS Academic Reading · Practice Test ${T.num}</span>
+  <span class="who">IELTS Academic Reading · ${T.name || 'Practice Test ' + T.num}</span>
   <span class="tip" id="tip">Select text in a passage to highlight it</span>
   <span class="row" style="gap:14px"><span class="clock" id="clock">60:00</span><a href="./#reading">Back to trainer</a></span>
 </div>
@@ -14,7 +14,7 @@
 <div class="intro-wrap" id="intro">
   <section class="intro">
     <span class="label">Academic Reading</span>
-    <h1>Reading Practice Test ${T.num}</h1>
+    <h1>Reading ${T.name || 'Practice Test ' + T.num}</h1>
     <ul>
       <li>You have <b>60 minutes</b> to read three passages and answer 40 questions. There is no extra time to transfer answers.</li>
       <li>Each question carries one mark. Spelling must be correct.</li>
