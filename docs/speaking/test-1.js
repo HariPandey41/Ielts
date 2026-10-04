@@ -18,18 +18,18 @@
     { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'What did you do last weekend?', say: 'Let\'s move on to talk about weekends. What did you do last weekend?' },
     { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'Do you prefer to spend your weekends at home or going out?' },
     { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'Is there anything new you would like to try at the weekend?' },
-    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a time when you helped someone.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a time when you helped someone.' },
-    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a time when you helped someone. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?' },
-    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you often help other people in this way?', say: 'Thank you. Do you often help other people in this way?' },
-    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Why do some people enjoy volunteering?', say: 'We\'ve been talking about a time when you helped someone, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all helping in the community. Why do some people enjoy volunteering?' },
-    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Do you think young people today are less willing to help others than people were in the past?' },
-    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Should schools teach children to help others? How could they do this?' },
-    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Who should be responsible for looking after elderly people, their families or the government?', say: 'Now let\'s move on to talk about responsibility and change. Who should be responsible for looking after elderly people, their families or the government?' },
-    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Some people say technology has made people less helpful to their neighbours. What do you think?' },
-    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'How might the way people help each other change in the future?' },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a gift you gave to someone.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a gift you gave to someone.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a gift you gave to someone. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?' },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you enjoy choosing gifts for other people?', say: 'Thank you. Do you enjoy choosing gifts for other people?' },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'On what occasions do people in your country usually give gifts?', say: 'We\'ve been talking about a gift you gave to someone, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all giving gifts. On what occasions do people in your country usually give gifts?' },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Is it better to give someone money or a present you have chosen yourself? Why?' },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Why do some people find it difficult to choose gifts for others?' },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Some people say that celebrations such as festivals and birthdays have become too commercial. Do you agree?', say: 'Now let\'s move on to talk about celebrations and spending. Some people say that celebrations such as festivals and birthdays have become too commercial. Do you agree?' },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Do you think the price of a gift shows how much someone cares?' },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Why do companies sometimes give gifts to their customers or employees?' },
     { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
   ];
 
-  const cue = { topic: 'Describe a time when you helped someone.', points: ['who you helped', 'why they needed help', 'how you helped them'], explain: 'and explain how you felt about helping this person.' };
+  const cue = { topic: 'Describe a gift you gave to someone.', points: ['what the gift was', 'who you gave it to', 'why you chose it'], explain: 'and explain how the person felt when they received it.' };
   window.SPEAKING_TEST = { num: 1, clipBase: 'audio/speaking/test1/', steps, cue };
 })();
