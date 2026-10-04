@@ -18,18 +18,18 @@
     { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'Do you enjoy going shopping?', say: 'Let\'s move on to talk about shopping. Do you enjoy going shopping?' },
     { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'Do you prefer shopping online or in shops?' },
     { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'Has the way you shop changed in recent years?' },
-    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a skill that took you a long time to learn.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a skill that took you a long time to learn.' },
-    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a skill that took you a long time to learn. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?' },
-    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you think you will learn another difficult skill soon?', say: 'Thank you. Do you think you will learn another difficult skill soon?' },
-    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Which skills do you think are most important for young people to learn today?', say: 'We\'ve been talking about a skill you learned, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all learning skills. Which skills do you think are most important for young people to learn today?' },
-    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Is it better to learn a skill from a teacher or by yourself? Why?' },
-    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Why do some people give up when they are learning something new?' },
-    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Do you think schools prepare young people well for the world of work?', say: 'Now let\'s move on to talk about skills and work. Do you think schools prepare young people well for the world of work?' },
-    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Some people say practical skills are valued less than academic qualifications. Do you agree?' },
-    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'How might the skills people need for work change in the future?' },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a time when you were very busy.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a time when you were very busy.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a time when you were very busy. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?' },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Are you usually good at managing your time?', say: 'Thank you. Are you usually good at managing your time?' },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Why do people today seem to be busier than people in the past?', say: 'We\'ve been talking about a time when you were very busy, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all busy lives. Why do people today seem to be busier than people in the past?' },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Do you think being busy is always a bad thing?' },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Who do you think are busier in your country, young people or older people? Why?' },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'How important is it for people to have a good balance between work and free time?', say: 'Now let\'s move on to talk about work and free time. How important is it for people to have a good balance between work and free time?' },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Should employers do more to stop their staff from working too many hours?' },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Do you think people will have more or less free time in the future? Why?' },
     { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
   ];
 
-  const cue = { topic: 'Describe a skill that took you a long time to learn.', points: ['what the skill is', 'when you started learning it', 'how you learned it'], explain: 'and explain why it took you a long time to learn.' };
+  const cue = { topic: 'Describe a time when you were very busy.', points: ['when it was', 'why you were so busy', 'what you had to do'], explain: 'and explain how you felt during this busy time.' };
   window.SPEAKING_TEST = { num: 4, clipBase: 'audio/speaking/test4/', steps, cue };
 })();
