@@ -1,0 +1,76 @@
+// IELTS Speaking · Premium Test 3 — content only. The exam engine is assets/speaking-exam.js.
+// Premium Exam (band 7–9 level): kept for the mock test, not listed with the practice tests.
+(() => {
+  'use strict';
+  // clip: examiner audio · ans: max answer seconds · min: earliest "finished" · prep: Part 2 preparation
+  // say: the examiner's exact words, when they differ from q (recorded by tools/make_speaking_audio.py)
+  // samples: answers at band 6 and band 8, shown after the interview
+  const s = (b6, b8) => [{ band: 6, text: b6 }, { band: 8, text: b8 }];
+  const steps = [
+    { part: 1, clip: 'p1-00', ans: 15, min: 2, q: 'Can you tell me your full name, please?', say: 'Good morning. My name is Emma, and I\'ll be your examiner today. Can you tell me your full name, please?' },
+    { part: 1, clip: 'p1-01', ans: 10, min: 2, q: 'What should I call you?', say: 'Thank you. And what should I call you?' },
+    { part: 1, clip: 'p1-02', ans: 15, min: 2, q: 'Can you tell me where you’re from?', say: 'And can you tell me where you’re from?' },
+    { part: 1, clip: 'p1-03', ans: 35, min: 3, q: 'Do you collect anything?', say: 'Now, in this first part, I\'d like to ask you some questions about yourself. Let\'s talk about collecting things. Do you collect anything?',
+      samples: s('Not now, but when I was a child I collected stamps. My grandfather gave me many old stamps from different countries.',
+        'Not seriously, although I do seem to have accumulated a lot of postcards from places I’ve visited. I suppose that counts as an accidental collection.') },
+    { part: 1, clip: 'p1-04', ans: 35, min: 3, q: 'What kinds of things do people in your country like to collect?',
+      samples: s('Many people collect coins and stamps. Young people collect things from their favourite films or games.',
+        'The traditional things like coins and stamps are still around, but younger people are more into collecting trainers or figures from their favourite series, some of which are surprisingly valuable.') },
+    { part: 1, clip: 'p1-05', ans: 35, min: 3, q: 'Why do you think people enjoy collecting things?',
+      samples: s('I think it is fun to find new things and complete the collection. Also some collections become expensive later.',
+        'I think it’s partly the thrill of the hunt, searching for that one missing item, and partly a sense of order. A collection is something you can complete and control, which is rare in everyday life.') },
+    { part: 1, clip: 'p1-06', ans: 35, min: 3, q: 'Is collecting things a good hobby for children?',
+      samples: s('Yes, I think it is good, because children learn to be patient and they learn about the things they collect.',
+        'Generally, yes. It teaches them to organise things and to be patient, and if they collect something like stamps or fossils, they often learn quite a lot about history or geography without realising it.') },
+    { part: 1, clip: 'p1-07', ans: 35, min: 3, q: 'What can you see from the window of your home?', say: 'Now let\'s talk about the view from your window. What can you see from the window of your home?',
+      samples: s('I can see the street and some other buildings. There is also a small park across the road.',
+        'Mostly the block of flats opposite, to be honest, but if I lean slightly to the left, I can see a row of old trees along the river, which is lovely in autumn.') },
+    { part: 1, clip: 'p1-08', ans: 35, min: 3, q: 'Do you like the view from your window?',
+      samples: s('It is OK. It is not very beautiful but I like to see the people walking in the street.',
+        'I’ve grown fond of it. It isn’t spectacular, but there’s always something happening in the street below, which I find quite relaxing to watch.') },
+    { part: 1, clip: 'p1-09', ans: 35, min: 3, q: 'Would you pay more for a home with a good view?',
+      samples: s('Maybe a little more, but not too much. I think the location is more important than the view.',
+        'Within reason, yes. You look out of your windows every day, so a good view affects your mood far more than people realise. But I wouldn’t sacrifice a sensible location for one.') },
+    { part: 1, clip: 'p1-10', ans: 35, min: 3, q: 'Do you prefer to sit by a window when you travel?',
+      samples: s('Yes, I always choose the window seat on a train or a plane, because I like to look outside.',
+        'Always, especially on trains. Watching the landscape change is half the pleasure of the journey for me, and it makes long trips go much faster.') },
+    { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'Do you often lose things?', say: 'Let\'s move on to talk about losing things. Do you often lose things?',
+      samples: s('Sometimes I lose my keys or my phone at home, but usually I find them after a few minutes.',
+        'Far too often, I’m afraid, usually small things like keys or headphones. They almost always turn up eventually, generally in the last place I’d think of looking.') },
+    { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'What was the last thing you lost?',
+      samples: s('Last month I lost my umbrella. I think I left it on the bus.',
+        'A library book, which was rather embarrassing. I eventually found it under the seat of my car, but only after I’d paid a fine for returning it late.') },
+    { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'What do you do to avoid losing things?',
+      samples: s('I try to put my keys and wallet in the same place every day.',
+        'I’ve trained myself to put the important things, my keys, wallet and phone, in the same bowl by the door the moment I come home. It works, as long as I remember to do it.') },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a place you visited that was very different from where you live.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a place you visited that was very different from where you live.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a place you visited that was very different from where you live. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?',
+      samples: s('I want to talk about a village in the mountains that I visited two years ago with my friends. I live in a big city with a lot of traffic and noise, so the village was very different. It was very quiet and the air was clean and fresh. There were not many shops, only one small shop and a café, and there was no internet in the house where we stayed. At first I felt strange because I could not use my phone, but after two days I started to enjoy it. We walked in the forest every day and in the evening we talked with the local people. They were very friendly and they cooked traditional food for us. I felt relaxed there and I think it was good for me to stop using my phone. I would like to go back there again.',
+        'I’d like to describe a small fishing island I visited a few years ago, which couldn’t have been more different from the city where I grew up. At home, everything revolves around speed: traffic, deadlines, people rushing from one appointment to the next. On the island, there were no cars at all, just narrow paths between whitewashed houses, and the whole rhythm of life was dictated by the weather and the tides. If the sea was rough, the ferry simply didn’t run, and nobody seemed particularly concerned. What struck me most was how connected people were. Everyone knew each other, and when we arrived, the woman who owned our guesthouse had already heard about us from the ferry captain. At first, I found the slowness slightly frustrating, and I kept checking my phone out of habit, even though the signal was terrible. But after a few days, I began to appreciate it. I read more, I slept better, and I had longer conversations than I’d had in months. When I came home, I felt quite unsettled for a while, because I realised how much of my daily life I spend in a hurry for no real reason.') },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Would you like to live in a place like that?', say: 'Thank you. Would you like to live in a place like that?',
+      samples: s('Maybe for a short time, but not forever, because I need my job and my friends in the city.',
+        'For a few months, perhaps, but probably not permanently. I think I’d eventually miss the opportunities and the variety of city life.') },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Why do some people find it difficult to adapt to a different culture?', say: 'We\'ve been talking about a place you visited that was very different from where you live, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all travel and cultural differences. Why do some people find it difficult to adapt to a different culture?',
+      samples: s('I think the language is a big problem, because if you cannot speak the language it is hard to make friends. Also the food and the customs are different, so people feel homesick.',
+        'Language is the obvious barrier, but I think the less visible differences are often harder: unwritten rules about how direct to be, how to show respect or even how close to stand to someone. People can unknowingly cause offence, or feel offended, and that creates a sense of isolation that’s difficult to overcome, particularly for those who move abroad without choosing to.') },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'What can people learn from visiting other countries?',
+      samples: s('They can learn about different food, history and traditions. They can also improve their language skills.',
+        'Beyond the obvious things like history and languages, I think the most valuable lesson is that your own way of doing things is just one option among many. Seeing how other societies organise daily life, from mealtimes to public transport, makes you question habits you’d never thought about.') },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Is it better to travel independently or on a guided tour?',
+      samples: s('I prefer to travel independently because I can choose what I want to do. But a guided tour is easier for old people.',
+        'It depends on the destination and the traveller. Independent travel gives you freedom and more genuine encounters with local people, but in a country where you don’t speak the language or where safety is a concern, a good guide can open doors that would otherwise stay closed.') },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'How does tourism change the places that people visit?', say: 'Now let\'s move on to talk about tourism and local communities. How does tourism change the places that people visit?',
+      samples: s('Tourism brings money and jobs, but sometimes there are too many tourists and the prices become higher for local people.',
+        'It can transform them, for better and worse. It brings jobs and investment, and it can help preserve traditions that might otherwise disappear. But it can also push up housing costs, replace local shops with souvenir stalls and, in extreme cases, turn a living neighbourhood into something closer to a theme park.') },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Should popular tourist sites limit the number of visitors?',
+      samples: s('Yes, I think so, because too many people can damage old buildings and nature. They can sell tickets online to control the numbers.',
+        'For the most fragile or crowded sites, I think it’s unavoidable. Timed tickets or daily limits protect the site itself and actually improve the experience for visitors. The challenge is to do it fairly, so that access doesn’t simply go to those who can pay the most.') },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Do you think people will travel more or less in the future?',
+      samples: s('I think people will travel more, because flights are cheap and people have more money. But maybe they will worry about the environment.',
+        'Probably more overall, as incomes rise in many countries, but perhaps differently. Concern about the climate may lead people to take fewer, longer trips, and to choose trains over planes for shorter journeys, especially if governments start taxing flights more heavily.') },
+    { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
+  ];
+
+  const cue = { topic: 'Describe a place you visited that was very different from where you live.', points: ['where it was', 'when you went there', 'what was different about it'], explain: 'and explain how you felt about these differences.' };
+  window.SPEAKING_TEST = { num: 103, name: 'Premium Test 3', clipBase: 'audio/speaking/test103/', steps, cue };
+})();
