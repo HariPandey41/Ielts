@@ -1,0 +1,76 @@
+// IELTS Speaking · Premium Test 1 — content only. The exam engine is assets/speaking-exam.js.
+// Premium Exam (band 7–9 level): kept for the mock test, not listed with the practice tests.
+(() => {
+  'use strict';
+  // clip: examiner audio · ans: max answer seconds · min: earliest "finished" · prep: Part 2 preparation
+  // say: the examiner's exact words, when they differ from q (recorded by tools/make_speaking_audio.py)
+  // samples: answers at band 6 and band 8, shown after the interview
+  const s = (b6, b8) => [{ band: 6, text: b6 }, { band: 8, text: b8 }];
+  const steps = [
+    { part: 1, clip: 'p1-00', ans: 15, min: 2, q: 'Can you tell me your full name, please?', say: 'Good morning. My name is Emma, and I\'ll be your examiner today. Can you tell me your full name, please?' },
+    { part: 1, clip: 'p1-01', ans: 10, min: 2, q: 'What should I call you?', say: 'Thank you. And what should I call you?' },
+    { part: 1, clip: 'p1-02', ans: 15, min: 2, q: 'Can you tell me where you’re from?', say: 'And can you tell me where you’re from?' },
+    { part: 1, clip: 'p1-03', ans: 35, min: 3, q: 'Did you enjoy studying history at school?', say: 'Now, in this first part, I\'d like to ask you some questions about yourself. Let\'s talk about history. Did you enjoy studying history at school?',
+      samples: s('Yes, I enjoyed it. My teacher told us many stories about the past, so it was interesting. But sometimes we had to remember a lot of dates and it was boring.',
+        'I did, mostly because of one teacher who made it feel like detective work rather than memorising dates. She’d give us two conflicting accounts of the same event and ask us to work out which was more reliable, which I found fascinating.') },
+    { part: 1, clip: 'p1-04', ans: 35, min: 3, q: 'Which period of history interests you most?',
+      samples: s('I like the history of my country in the old time, when there were kings. There are many old buildings from that time and I like to visit them.',
+        'I’m drawn to periods of rapid change, the early twentieth century in particular, because so much of the world we live in now, from cars to votes for women, took shape in just a few decades.') },
+    { part: 1, clip: 'p1-05', ans: 35, min: 3, q: 'Do you like visiting historical places?',
+      samples: s('Yes, I like it. Last year I went to an old castle with my family and we took many photos. It is good to learn about the past.',
+        'I do, although I prefer smaller, less famous sites, where you can actually imagine people living there. The big attractions tend to be so crowded that it’s hard to get any real sense of the past.') },
+    { part: 1, clip: 'p1-06', ans: 35, min: 3, q: 'Do you think it’s important to know about history?',
+      samples: s('Yes, I think it is important, because we can learn from the mistakes in the past and we can understand our culture better.',
+        'Very much so. Without some knowledge of history, it’s difficult to make sense of the news, because most current conflicts and debates have roots that go back decades or even centuries.') },
+    { part: 1, clip: 'p1-07', ans: 35, min: 3, q: 'Were you good at maths at school?', say: 'Now let\'s talk about maths. Were you good at maths at school?',
+      samples: s('Not really. I was good at simple maths, but when it became difficult, like algebra, I didn’t understand very well and my marks were not high.',
+        'I was reasonably good at it until about the age of fifteen, when it became much more abstract. I could follow the methods, but I never really understood why they worked, which made it hard to stay motivated.') },
+    { part: 1, clip: 'p1-08', ans: 35, min: 3, q: 'How often do you use maths in your daily life?',
+      samples: s('I use maths every day, for example when I go shopping and I need to calculate the price, or when I check my money.',
+        'Far more often than I notice, I suppose: working out discounts, splitting a bill with friends, or estimating how long a journey will take. It’s mostly mental arithmetic rather than anything I learned in my final years at school.') },
+    { part: 1, clip: 'p1-09', ans: 35, min: 3, q: 'Do you think calculators should be allowed in schools?',
+      samples: s('I think yes, for older students, because they save time. But young children should learn to calculate without a calculator first.',
+        'For older students, yes, because the point is to understand the problem, not to do long calculations by hand. But younger children need to develop a feel for numbers first, otherwise they can’t tell when a calculator has given a ridiculous answer.') },
+    { part: 1, clip: 'p1-10', ans: 35, min: 3, q: 'What makes some people better at maths than others?',
+      samples: s('Maybe some people are born with a talent for maths. Also, if they practise a lot, they become better.',
+        'I suspect it’s less about talent than people think. Confidence plays a huge part: people who decide early on that they’re “not a maths person” tend to give up as soon as something is difficult, so the belief becomes self-fulfilling.') },
+    { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'Do you mind being in crowded places?', say: 'Let\'s move on to talk about crowded places. Do you mind being in crowded places?',
+      samples: s('Sometimes I don’t like it, because it is noisy and I feel tired. But if I am with my friends, it is OK.',
+        'It depends on my mood. At a concert or a festival, the crowd is part of the atmosphere, but on a packed train after a long day at work, I find it quite draining.') },
+    { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'Which places are most crowded in your city?',
+      samples: s('The shopping centre is very crowded at the weekend, and also the buses in the morning when people go to work.',
+        'The old market area is always packed, especially in the early evening, when office workers and tourists all converge on the same few streets. The metro at rush hour is even worse.') },
+    { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'How do you avoid crowds?',
+      samples: s('I try to go shopping early in the morning when there are not many people, and I sometimes shop online.',
+        'Mostly by timing. I go to the gym at lunchtime rather than after work, and if I want to visit somewhere popular, I go on a weekday morning, when it’s far quieter.') },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a time when you changed your mind about something.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a time when you changed your mind about something.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a time when you changed your mind about something. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?',
+      samples: s('I want to talk about when I changed my mind about learning to cook. Before, I thought cooking was boring and it took too much time. I always bought food from restaurants or my mother cooked for me. But two years ago I moved to another city for university and I lived alone. At first I bought fast food every day, but it was expensive and I didn’t feel healthy. Then my roommate taught me how to cook some simple dishes, like pasta and fried rice. I found that it was not so difficult and actually it was relaxing after studying. Now I cook almost every day and I enjoy trying new recipes. I felt happy that I changed my mind, because now I save money and I eat better food.',
+        'I’d like to talk about the time I changed my mind about studying abroad. When I was at secondary school, I was quite firmly against the idea. I assumed it was mainly for wealthy families, and, to be honest, I was nervous about being far from home, so I told myself I’d be better off at a local university. What changed my mind was a conversation with a cousin who had spent a year in Canada. She didn’t present it as a glamorous adventure at all; she was very frank about how lonely she’d felt at first. But she also explained how much more independent and confident she’d become, and that she’d been able to cover a lot of her costs through a scholarship I didn’t even know existed. That combination of honesty and practical information made me realise my objections were based more on fear than on facts. So I started researching programmes, and I eventually applied for an exchange semester. Looking back, I feel slightly embarrassed that I’d dismissed the idea so quickly, but I’m also quite proud that I was willing to reconsider, because it turned out to be one of the most valuable experiences I’ve had.') },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you often change your mind?', say: 'Thank you. Do you often change your mind?',
+      samples: s('Not very often. When I decide something, I usually don’t change it.',
+        'About small things, constantly. About important decisions, rarely, but when I do, it’s usually because someone has shown me something I hadn’t considered.') },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Why do older people often find it harder to change their opinions?', say: 'We\'ve been talking about a time when you changed your mind about something, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all changing opinions. Why do older people often find it harder to change their opinions?',
+      samples: s('I think older people have more experience, so they believe their opinion is correct. Also they are used to doing things in the same way for a long time, so it is difficult for them to change.',
+        'Partly, I think, because their opinions are tied up with their identity. If you’ve held a view for forty years, changing it can feel like admitting that you were wrong for most of your life. That said, I’m not sure it’s entirely about age: plenty of young people are just as stubborn, they simply have fewer opinions that have hardened over time.') },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Is changing your mind a sign of weakness or of strength?',
+      samples: s('I think it is a sign of strength, because it means you can accept that you made a mistake. Some people think it is weakness, but I don’t agree.',
+        'Generally a strength, provided it’s a response to good evidence or a better argument. It takes a certain confidence to say “I was wrong”. The problem is that in politics, for example, changing your mind is often portrayed as weakness, so people are under pressure to stick to positions even after they’ve stopped believing in them.') },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'How do advertisers try to change what people think?',
+      samples: s('They use famous people in their adverts, because people like them and want to copy them. They also repeat the advert many times so people remember the product.',
+        'Mostly by appealing to emotions rather than reason. Adverts rarely tell you much about the product itself; instead they associate it with a feeling, such as belonging, success or freedom. Repetition matters too, and increasingly, advertisers use people’s online data to target them with messages tailored to their interests.') },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'How has the internet affected the way people form their opinions?', say: 'Now let\'s move on to talk about public debate. How has the internet affected the way people form their opinions?',
+      samples: s('The internet gives us a lot of information, so we can read different opinions. But there is also fake news, and some people believe it without checking.',
+        'In two contradictory ways. On the one hand, people have access to an enormous range of views and evidence. On the other, the algorithms that decide what we see tend to show us content we already agree with, so many people end up in what are called echo chambers, where their existing opinions are constantly reinforced rather than challenged.') },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Should governments try to change people’s behaviour, for example to improve their health?',
+      samples: s('Yes, I think the government should do something, for example make cigarettes more expensive, because it helps people to be healthy and it saves money for hospitals.',
+        'To some extent, yes, particularly when individual choices create costs for everyone, as with smoking or obesity, which put pressure on public health systems. But I think gentle measures, like clear food labelling or taxing sugary drinks, are more acceptable than outright bans, which can feel paternalistic and sometimes provoke a backlash.') },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Is it important for young people to learn how to debate?',
+      samples: s('Yes, it is important, because they learn to speak in front of people and to give their opinion. It also helps them in their future job.',
+        'I think it’s extremely valuable, not so much for winning arguments as for learning to understand the other side. When you’re forced to argue a position you disagree with, you start to see that the people who hold it aren’t necessarily foolish, which is a skill that seems in short supply in public life at the moment.') },
+    { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
+  ];
+
+  const cue = { topic: 'Describe a time when you changed your mind about something.', points: ['what you changed your mind about', 'what you thought before', 'what made you change your mind'], explain: 'and explain how you felt after changing your mind.' };
+  window.SPEAKING_TEST = { num: 101, name: 'Premium Test 1', clipBase: 'audio/speaking/test101/', steps, cue };
+})();

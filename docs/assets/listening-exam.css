@@ -172,6 +172,7 @@ table.rev th { font-family: var(--f-display); font-size: 0.72rem; letter-spacing
 table.rev td.n { font-family: var(--f-mono); }
 table.rev .ok { color: var(--ok); font-weight: 600; }
 table.rev .no { color: var(--bad); font-weight: 600; }
+table.rev td.why { font-size: 0.86rem; color: var(--pencil); line-height: 1.45; min-width: 220px; }
 .transcript { display: flex; flex-direction: column; gap: 14px; }
 .transcript details { border: 1px solid var(--rule); border-radius: 3px; padding: 10px 14px; }
 .transcript summary { font-family: var(--f-display); font-weight: 700; cursor: pointer; }

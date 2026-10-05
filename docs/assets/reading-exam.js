@@ -166,7 +166,35 @@
     }
     document.getSelection().removeAllRanges(); hlBtn.hidden = true;
   });
-  $('passage-pane').addEventListener('click', e => { const m = e.target.closest('mark'); if (m && document.getSelection().isCollapsed) { m.replaceWith(...m.childNodes); } });
+  $('passage-pane').addEventListener('click', e => { const m = e.target.closest('mark'); if (m && !m.classList.contains('ev') && document.getSelection().isCollapsed) { m.replaceWith(...m.childNodes); } });
+
+  // Premium tests (T.evidence): after submitting, mark in each passage the words quoted in every
+  // explanation, with the question number, so students can see exactly where each answer comes from.
+  function showEvidence() {
+    T.passages.forEach((p, i) => {
+      const paras = passageNodes[i].querySelectorAll('.txt > p');
+      p.paras.forEach(([l, t], k) => {
+        const low = t.toLowerCase(), spans = [];
+        for (let n = RANGES[i][0]; n <= RANGES[i][1]; n++) {
+          for (const m of String(T.Q[n].ev || '').matchAll(/“([^”]+)”/g)) for (const frag of m[1].split('…').map(f => f.trim().replace(/[.,;:]$/, '')).filter(f => f.length > 3)) {
+            const at = low.indexOf(frag.toLowerCase());
+            if (at >= 0) spans.push({ a: at, b: at + frag.length, qs: [n] });
+          }
+        }
+        if (!spans.length) return;
+        spans.sort((x, y) => x.a - y.a);
+        const merged = [];
+        for (const sp of spans) {
+          const last = merged[merged.length - 1];
+          if (last && sp.a <= last.b) { last.b = Math.max(last.b, sp.b); if (!last.qs.includes(sp.qs[0])) last.qs.push(sp.qs[0]); }
+          else merged.push({ ...sp, qs: [...sp.qs] });
+        }
+        let html = '', pos = 0;
+        for (const sp of merged) { html += esc(t.slice(pos, sp.a)) + `<mark class="ev" title="Question ${sp.qs.join(', ')}">${esc(t.slice(sp.a, sp.b))}<sup>${sp.qs.join(',')}</sup></mark>`; pos = sp.b; }
+        paras[k].innerHTML = (l ? `<span class="pl">${l}</span>` : '') + html + esc(t.slice(pos));
+      });
+    });
+  }
 
   // ================= TIMER =================
   const fmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
@@ -214,6 +242,7 @@
       else if (!ok) host.insertAdjacentHTML('beforeend', `<span class="fix">${esc(q.kind === 'gap' ? q.a[0] : q.a)}</span>`);
     }
     renderNav();
+    if (T.evidence) showEvidence();
 
     try {
       const KEY = 'ielts-band-trainer-v1';
@@ -233,7 +262,7 @@
       <div class="scorebox"><div class="band-box">${fmtBand(band)}</div>
         <div><h2>${score} / 40 correct</h2><p class="muted">IELTS Academic Reading band ${fmtBand(band)} · PTE equivalent ≈ ${PTE[band]}</p></div></div>
       <div class="split-score">${per.map((c, i) => `<div><span class="label">Passage ${i + 1}</span><br><b>${c}/${RANGES[i][1] - RANGES[i][0] + 1}</b></div>`).join('')}</div>
-      <p class="muted">Your band has been added to the Test Report Form on the trainer page. Use the bar at the bottom to go back through the passages: correct answers are shown in green.</p>
+      <p class="muted">Your band has been added to the Test Report Form on the trainer page. Use the bar at the bottom to go back through the passages: correct answers are shown in green.${T.evidence ? ' In the passages, the words that give each answer are now highlighted, with the question number.' : ''}</p>
       <div class="row"><a class="btn" href="./#reading">Back to trainer</a><button class="btn ghost" type="button" id="review">Review the passages</button><button class="btn ghost" type="button" id="again">Take the test again</button></div>
       <h3>Answers and explanations</h3>
       <div class="tbl-wrap"><table class="rev"><thead><tr><th>Q</th><th>Your answer</th><th>Correct</th><th></th><th>Where to find it</th></tr></thead><tbody>${rows}</tbody></table></div>`;

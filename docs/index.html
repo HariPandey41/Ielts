@@ -141,6 +141,8 @@ figure img { display: block; width: 100%; height: auto; }
 .test2-card { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border: 1.5px solid var(--omr); border-radius: 4px; background: var(--omr-soft); color: var(--ink); text-decoration: none; }
 .test2-card strong { font-family: var(--f-display); font-size: 1.15rem; }
 .test2-card span:not(.label) { max-width: 70ch; }
+.premium-list { margin: 0 0 16px; padding-left: 20px; line-height: 1.55; }
+.premium-list li { margin-bottom: 4px; }
 .test2-card .test2-go { font-family: var(--f-display); font-weight: 700; color: var(--omr); }
 .test2-card:hover .test2-go { text-decoration: underline; }
 footer { font-size: 0.88rem; color: var(--pencil); display: flex; flex-direction: column; gap: 6px; max-width: 75ch; }
@@ -176,6 +178,7 @@ footer a { color: inherit; }
     <button role="tab" id="tab-bands" aria-selected="false" data-tab="bands">Band table</button>
     <button role="tab" id="tab-exam" aria-selected="false" data-tab="exam">External site links</button>
     <button role="tab" id="tab-mock" aria-selected="false" data-tab="mock">Full mock test</button>
+    <button role="tab" id="tab-premium" aria-selected="false" data-tab="premium">Premium Exam</button>
   </nav>
 
   <!-- LISTENING: full practice exams -->
@@ -677,6 +680,28 @@ footer a { color: inherit; }
     </a>
   </section>
 
+  <section class="sheet" id="panel-premium" role="tabpanel" hidden>
+    <div class="sheet-head">
+      <h2>Premium Exam · for band 7 to 9</h2>
+      <span class="trf-meta">Harder full tests · detailed review after every section</span>
+    </div>
+    <p class="instr">Full IELTS Academic tests written at real exam level for candidates aiming high. They run under the same exam rules as the full mock tests (Listening, Reading and Writing with no break, each section once only), but the questions are harder and the review is far more detailed.</p>
+    <ul class="premium-list">
+      <li><b>Harder questions:</b> faster speech, more distractors, denser academic passages and every official question type, including map labelling, flow charts, classification and three-word answers.</li>
+      <li><b>Listening review:</b> the transcript with every answer highlighted, plus an explanation of each answer and why the distractors are wrong.</li>
+      <li><b>Reading review:</b> the words that give each answer are highlighted in the passage, with the question number.</li>
+      <li><b>Writing review:</b> model answers for both tasks at band 6, 7 and 8, with notes on what lifts each one.</li>
+      <li><b>Speaking review:</b> band 6 and band 8 sample answers for every question.</li>
+    </ul>
+    <a class="test2-card" href="mock-test.html?n=101">
+      <span class="label">Premium · band 7–9 level · about 2 hours 45 minutes</span>
+      <strong>Premium Test 1</strong>
+      <span>Listening: registering for a conference, a redeveloped waterfront (map labelling), a student project on heat pumps and sponge cities. Reading: the story of the barcode, whether museums should return objects, and how happiness is measured. Writing: news sources by age group and the purpose of university. Speaking: history, maths, crowded places and a time you changed your mind.</span>
+      <span class="trf-meta" data-mock-status="101">Not started</span>
+      <span class="test2-go">Open Premium Test 1 →</span>
+    </a>
+  </section>
+
   <footer>
     <p>Built from <a href="https://github.com/HariPandey41/Ielts" target="_blank" rel="noopener">HariPandey41/Ielts</a> (IELTS_PracticeAndEvaluation). Your answers and scores are saved only in this browser.</p>
     <p>Listening and Reading bands are projected to a 40-question test from the questions you have answered so far.</p>
@@ -717,7 +742,7 @@ footer a { color: inherit; }
   const fmtBand = b => (b == null ? '–' : (Number.isInteger(b) ? b.toFixed(1) : String(b)));
   const roundHalf = x => Math.round(x * 2) / 2;
   // tests 11 upwards belong to the full mock tests (Full Mock Test 1 = Test 11)
-  const testName = t => (t >= 11 ? `Full Mock Test ${t - 10}` : `Test ${t}`);
+  const testName = t => (t >= 101 ? `Premium Test ${t - 100}` : t >= 11 ? `Full Mock Test ${t - 10}` : `Test ${t}`);
   // overall IELTS band: mean of four, rounded to nearest half (x.25 → x.5, x.75 → next whole)
   const overallBand = arr => roundHalf(arr.reduce((a, b) => a + b, 0) / arr.length);
 
@@ -1055,7 +1080,7 @@ footer a { color: inherit; }
 
   // ---------- FULL MOCK TEST: status on each card (progress is kept by mock-test.html) ----------
   const MOCK_SECTIONS = ['listening', 'reading', 'writing', 'speaking'];
-  const MOCK_COUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+  const MOCK_COUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 101];
   function renderMocks() {
     document.querySelectorAll('[data-mock-status]').forEach(el => {
       let m = null;

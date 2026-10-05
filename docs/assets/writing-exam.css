@@ -121,3 +121,10 @@ table.datatable th, table.datatable td { border: 1px solid var(--ink); padding: 
 table.datatable thead th { background: var(--paper); text-align: center; }
 table.datatable tbody th { text-align: left; font-weight: 600; }
 .datanote { font-size: 0.85rem; color: var(--pencil); margin-top: 6px; }
+
+/* Premium tests: model answers at several bands */
+.bands-compare { display: flex; flex-direction: column; gap: 10px; }
+.bands-compare details { border: 1px solid var(--rule); border-radius: 4px; padding: 10px 12px; }
+.bands-compare summary { cursor: pointer; }
+.bands-compare .essay { margin-top: 10px; }
+.band-notes { margin: 10px 0 0; padding-left: 20px; font-size: 0.93rem; }

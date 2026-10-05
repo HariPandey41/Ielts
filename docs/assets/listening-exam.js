@@ -142,6 +142,7 @@
   function withinLimit(raw, limit) {
     const toks = normAns(raw).split(' ').filter(Boolean);
     if (!limit) return true;
+    if (typeof limit === 'number') return toks.length <= limit;   // e.g. NO MORE THAN THREE WORDS
     if (limit === 'w') return toks.length === 1;
     const nums = toks.filter(t => /\d/.test(t)).length, words = toks.length - nums;
     return words <= 1 && nums <= 1;
@@ -250,10 +251,12 @@
       localStorage.setItem(KEY, JSON.stringify(st));
     } catch (e) {}
 
+    // Premium tests explain each answer (and why the distractors are wrong) in an extra column
+    const hasWhy = Object.values(T.Q).some(q => q.why);
     const rows = Array.from({ length: 40 }, (_, i) => i + 1).map(n => {
       const ok = mark(n);
       const given = T.Q[n].kind === 'two' ? (answers[n] || '') : (answers[n] || '');
-      return `<tr><td class="n">${n}</td><td>${given ? esc(given) : '<span class="muted">blank</span>'}</td><td>${esc(keyText(n))}</td><td class="${ok ? 'ok' : 'no'}">${ok ? '✓' : '✗'}</td></tr>`;
+      return `<tr><td class="n">${n}</td><td>${given ? esc(given) : '<span class="muted">blank</span>'}</td><td>${esc(keyText(n))}</td><td class="${ok ? 'ok' : 'no'}">${ok ? '✓' : '✗'}</td>${hasWhy ? `<td class="why">${esc(T.Q[n].why || '')}</td>` : ''}</tr>`;
     }).join('');
 
     const partNames = T.partNames;
@@ -277,7 +280,7 @@
       <p class="muted">Your band has been added to the Test Report Form on the trainer page. Correct answers are shown in green on the question paper above each part.</p>
       <div class="row"><a class="btn" href="./#full-exam">Back to trainer</a><button class="btn ghost" type="button" id="again">Take the test again</button></div>
       <h3>Answer key</h3>
-      <div class="tbl-wrap"><table class="rev"><thead><tr><th>Q</th><th>Your answer</th><th>Correct answer</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="tbl-wrap"><table class="rev"><thead><tr><th>Q</th><th>Your answer</th><th>Correct answer</th><th></th>${hasWhy ? '<th>Why</th>' : ''}</tr></thead><tbody>${rows}</tbody></table></div>
       <h3>Transcript</h3>
       <p class="muted">Highlighted text shows where each answer was heard. The small number is the question.</p>
       <div class="transcript">${[1, 2, 3, 4].map(k => `<details ${k === 1 ? 'open' : ''}><summary>${partNames[k]}</summary>${tx[k].join('')}</details>`).join('')}</div>`;

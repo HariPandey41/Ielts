@@ -280,6 +280,10 @@
       </section>
       ${hasTx ? `<section class="card"><h2>Transcript</h2><p class="note">Written automatically by your browser, so some words may be wrong. Check it against the recording.</p>
         <div class="tx">${log.map(l => { const n = wordsOf(l.text).length; return `<div class="item"><p class="q">Part ${l.part} · ${esc(l.q.replace(' (long turn)', ''))}</p><p class="a">${l.text ? esc(l.text) : '<span class="muted">Nothing was recognised.</span>'}</p><p class="meta ${n < (l.part === 1 ? 12 : l.part === 3 ? 35 : 0) ? 'short' : ''}">${l.secs} s · ${n} words</p></div>`; }).join('')}</div></section>` : ''}
+      ${T.steps.some(st => st.samples) ? `<section class="card samples"><h2>Sample answers</h2>
+        <p class="note">For every question, here is how a band 6 and a band 8 candidate might answer. Compare them with your own answers: the higher-band answers are more developed, use more precise vocabulary and link ideas more naturally.</p>
+        ${T.steps.filter(st => st.samples).map(st => `<details><summary>Part ${st.part} · ${esc(st.q.replace(' (long turn)', ''))}</summary>${st.samples.map(x => `<p><span class="label">Band ${fmtBand(x.band)}</span><br>${esc(x.text)}</p>`).join('')}</details>`).join('')}
+      </section>` : ''}
       <section class="card">
         <h2>Marking</h2>
         <p class="note">A computer cannot fairly judge speaking, so the band comes from you or your teacher. Listen to the recording, then choose the band that best matches each description. The Speaking band is the average of the four, rounded down to the nearest half band.</p>

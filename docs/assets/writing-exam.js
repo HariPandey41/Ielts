@@ -316,6 +316,9 @@ window.IELTSChart = (() => {
           <div><span class="label">Your answer</span><div class="essay">${st.texts[i].trim() ? esc(st.texts[i]) : '<span class="muted">No answer written.</span>'}</div></div>
           <div><span class="label">Model answer (about band 8)</span><div class="essay">${esc(T.tasks[i].model)}</div></div>
         </div>
+        ${T.tasks[i].models ? `<h3>The same task at different bands</h3>
+        <p class="note">Compare these answers to see what moves a response up the band scale. The notes explain what an examiner would reward or penalise.</p>
+        <div class="bands-compare">${T.tasks[i].models.map(m => `<details${m.band === 7 ? ' open' : ''}><summary><b>Band ${fmtBand(m.band)}</b> answer</summary>${m.text === T.tasks[i].model ? '<p class="note">This is the model answer shown above.</p>' : `<div class="essay">${esc(m.text)}</div>`}<ul class="band-notes">${m.notes.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>`).join('')}</div>` : ''}
       </section>`).join('')}
       <section class="card">
         <h2>Teacher marking</h2>
