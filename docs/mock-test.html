@@ -77,7 +77,7 @@ a { color: inherit; }
 <div class="wrap">
   <header class="top">
     <div><span class="label">Exam conditions · Academic</span><h1 id="title">Full Mock Test</h1></div>
-    <a href="./#mock">Back to trainer</a>
+    <a href="./#mock" id="back-link">Back to trainer</a>
   </header>
   <main id="main"></main>
 </div>
@@ -85,17 +85,20 @@ a { color: inherit; }
 <script>
 (() => {
   'use strict';
-  // Mock N uses the tests numbered N: 1–10 are the practice tests, 11 upwards are kept for mock tests only
-  const COUNT = 20, FIRST_MOCK_ONLY = 11;
+  // Mock N uses the tests numbered N: 1–10 are the practice tests, 11 upwards are kept for mock tests only,
+  // and 101 upwards are the Premium Exam tests (Premium Test 1 = Test 101)
+  const COUNT = 20, FIRST_MOCK_ONLY = 11, FIRST_PREMIUM = 101, PREMIUM_COUNT = 1;
   const n = +new URLSearchParams(location.search).get('n');
-  const fresh = n >= FIRST_MOCK_ONLY;
-  const NAME = fresh ? `Full Mock Test ${n - FIRST_MOCK_ONLY + 1}` : `Practice Mock Test ${n}`;
+  const fresh = n >= FIRST_MOCK_ONLY, premium = n >= FIRST_PREMIUM;
+  const NAME = premium ? `Premium Test ${n - FIRST_PREMIUM + 1}` : fresh ? `Full Mock Test ${n - FIRST_MOCK_ONLY + 1}` : `Practice Mock Test ${n}`;
   const main = document.getElementById('main');
-  if (!(n >= 1 && n <= COUNT && Number.isInteger(n))) {
+  if (!(Number.isInteger(n) && ((n >= 1 && n <= COUNT) || (n >= FIRST_PREMIUM && n < FIRST_PREMIUM + PREMIUM_COUNT)))) {
     main.innerHTML = '<section class="card"><p>This mock test does not exist. Choose one from the <a href="./#mock">Full mock test</a> tab.</p></section>';
     return;
   }
   document.title = `IELTS ${NAME}`;
+  const HOME = premium ? './#premium' : './#mock';
+  document.getElementById('back-link').href = HOME;
   document.getElementById('title').textContent = NAME;
 
   const MKEY = 'ielts-mock-test' + n, RKEY = 'ielts-band-trainer-v1';
@@ -135,6 +138,7 @@ a { color: inherit; }
     main.innerHTML = `
       <section class="card">
         <h2>Take the whole IELTS test, as on exam day</h2>
+        ${premium ? '<p class="warnbox"><b>Premium Exam · harder than the Full Mock Tests.</b> This test is written for candidates aiming at band 7 to 9: faster speech, more distractors, denser academic passages and every official question type. After each section you get a detailed review: explanations for every Listening answer, the evidence for every Reading answer highlighted in the passage, Writing model answers at three bands, and Speaking sample answers at two bands.</p>' : ''}
         <p>${fresh ? 'This mock test has its own Listening, Reading, Writing and Speaking tests, with questions that do not appear anywhere else on the site. It runs them under real exam rules:'
           : `This mock test puts Listening Test ${n}, Reading Test ${n}, Writing Test ${n} and Speaking Test ${n} from the practice tabs together and runs them under real exam rules:`}</p>
         <ul>
@@ -199,7 +203,7 @@ a { color: inherit; }
           <div><span class="label">Overall band</span><div class="band-box">${fmtBand(ov)}</div><span class="meta">mean of four, to the nearest half band</span></div>
         </div>
         <p class="muted">Finished ${took >= 60 * 24 ? `over ${Math.round(took / 60 / 24)} day(s)` : `in ${Math.floor(took / 60)} h ${took % 60} min`}. Writing is a computer estimate and Speaking is your own marking, so ask a teacher to check them for an exact band. These results also appear on the trainer's Test Report Form.</p>
-        <div class="row"><a class="btn" href="./#mock">Choose another mock test</a><button class="btn ghost" id="reset" type="button">Reset this mock test</button></div>
+        <div class="row"><a class="btn" href="${HOME}">Choose another mock test</a><button class="btn ghost" id="reset" type="button">Reset this mock test</button></div>
       </section>`;
     bindReset();
   }

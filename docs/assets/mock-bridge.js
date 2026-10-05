@@ -6,10 +6,11 @@
 // Progress is kept in localStorage under ielts-mock-test<N>; results come from the engines' own records.
 // Mock N uses the tests numbered N: 1–10 are the practice tests (Practice Mock Tests), and 11 upwards
 // are kept for the mock tests only (Full Mock Test 1 = Test 11), so those pages refuse to open outside a mock.
+// Tests 101 upwards are the harder Premium Exam tests (Premium Test 1 = Test 101).
 (() => {
   'use strict';
-  const FIRST_MOCK_ONLY = 11;
-  const mockName = n => (+n >= FIRST_MOCK_ONLY ? `Full Mock Test ${n - FIRST_MOCK_ONLY + 1}` : `Practice Mock Test ${n}`);
+  const FIRST_MOCK_ONLY = 11, FIRST_PREMIUM = 101;
+  const mockName = n => (+n >= FIRST_PREMIUM ? `Premium Test ${n - FIRST_PREMIUM + 1}` : +n >= FIRST_MOCK_ONLY ? `Full Mock Test ${n - FIRST_MOCK_ONLY + 1}` : `Practice Mock Test ${n}`);
   const mock = new URLSearchParams(location.search).get('mock');
   const m = location.pathname.match(/(listening|reading|writing|speaking)-test-(\d+)\.html$/);
   if (!m) return;
