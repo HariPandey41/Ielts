@@ -1,0 +1,76 @@
+// IELTS Speaking · Premium Test 5 — content only. The exam engine is assets/speaking-exam.js.
+// Premium Exam (band 7–9 level): kept for the mock test, not listed with the practice tests.
+(() => {
+  'use strict';
+  // clip: examiner audio · ans: max answer seconds · min: earliest "finished" · prep: Part 2 preparation
+  // say: the examiner's exact words, when they differ from q (recorded by tools/make_speaking_audio.py)
+  // samples: answers at band 6 and band 8, shown after the interview
+  const s = (b6, b8) => [{ band: 6, text: b6 }, { band: 8, text: b8 }];
+  const steps = [
+    { part: 1, clip: 'p1-00', ans: 15, min: 2, q: 'Can you tell me your full name, please?', say: 'Good morning. My name is Emma, and I\'ll be your examiner today. Can you tell me your full name, please?' },
+    { part: 1, clip: 'p1-01', ans: 10, min: 2, q: 'What should I call you?', say: 'Thank you. And what should I call you?' },
+    { part: 1, clip: 'p1-02', ans: 15, min: 2, q: 'Can you tell me where you’re from?', say: 'And can you tell me where you’re from?' },
+    { part: 1, clip: 'p1-03', ans: 35, min: 3, q: 'Are there many birds where you live?', say: 'Now, in this first part, I\'d like to ask you some questions about yourself. Let\'s talk about birds. Are there many birds where you live?',
+      samples: s('Yes, there are many pigeons and some small birds in the park near my house. In the morning I can hear them singing.',
+        'Quite a few, considering it’s a city. Pigeons and sparrows, obviously, but the trees along the river attract some more interesting ones too, and in spring the dawn chorus is surprisingly loud.') },
+    { part: 1, clip: 'p1-04', ans: 35, min: 3, q: 'Do you like listening to birds singing?',
+      samples: s('Yes, I like it. It makes me feel relaxed, especially in the morning.',
+        'I do. There’s something very calming about it, and it’s one of the few natural sounds you can still hear in the middle of a city. It’s a good reminder that nature hasn’t entirely disappeared.') },
+    { part: 1, clip: 'p1-05', ans: 35, min: 3, q: 'Are birds kept as pets in your country?',
+      samples: s('Yes, some people keep small birds like parrots in their homes. Old people especially like them.',
+        'Yes, small songbirds and parrots are fairly popular, particularly among older people. I have mixed feelings about it, though, because it seems a shame to keep a creature that’s designed to fly in a cage.') },
+    { part: 1, clip: 'p1-06', ans: 35, min: 3, q: 'Would you like to learn more about birds?',
+      samples: s('Maybe. I don’t know the names of many birds, so it would be interesting to learn them.',
+        'I think I would. I can only identify a handful, and I’ve noticed that friends who know about birds seem to get much more out of a simple walk in the countryside.') },
+    { part: 1, clip: 'p1-07', ans: 35, min: 3, q: 'Which websites do you use most often?', say: 'Now let\'s talk about websites. Which websites do you use most often?',
+      samples: s('I use news websites and video websites every day. I also use a website to learn English.',
+        'Apart from email, mostly news sites and a couple of online dictionaries I rely on for work. I’ve also become slightly addicted to a website about cooking, which I check almost every evening.') },
+    { part: 1, clip: 'p1-08', ans: 35, min: 3, q: 'What makes a website easy to use?',
+      samples: s('I think a good website is simple and fast. It should be easy to find information.',
+        'Clear navigation, above all, so you can find what you need in a couple of clicks. Speed matters too, and it should work well on a phone, since that’s how most people browse these days.') },
+    { part: 1, clip: 'p1-09', ans: 35, min: 3, q: 'Have you ever made your own website?',
+      samples: s('No, I haven’t. But I would like to learn how to do it in the future.',
+        'Only a very simple one, for a university project. It looked fairly amateurish, but it gave me a lot of respect for professional designers, because even small details took hours to get right.') },
+    { part: 1, clip: 'p1-10', ans: 35, min: 3, q: 'Do you trust the information you find on websites?',
+      samples: s('Not always. Some websites have wrong information, so I check it on other websites.',
+        'It depends on the source. I trust established news organisations and official sites, but I’m quite sceptical about anything that seems designed to provoke a strong reaction, and I usually check it elsewhere.') },
+    { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'Do you enjoy staying at home?', say: 'Let\'s move on to talk about staying at home. Do you enjoy staying at home?',
+      samples: s('Yes, sometimes. After a busy week I like to stay at home and relax.',
+        'In moderation. After a hectic week, a quiet weekend at home is exactly what I need, but if I stay in for more than a couple of days, I start to feel restless.') },
+    { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'What do you usually do when you stay at home?',
+      samples: s('I usually watch films, cook and clean my room. Sometimes I call my family.',
+        'I tend to catch up on the things I never have time for during the week: cooking something more ambitious, reading, and, less excitingly, laundry.') },
+    { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'Do you prefer to spend your free time at home or outside?',
+      samples: s('I prefer to go outside, because I can meet my friends and do different activities.',
+        'Outside, on the whole, especially when the weather’s good. But I think a balance is important; too much socialising leaves me exhausted.') },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a time when you received some good news.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a time when you received some good news.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a time when you received some good news. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?',
+      samples: s('I want to talk about when I got my university results last year. I had studied very hard for my final exams, but I was worried because one exam was very difficult. The results were published online on a Friday morning. I was at home with my mother and I was very nervous. When I opened the website, I saw that I passed all my exams with good marks, and I got the highest mark in my class in one subject. I was so happy that I shouted and my mother came to see what happened. Then I called my father and my best friend to tell them. In the evening my family went to a restaurant to celebrate. I felt very proud and relieved, because all my hard work was successful.',
+        'I’d like to talk about the day I found out that I’d been offered a scholarship to study abroad. I’d applied about six months earlier, and to be honest, I’d almost given up hope, because I’d been told that only a handful of applicants were successful each year. The news arrived in a rather unremarkable way: I was on a crowded bus on my way to work when I glanced at my phone and saw an email with the subject line “Congratulations”. I remember reading it three times, because I was convinced I must have misunderstood. My first reaction, oddly enough, wasn’t excitement but a kind of disbelief, and I just sat there staring at the screen while the bus went past my stop. Once it had sunk in, I called my parents, who had supported me through the whole application process, and my mother burst into tears. What made the news so meaningful was that it changed my plans completely: without the scholarship, studying abroad simply wouldn’t have been affordable. So it felt less like a single piece of good news and more like a door opening onto a different future.') },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Who do you usually tell first when you have good news?', say: 'Thank you. Who do you usually tell first when you have good news?',
+      samples: s('Usually I tell my mother first, because she is always happy for me.',
+        'Usually my parents, partly because they’re the people who’d be most pleased, and partly because they’d be offended if they heard it from someone else first.') },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'How do people usually share important personal news today?', say: 'We\'ve been talking about a time when you received some good news, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all sharing personal news. How do people usually share important personal news today?',
+      samples: s('Most people use messages or social media now. In the past people called on the phone or visited their family.',
+        'Increasingly through messaging apps and social media, often to large numbers of people at once. Interestingly, though, many people still feel that the most important news, such as an engagement or a serious illness, should be shared in person or by phone with close family first, and only then posted online.') },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Is it better to give bad news face to face or in writing?',
+      samples: s('I think face to face is better, because the other person can ask questions and you can help them. A message is not polite for bad news.',
+        'Generally face to face, because it shows respect and allows the other person to react and ask questions. That said, writing can sometimes be kinder, since it gives the person time to absorb the news privately before they have to respond, so it really depends on the situation and the relationship.') },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Why do some people share so much of their lives online?',
+      samples: s('Maybe they want attention and likes from other people. Also they want to keep in touch with friends who live far away.',
+        'Partly for connection, especially with friends and family who live far away. But I think there’s also a desire for approval: likes and comments provide a small reward each time, which can become quite addictive. Some people also build an online identity that matters to them almost as much as their real one.') },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Is it important to celebrate small achievements?', say: 'Now let\'s move on to talk about achievements. Is it important to celebrate small achievements?',
+      samples: s('Yes, I think it is important, because it makes people feel good and gives them motivation to continue.',
+        'I think so. Large goals can take years, and if you only celebrate at the very end, it’s easy to lose motivation along the way. Recognising small steps keeps people going, although if everything is celebrated, the celebrations themselves start to lose their meaning.') },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Do young people today put too much pressure on themselves to succeed?',
+      samples: s('Yes, I think many young people are very stressed because they want to get good marks and a good job. Social media also makes this worse.',
+        'Many do, I think. Competition for university places and jobs is intense, and social media constantly exposes young people to carefully edited images of other people’s success. The danger is that they start to measure their own worth entirely by achievements, which can be quite damaging to their mental health.') },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'How should people react when they fail to achieve a goal?',
+      samples: s('I think they should not give up. They should think about what went wrong and try again next time.',
+        'Ideally by treating it as information rather than a judgement on themselves: working out what went wrong, what was within their control and what wasn’t. It’s also fine to feel disappointed for a while, but the people who eventually succeed are usually the ones who adjust their approach and try again, rather than abandoning the goal altogether.') },
+    { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
+  ];
+
+  const cue = { topic: 'Describe a time when you received some good news.', points: ['what the news was', 'when and how you received it', 'who you shared it with'], explain: 'and explain why it was good news for you.' };
+  window.SPEAKING_TEST = { num: 105, name: 'Premium Test 5', clipBase: 'audio/speaking/test105/', steps, cue };
+})();
