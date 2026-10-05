@@ -1,0 +1,76 @@
+// IELTS Speaking · Premium Test 2 — content only. The exam engine is assets/speaking-exam.js.
+// Premium Exam (band 7–9 level): kept for the mock test, not listed with the practice tests.
+(() => {
+  'use strict';
+  // clip: examiner audio · ans: max answer seconds · min: earliest "finished" · prep: Part 2 preparation
+  // say: the examiner's exact words, when they differ from q (recorded by tools/make_speaking_audio.py)
+  // samples: answers at band 6 and band 8, shown after the interview
+  const s = (b6, b8) => [{ band: 6, text: b6 }, { band: 8, text: b8 }];
+  const steps = [
+    { part: 1, clip: 'p1-00', ans: 15, min: 2, q: 'Can you tell me your full name, please?', say: 'Good morning. My name is Emma, and I\'ll be your examiner today. Can you tell me your full name, please?' },
+    { part: 1, clip: 'p1-01', ans: 10, min: 2, q: 'What should I call you?', say: 'Thank you. And what should I call you?' },
+    { part: 1, clip: 'p1-02', ans: 15, min: 2, q: 'Can you tell me where you’re from?', say: 'And can you tell me where you’re from?' },
+    { part: 1, clip: 'p1-03', ans: 35, min: 3, q: 'Do you prefer coffee or tea?', say: 'Now, in this first part, I\'d like to ask you some questions about yourself. Let\'s talk about coffee and tea. Do you prefer coffee or tea?',
+      samples: s('I prefer coffee, because it gives me energy in the morning. I drink tea sometimes, but not very often.',
+        'Coffee, without a doubt, at least in the morning. I can barely function without a cup. In the afternoon, though, I switch to green tea, because coffee late in the day tends to keep me awake.') },
+    { part: 1, clip: 'p1-04', ans: 35, min: 3, q: 'How often do you go to cafés?',
+      samples: s('Maybe two or three times a week. I go with my friends after class and we talk and drink coffee.',
+        'More often than I’d like to admit, probably three or four times a week. Partly it’s the coffee, but mostly it’s that I find it easier to concentrate in a café than at home, oddly enough.') },
+    { part: 1, clip: 'p1-05', ans: 35, min: 3, q: 'Is tea or coffee more popular in your country?',
+      samples: s('In my country tea is more popular, especially with older people. But young people like coffee more now.',
+        'Traditionally tea, which is still served whenever guests visit. But coffee has taken off among younger people over the last ten years or so, and new coffee shops seem to open every week.') },
+    { part: 1, clip: 'p1-06', ans: 35, min: 3, q: 'Have your drinking habits changed since you were a child?',
+      samples: s('Yes, when I was a child I drank milk and juice. Now I drink coffee every day and less juice.',
+        'Completely. As a child I mostly drank milk and fruit juice, and I couldn’t stand the bitterness of coffee. It’s funny how tastes change: now I actually prefer it strong and black.') },
+    { part: 1, clip: 'p1-07', ans: 35, min: 3, q: 'How often do you visit libraries?', say: 'Now let\'s talk about libraries. How often do you visit libraries?',
+      samples: s('Not very often now. When I was a student I went every week, but now I read on my phone.',
+        'Less than I used to. During my exams I practically lived in the university library, but these days I mostly read e-books, so I only go when I need a quiet place to work.') },
+    { part: 1, clip: 'p1-08', ans: 35, min: 3, q: 'What do people use libraries for in your country?',
+      samples: s('People borrow books and students go there to study. Some libraries also have computers.',
+        'Increasingly, as community spaces rather than just places to borrow books. Students use them to study, but there are also language classes, activities for children and free internet access for people who don’t have it at home.') },
+    { part: 1, clip: 'p1-09', ans: 35, min: 3, q: 'Did you use a library when you were a child?',
+      samples: s('Yes, my school had a small library and I borrowed story books every week. I liked it very much.',
+        'Yes, my mother used to take me to the local library every Saturday. I remember the excitement of being allowed to choose five books on my own, which felt like a huge responsibility at the time.') },
+    { part: 1, clip: 'p1-10', ans: 35, min: 3, q: 'Do you think libraries will still exist in the future?',
+      samples: s('I think yes, but maybe they will be smaller, because many people read online now.',
+        'I think so, but they’ll look quite different. The book collections will probably shrink, while the space is used more for studying, events and digital services, so they’ll be less like warehouses for books and more like community centres.') },
+    { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'Did you have to wear a uniform at school?', say: 'Let\'s move on to talk about uniforms. Did you have to wear a uniform at school?',
+      samples: s('Yes, we wore a white shirt and dark blue trousers. I didn’t like it very much because it was not comfortable.',
+        'Yes, from the age of six until I left school: a white shirt, a dark blue jumper and a rather uncomfortable tie. I complained about it constantly at the time, but I can see the advantages now.') },
+    { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'Which jobs require people to wear a uniform?',
+      samples: s('Police officers, nurses and pilots wear uniforms. Also people who work in shops or restaurants.',
+        'Most obviously the police, the military and medical staff, where people need to be recognised instantly. But a lot of service jobs, in hotels, airlines and fast-food chains, also require one, mainly for branding.') },
+    { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'Do you think uniforms are a good idea?',
+      samples: s('Yes, I think they are good, because everybody looks the same and people don’t worry about clothes.',
+        'On balance, yes, especially in schools, because they reduce the pressure on children to compete over fashion. Although I’d prefer them to be more practical and comfortable than the ones I had to wear.') },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a time when you solved a difficult problem.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a time when you solved a difficult problem.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a time when you solved a difficult problem. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?',
+      samples: s('I want to talk about a problem I had last year with my university project. I was working in a group with three other students, but one student never came to the meetings and he didn’t do his part. The deadline was very close and we were worried. First, I sent him messages but he didn’t reply. Then I decided to talk to him after class. He told me that he had a part-time job and he was very busy. So we changed the plan and gave him a smaller part that he could do at home. The other students and I did more work. In the end we finished the project on time and we got a good mark. I felt very happy and proud because I solved the problem and also I learned that it is better to talk to people directly.',
+        'I’d like to talk about a problem I had to solve when I was working part-time at a small travel agency. Two days before a group of twenty students were due to fly to Spain, the airline cancelled their flight because of a strike. My manager was away, so it fell to me to sort it out. The first thing I did was stop and work out what really mattered: the students had to arrive in time for a course that started on the Monday, so the exact route was less important than the date. Rather than looking for another direct flight, which were all full, I split the group across two connecting flights via different cities and arranged a coach to bring everyone together at the other end. It took most of the night on the phone, and there was a nervous moment when one of the connections was delayed, but everyone arrived within an hour of each other. What I felt afterwards was mostly relief, but also a quiet sense of confidence, because I’d discovered that I could think clearly under pressure, which I hadn’t been sure of before.') },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you usually ask for help when you have a problem?', say: 'Thank you. Do you usually ask for help when you have a problem?',
+      samples: s('Sometimes. If it is a big problem I ask my family, but small problems I solve by myself.',
+        'Usually only after I’ve tried on my own first. I’m a bit stubborn that way, although I’m learning that asking earlier often saves a lot of time.') },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Should schools teach problem-solving as a separate subject?', say: 'We\'ve been talking about a time when you solved a difficult problem, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all problem-solving at school and at work. Should schools teach problem-solving as a separate subject?',
+      samples: s('I think it is a good idea, because problem-solving is important for life. But maybe it is better to teach it in other subjects like maths and science.',
+        'I’m not convinced it works as a separate subject, because problem-solving is always about something specific: you solve a maths problem differently from a problem in a relationship. I think it’s more effective to build it into every subject, by giving students open-ended tasks rather than exercises with a single right answer.') },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Are people better at solving problems alone or in groups?',
+      samples: s('I think in groups is better, because people have different ideas and they can help each other. But sometimes groups argue and it takes more time.',
+        'It depends on the problem. Groups are better at generating a range of ideas and spotting weaknesses, but they can also fall into “groupthink”, where nobody wants to challenge the majority. For a complex problem, I think the best approach is for people to think individually first and then compare their ideas as a group.') },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'Which jobs need the strongest problem-solving skills?',
+      samples: s('I think doctors need good problem-solving skills, because they must find what is wrong with the patient. Engineers also need these skills.',
+        'Doctors are an obvious example, since diagnosis is essentially solving a puzzle with incomplete information and high stakes. But I’d argue that people in jobs like social work or teaching face problems that are even harder, because there’s rarely a clear right answer and every situation involves people with different needs.') },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Has technology made people less able to solve problems for themselves?', say: 'Now let\'s move on to talk about technology and problem-solving. Has technology made people less able to solve problems for themselves?',
+      samples: s('Maybe yes. Now people search on the internet for every answer and they don’t think by themselves. But technology also helps us to solve problems faster.',
+        'In some ways, yes. If you can look up the answer to almost anything in seconds, there’s less need to work things out, and skills like navigating without a map do seem to be fading. On the other hand, technology frees people from routine problems, so in theory they can spend more energy on the genuinely difficult ones.') },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'What problems do you think future generations will have to solve?',
+      samples: s('I think climate change will be a big problem in the future. Also maybe there will not be enough water and food for everyone.',
+        'Climate change is the obvious one, both reducing emissions and adapting to the changes that are already unavoidable. I also think that ageing populations will be a huge challenge, because fewer working people will have to support many more elderly people, and that will affect everything from healthcare to pensions.') },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Should governments ask the public for ideas to solve local problems?',
+      samples: s('Yes, I think it is good, because local people know the problems in their area very well. The government should listen to them.',
+        'I think they should, at least for local issues like traffic or parks, because residents often understand the problem better than officials. The risk is that only the most vocal people take part, so governments need to make sure they hear from a wide range of residents, not just those with the time and confidence to attend meetings.') },
+    { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
+  ];
+
+  const cue = { topic: 'Describe a time when you solved a difficult problem.', points: ['what the problem was', 'when it happened', 'how you solved it'], explain: 'and explain how you felt after solving it.' };
+  window.SPEAKING_TEST = { num: 102, name: 'Premium Test 2', clipBase: 'audio/speaking/test102/', steps, cue };
+})();
