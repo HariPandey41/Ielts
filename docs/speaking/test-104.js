@@ -1,0 +1,76 @@
+// IELTS Speaking · Premium Test 4 — content only. The exam engine is assets/speaking-exam.js.
+// Premium Exam (band 7–9 level): kept for the mock test, not listed with the practice tests.
+(() => {
+  'use strict';
+  // clip: examiner audio · ans: max answer seconds · min: earliest "finished" · prep: Part 2 preparation
+  // say: the examiner's exact words, when they differ from q (recorded by tools/make_speaking_audio.py)
+  // samples: answers at band 6 and band 8, shown after the interview
+  const s = (b6, b8) => [{ band: 6, text: b6 }, { band: 8, text: b8 }];
+  const steps = [
+    { part: 1, clip: 'p1-00', ans: 15, min: 2, q: 'Can you tell me your full name, please?', say: 'Good morning. My name is Emma, and I\'ll be your examiner today. Can you tell me your full name, please?' },
+    { part: 1, clip: 'p1-01', ans: 10, min: 2, q: 'What should I call you?', say: 'Thank you. And what should I call you?' },
+    { part: 1, clip: 'p1-02', ans: 15, min: 2, q: 'Can you tell me where you’re from?', say: 'And can you tell me where you’re from?' },
+    { part: 1, clip: 'p1-03', ans: 35, min: 3, q: 'Do you like flowers?', say: 'Now, in this first part, I\'d like to ask you some questions about yourself. Let\'s talk about flowers. Do you like flowers?',
+      samples: s('Yes, I like flowers because they are beautiful and they smell nice. My favourite flowers are roses.',
+        'I do, although I’m better at admiring them than keeping them alive. I particularly like wild flowers, the kind you see along the roadside in spring, because they seem less arranged and more natural.') },
+    { part: 1, clip: 'p1-04', ans: 35, min: 3, q: 'Do people in your country often give flowers as gifts?',
+      samples: s('Yes, people give flowers on birthdays and special days, for example when someone is in hospital.',
+        'Quite often, especially on birthdays, anniversaries and when visiting someone in hospital. There are some unwritten rules, though: certain flowers are associated with funerals, so you’d never give those as a present.') },
+    { part: 1, clip: 'p1-05', ans: 35, min: 3, q: 'Have you ever grown flowers yourself?',
+      samples: s('When I was a child I grew some flowers with my grandmother in her garden. Now I live in a flat so I don’t have a garden.',
+        'Only on a balcony, with mixed results. I managed to grow some geraniums last summer, which felt like a real achievement, but most of my attempts have ended badly because I forget to water them.') },
+    { part: 1, clip: 'p1-06', ans: 35, min: 3, q: 'Are there any flowers that have a special meaning in your culture?',
+      samples: s('Yes, some flowers are used in weddings and some flowers are used in religious festivals. They have special meanings.',
+        'Yes, quite a few. Some are associated with particular festivals and are used to decorate homes and temples, while white flowers in some contexts are linked with mourning, so the choice of flower can carry a surprisingly strong message.') },
+    { part: 1, clip: 'p1-07', ans: 35, min: 3, q: 'Do you often stay up late?', say: 'Now let\'s talk about staying up late. Do you often stay up late?',
+      samples: s('Yes, quite often. I usually go to bed after midnight because I watch videos or talk with friends online.',
+        'More often than I should. I’m naturally a night person, so I tend to get a second wind around ten o’clock, which is great for getting things done but not so great when the alarm goes off at seven.') },
+    { part: 1, clip: 'p1-08', ans: 35, min: 3, q: 'What do you usually do when you stay up late?',
+      samples: s('I usually watch films or play games on my phone. Sometimes I study for my exams.',
+        'Usually something fairly quiet: reading, catching up on a series, or sometimes working on things that need concentration, because the late evening is when there are fewest interruptions.') },
+    { part: 1, clip: 'p1-09', ans: 35, min: 3, q: 'Did you stay up late when you were a child?',
+      samples: s('No, my parents were strict and I had to go to bed at nine o’clock. Only on holidays I could stay up late.',
+        'Hardly ever. My parents were quite strict about bedtimes, which I resented at the time. The only exceptions were New Year’s Eve and family celebrations, which made staying up feel like a real treat.') },
+    { part: 1, clip: 'p1-10', ans: 35, min: 3, q: 'Is it a good idea to stay up late before an exam?',
+      samples: s('I think it is not a good idea, because you will be tired in the exam and you cannot remember things.',
+        'Generally not. Last-minute cramming might help you remember a few extra facts, but if you’re exhausted the next day, you’ll probably lose more than you gain, because tiredness affects concentration and clear thinking.') },
+    { part: 1, clip: 'p1-11', ans: 35, min: 3, q: 'Do you smile a lot?', say: 'Let\'s move on to talk about smiling. Do you smile a lot?',
+      samples: s('Yes, I think I smile a lot, especially when I am with my friends.',
+        'I think so, although people tell me I look quite serious when I’m concentrating. With friends, though, I’m usually laughing about something.') },
+    { part: 1, clip: 'p1-12', ans: 35, min: 3, q: 'Do people in your country smile at strangers?',
+      samples: s('Not very much. In the city people are busy and they don’t smile at people they don’t know.',
+        'It depends where you are. In small towns, people often smile or nod at strangers, but in the big cities, people tend to keep to themselves, and smiling at a stranger on the metro might be seen as a little odd.') },
+    { part: 1, clip: 'p1-13', ans: 35, min: 3, q: 'Do you think smiling is important at work?',
+      samples: s('Yes, especially in jobs with customers, because customers feel happy when the staff smile.',
+        'In customer-facing jobs, definitely, because it makes people feel welcome. But I think a forced smile can be counterproductive; people can usually tell when it isn’t genuine.') },
+    { part: 2, clip: 'p2-00', prep: 60, q: 'Describe a person who taught you something important.', say: 'Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish. Here is your topic. I\'d like you to describe a person who taught you something important.' },
+    { part: 2, clip: 'p2-01', ans: 120, min: 60, long: true, q: 'Describe a person who taught you something important. (long turn)', say: 'All right? Remember, you have one to two minutes for this, so don\'t worry if I stop you. I\'ll tell you when the time is up. Can you start speaking now, please?',
+      samples: s('I want to talk about my uncle, who taught me how to manage money. When I was sixteen, I got my first part-time job in a shop and I was very happy because I had my own money. But I spent all my money every month on clothes and food with my friends. My uncle saw this and he talked to me. He showed me how to write down everything I spent and how to save a little money every month. At first I thought it was boring, but I did what he said. After one year I had saved enough money to buy a laptop for university. I think this was very important because now I am careful with money and I never have problems at the end of the month. I am very grateful to my uncle.',
+        'I’d like to talk about my first manager, a woman called Leila, who ran the small marketing agency where I did my first internship. What she taught me, more than any particular skill, was how to deal with criticism. In my first month, I submitted a report I was quite proud of, and she returned it covered in comments. I was crushed, and frankly a bit defensive. Instead of simply telling me what to fix, she sat down with me and explained that every piece of feedback was a sign that she took my work seriously, and that the most successful people she knew were the ones who actively asked for criticism rather than avoiding it. She also practised what she preached: she regularly asked the junior staff to point out weaknesses in her own presentations. That changed my attitude completely. I started asking colleagues to review my work before I submitted it, and my writing improved enormously as a result. It’s probably the single most useful lesson I’ve learned in my working life, and I’ve tried to pass it on to people I’ve worked with since.') },
+    { part: 2, clip: 'p2-02', ans: 25, min: 2, q: 'Do you prefer learning from books or from people?', say: 'Thank you. Do you prefer learning from books or from people?',
+      samples: s('I prefer learning from people, because I can ask questions when I don’t understand.',
+        'From people, on the whole, because you can ask questions and learn from their mistakes as well as their successes. But books are better for depth.') },
+    { part: 3, clip: 'p3-00', ans: 75, min: 5, q: 'Do children learn more from their parents or from their friends?', say: 'We\'ve been talking about a person who taught you something important, and I\'d like to discuss with you one or two more general questions related to this. Let\'s consider first of all learning from other people. Do children learn more from their parents or from their friends?',
+      samples: s('When children are young they learn more from parents, but when they become teenagers they learn more from friends, for example about fashion and music.',
+        'It changes with age. Young children learn their values and habits mostly from their parents, often by imitation rather than instruction. In adolescence, friends become far more influential, particularly on things like language, fashion and attitudes to risk, although research suggests that parents’ influence on deeper values tends to persist.') },
+    { part: 3, clip: 'p3-01', ans: 75, min: 5, q: 'Is it easier to learn from someone older or someone of your own age?',
+      samples: s('I think it is easier to learn from someone of my age, because I feel relaxed and I am not shy to ask questions.',
+        'Each has advantages. Older people have more experience, but there can be a barrier: you may feel reluctant to admit you don’t understand. With someone your own age, you’re more relaxed and willing to ask basic questions, although they may not know much more than you do.') },
+    { part: 3, clip: 'p3-02', ans: 75, min: 5, q: 'How important are mentors in the workplace?',
+      samples: s('I think they are very important, especially for new workers, because they can help them understand the job and the company.',
+        'Very important, especially early in a career. A good mentor can explain the unwritten rules of an organisation, which you’d never find in a manual, and give honest feedback without the pressure of a formal evaluation. People who have mentors often progress faster, partly because someone senior knows their abilities.') },
+    { part: 3, clip: 'p3-03', ans: 75, min: 5, q: 'Why do some people choose to become teachers?', say: 'Now let\'s move on to talk about teaching as a profession. Why do some people choose to become teachers?',
+      samples: s('Some people like children and they want to help them. Also teachers have long holidays, so some people like this.',
+        'For many, it’s a sense of purpose, the idea that they can make a real difference to young people’s lives. Some are inspired by a teacher they had themselves. Practical factors play a part too, such as job security, although the long holidays are often overstated, since much of that time is spent planning and marking.') },
+    { part: 3, clip: 'p3-04', ans: 75, min: 5, q: 'Should teachers be paid as much as doctors?',
+      samples: s('Maybe not the same, because doctors study for a long time. But I think teachers should be paid more than now.',
+        'Perhaps not exactly the same, given how long doctors train and the responsibility they carry. But I do think teachers are underpaid relative to their importance, and in many countries this makes it hard to attract and keep talented people, which ultimately affects the quality of education for everyone.') },
+    { part: 3, clip: 'p3-05', ans: 75, min: 5, q: 'Could technology ever replace human teachers?',
+      samples: s('I don’t think so. Technology can help students, but children need a real teacher to encourage them and to control the class.',
+        'For some purposes, it already does: you can learn a surprising amount from online courses and apps. But I doubt it will replace teachers completely, because a large part of teaching is motivating students, noticing when someone is struggling and building relationships, which machines still do poorly.') },
+    { part: 3, clip: 'end', q: 'Thank you. That is the end of the speaking test.' },
+  ];
+
+  const cue = { topic: 'Describe a person who taught you something important.', points: ['who this person is', 'what they taught you', 'how they taught you'], explain: 'and explain why this was important to you.' };
+  window.SPEAKING_TEST = { num: 104, name: 'Premium Test 4', clipBase: 'audio/speaking/test104/', steps, cue };
+})();
