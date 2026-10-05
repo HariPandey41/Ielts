@@ -721,6 +721,13 @@ footer a { color: inherit; }
       <span class="trf-meta" data-mock-status="104">Not started</span>
       <span class="test2-go">Open Premium Test 4 →</span>
     </a>
+    <a class="test2-card" href="mock-test.html?n=105">
+      <span class="label">Premium · band 7–9 level · about 2 hours 45 minutes</span>
+      <strong>Premium Test 5</strong>
+      <span>Listening: booking a car service (table), a renovated railway station (plan labelling), guidebooks versus travel apps and the life cycle of the eel. Reading: the history of the parachute, the Antikythera mechanism and whether exams should be abolished. Writing: passengers on three ferry routes (line graph) and choosing between an enjoyable job and a well-paid one. Speaking: birds, websites, staying at home and a time you received good news.</span>
+      <span class="trf-meta" data-mock-status="105">Not started</span>
+      <span class="test2-go">Open Premium Test 5 →</span>
+    </a>
   </section>
 
   <footer>
@@ -1101,7 +1108,7 @@ footer a { color: inherit; }
 
   // ---------- FULL MOCK TEST: status on each card (progress is kept by mock-test.html) ----------
   const MOCK_SECTIONS = ['listening', 'reading', 'writing', 'speaking'];
-  const MOCK_COUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 101, 102, 103, 104];
+  const MOCK_COUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 101, 102, 103, 104, 105];
   function renderMocks() {
     document.querySelectorAll('[data-mock-status]').forEach(el => {
       let m = null;
