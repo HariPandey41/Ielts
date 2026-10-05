@@ -586,6 +586,13 @@ footer a { color: inherit; }
       <span class="trf-meta" data-mock-status="18">Not started</span>
       <span class="test2-go">Open Full Mock Test 8 →</span>
     </a>
+    <a class="test2-card" href="mock-test.html?n=19">
+      <span class="label">New questions · exam conditions · about 2 hours 45 minutes</span>
+      <strong>Full Mock Test 9</strong>
+      <span>A complete test with questions that appear nowhere else on the site. Listening: joining a choir, a prison museum, a coastal erosion field trip and ants. Reading: the history of the zip, invasive species and how to praise children. Writing: passengers at four airports and learning a foreign language at primary school. Speaking: singing, boats, mirrors and a time you helped someone.</span>
+      <span class="trf-meta" data-mock-status="19">Not started</span>
+      <span class="test2-go">Open Full Mock Test 9 →</span>
+    </a>
     <div class="sheet-head" style="margin-top:8px">
       <h3>Practice mock tests</h3>
       <span class="trf-meta">Built from the practice tests on the other tabs</span>
@@ -1041,7 +1048,7 @@ footer a { color: inherit; }
 
   // ---------- FULL MOCK TEST: status on each card (progress is kept by mock-test.html) ----------
   const MOCK_SECTIONS = ['listening', 'reading', 'writing', 'speaking'];
-  const MOCK_COUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+  const MOCK_COUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
   function renderMocks() {
     document.querySelectorAll('[data-mock-status]').forEach(el => {
       let m = null;
